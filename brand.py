@@ -19,7 +19,8 @@ HANDLE = "@hbecapital"
 ARN = "ARN-275597"
 MF_DISCLAIMER = ("Mutual fund investments are subject to market risks, "
                  "read all scheme related documents carefully.")
-GENERIC_DISCLAIMER = ("For educational purposes only. Not investment advice or a recommendation to buy/sell. "
+EDU = "For educational purposes only. Not investment advice."
+GENERIC_DISCLAIMER = (f"{EDU} Not a recommendation to buy or sell. "
                       "Past performance does not guarantee future results.")
 
 BG, PANEL, GRID = "#0B1220", "#121B2E", "#1E2A44"
@@ -52,9 +53,9 @@ def footer(fig, kind="generic"):
     brand_badge(fig, 0.05, 0.045, size=0.7)
     fig.text(0.95, 0.045, HANDLE, color=MUTED, fontsize=14, ha="right", va="center")
     note = {
-        "mf": f"{MF_DISCLAIMER} Educational only. AMFI-registered MF Distributor · {ARN}",
-        "pms": ("PMS investments are subject to market risks. Returns as reported by providers to APMI; "
-                "not verified by HBE Capital. Educational only, not a recommendation."),
+        "mf": f"{MF_DISCLAIMER} {EDU} AMFI-registered MF Distributor · {ARN}",
+        "pms": ("PMS investments are subject to market risks. Returns as reported to APMI, not verified by "
+                f"HBE Capital. {EDU}"),
         "generic": GENERIC_DISCLAIMER,
     }[kind]
     fig.text(0.5, 0.012, note, color=MUTED, fontsize=7.5, ha="center", alpha=.85)

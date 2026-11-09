@@ -1,17 +1,18 @@
 name: Publish to Instagram
 
-# 09:00, 12:30, 17:30 and 20:00 IST. Each run posts the earliest due, unposted slot.
+# 09:00, 12:30, 15:00, 17:30 and 20:00 IST. Each run posts the earliest due, unposted slot.
 # GitHub can start scheduled runs late; a late run simply posts what is due.
 on:
   schedule:
     - cron: "30 3 * * *"
     - cron: "0 7 * * *"
+    - cron: "30 9 * * *"
     - cron: "0 12 * * *"
     - cron: "30 14 * * *"
   workflow_dispatch:
     inputs:
       slot:
-        description: "Post this slot now (psych, long, feature, short). Blank = whatever is due"
+        description: "Post this slot now (psych, long, edu, feature, short). Blank = whatever is due"
         required: false
 
 permissions:

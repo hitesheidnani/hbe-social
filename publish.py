@@ -51,6 +51,31 @@ def post_instagram(image_url, caption=None, story=False):
     return media, link
 
 
+def post_carousel(image_urls, caption):
+    ig, token = os.environ["IG_USER_ID"], os.environ["META_PAGE_TOKEN"]
+    children = []
+    for u in image_urls:
+        cid = graph("POST", f"{ig}/media", image_url=u, is_carousel_item="true", access_token=token)["id"]
+        children.append(cid)
+    for cid in children:                     # each slide must be processed before the album is created
+        for _ in range(30):
+            st = graph("GET", cid, fields="status_code", access_token=token).get("status_code")
+            if st == "FINISHED":
+                break
+            if st in ("ERROR", "EXPIRED"):
+                raise RuntimeError(f"Instagram could not process a carousel slide ({st})")
+            time.sleep(3)
+    parent = graph("POST", f"{ig}/media", media_type="CAROUSEL", children=",".join(children),
+                   caption=caption, access_token=token)["id"]
+    for _ in range(30):
+        if graph("GET", parent, fields="status_code", access_token=token).get("status_code") == "FINISHED":
+            break
+        time.sleep(3)
+    media = graph("POST", f"{ig}/media_publish", creation_id=parent, access_token=token)["id"]
+    link = graph("GET", media, fields="permalink", access_token=token).get("permalink")
+    return media, link
+
+
 def post_reel(mp4, caption, thumb_ms):
     """Upload a local MP4 as a Reel (Reels tab only, not the main grid) via resumable upload."""
     ig, token = os.environ["IG_USER_ID"], os.environ["META_PAGE_TOKEN"]
@@ -122,7 +147,11 @@ def main():
         print("Feed post already published:", rec["instagram"].get("url"))   # never post twice
     else:
         try:
-            media, link = post_instagram(image_url, p["caption"])
+            if p.get("carousel"):
+                media, link = post_carousel(
+                    [f"https://raw.githubusercontent.com/{repo}/main/{c}" for c in p["carousel"]], p["caption"])
+            else:
+                media, link = post_instagram(image_url, p["caption"])
             rec["instagram"] = {"ok": True, "id": media, "url": link, "at": now.isoformat(timespec="seconds")}
             print("✅ Posted to Instagram:", link)
         except Exception as e:

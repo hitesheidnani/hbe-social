@@ -4,6 +4,7 @@ Usage:  python daily.py [YYYY-MM-DD]
 Daily mix (IST):
   09:00  market psychology quote
   12:30  top-10 leaderboard, long horizon (5y / 7y / 10y), rotating category
+  15:00  MF Basics carousel (even days) or power-of-compounding illustration (odd days)
   17:30  weekday feature: SIP card (Mon, Fri), SIF (Tue), momentum funds (Wed, Sun), PMS (Thu, Sat)
   20:00  top-10 leaderboard, shorter horizon (1y / 2y / 3y), rotating category
 Returns for periods under 1 year are never shown.
@@ -12,10 +13,19 @@ import json, sys, datetime as dt
 from pathlib import Path
 
 import mf_posts as mf
-from brand import quote_card, story_version, ARN, MF_DISCLAIMER
+import edu_posts as edu
+from brand import quote_card, story_version, ARN, MF_DISCLAIMER, EDU
 
 ROOT = Path(__file__).parent
-SLOTS = {"psych": "09:00", "long": "12:30", "feature": "17:30", "short": "20:00"}
+SLOTS = {"psych": "09:00", "long": "12:30", "edu": "15:00", "feature": "17:30", "short": "20:00"}
+
+# 15:00 alternates: MF Basics carousel (even days) / power-of-compounding card (odd days)
+COMPOUNDING = [  # (type, amount, years, rate)
+    ("sip", 10000, 10, 0.15), ("early", 10000, None, 0.12), ("sip", 5000, 20, 0.12), ("stepup", 10000, 20, 0.12),
+    ("lump", 100000, None, 0.12), ("sip", 25000, 15, 0.15), ("sip", 10000, 30, 0.12), ("early", 5000, None, 0.15),
+    ("stepup", 5000, 25, 0.15), ("sip", 50000, 10, 0.12), ("lump", 500000, None, 0.15), ("sip", 10000, 20, 0.15),
+    ("sip", 2000, 25, 0.12), ("stepup", 25000, 15, 0.12), ("sip", 15000, 15, 0.12), ("early", 20000, None, 0.12),
+]
 
 CATS = [  # rotation order for leaderboards
     "Equity Scheme - Small Cap Fund", "Equity Scheme - Flexi Cap Fund", "Equity Scheme - Mid Cap Fund",
@@ -45,8 +55,8 @@ CAT_TAG = {"Small Cap": "#smallcapfunds", "Mid Cap": "#midcapfunds", "Large Cap"
            "Large & Mid Cap": "#largeandmidcap", "Value": "#valueinvesting", "Focused": "#focusedfunds"}
 ENGAGE = "🔖 Save this for your next review · 📤 Share with someone who invests in mutual funds"
 YEAR = __import__("datetime").date.today().year
-MF_FOOT = (f"Past performance may or may not be sustained in future. This is not a recommendation to buy or "
-           f"sell any fund. {MF_DISCLAIMER}\nHBE Capital · AMFI-registered Mutual Fund Distributor · {ARN}")
+MF_FOOT = (f"⚠️ {EDU} Past performance may or may not be sustained in future. This is not a recommendation "
+           f"to buy or sell any fund. {MF_DISCLAIMER}\nHBE Capital · AMFI-registered Mutual Fund Distributor · {ARN}")
 LINK = "📊 Full rankings for every category: link in bio"
 
 
@@ -65,7 +75,7 @@ def cap_psych(item):
             "💬 Which rule do you struggle with most? Tell us below.\n"
             "🔖 Save this for the next time the market tests your patience.\n\n"
             "Follow @hbecapital for daily trading psychology and mutual fund data.\n\n"
-            "For educational purposes only. Not investment advice.\n\n" + TAGS["psych"])
+            f"⚠️ {EDU}\n\n" + TAGS["psych"])
 
 
 def cap_leader(r):
@@ -108,7 +118,7 @@ def cap_sif(r):
         "Track records are still short, so judge them with care.",
         f"NAV as of {mf.nice_date(r['asof'])}. Regular plan, Growth option."
         + (" Returns under 1 year are absolute, not annualised." if r["horizon"] in ("3m", "6m") else ""), "",
-        "Past performance may or may not be sustained in future. Not a recommendation. "
+        f"⚠️ {EDU} Past performance may or may not be sustained in future. Not a recommendation. "
         f"Investments are subject to market risks, read all scheme related documents carefully.\n"
         f"HBE Capital · AMFI-registered Mutual Fund Distributor · {ARN}", "",
         ENGAGE, "", TAGS["sif"]])
@@ -130,6 +140,56 @@ def cap_momentum(r):
         TAGS["momentum"]])
 
 
+def cap_edu(t, n):
+    points = "\n".join(f"→ {h}" for h, _ in t["slides"])
+    return "\n".join([
+        f"MF Basics #{n}: {t['title']} 📚", "", t["hook"], "", points, "",
+        f"💡 {t['takeaway']}", "",
+        "👉 Swipe through, then save this for later 🔖",
+        "📤 Share it with someone starting their investing journey",
+        "Follow @hbecapital for a new mutual fund lesson every other day.", "",
+        f"⚠️ {EDU} {MF_DISCLAIMER}\nHBE Capital · AMFI-registered Mutual Fund Distributor · {ARN}", "",
+        t["tags"]])
+
+
+def cap_comp(r):
+    rate = f"{r['rate'] * 100:.0f}%"
+    ill = (f"Illustration at an assumed constant {rate} annual return. Real returns vary, can be negative, "
+           "and are not guaranteed. Not a projection for any fund.")
+    if r["type"] == "sip":
+        head = (f"₹{r['monthly']:,} SIP for {r['years']} Years at {rate} = {edu.inr(r['value'])} 🤯 | "
+                "Power of Compounding")
+        body = [f"Invested: {edu.inr(r['invested'])}", f"Value: {edu.inr(r['value'])}",
+                f"Growth: {edu.inr(r['value'] - r['invested'])} ({r['value'] / r['invested']:.1f}x)", "",
+                f"Half of the final value is created in just the last {r['last_years']} years. "
+                "That's compounding: slow at first, then powerful. The hardest part is staying invested long enough."]
+    elif r["type"] == "early":
+        (a1, v1, i1), (a2, v2, i2) = r["values"]
+        head = f"Start at {a1} vs {a2}: {edu.inr(v1)} vs {edu.inr(v2)} ⏳ | Power of Compounding"
+        body = [f"Same ₹{r['monthly']:,}/month SIP until age {r['until']}.",
+                f"Starting at {a1}: {edu.inr(i1)} invested → {edu.inr(v1)}",
+                f"Starting at {a2}: {edu.inr(i2)} invested → {edu.inr(v2)}", "",
+                f"Just {edu.inr(i1 - i2)} more invested, but {v1 / v2:.1f}x the wealth. "
+                "The best time to start was yesterday. The next best is today."]
+    elif r["type"] == "stepup":
+        head = f"Step-Up SIP: {edu.inr(r['up'])} vs {edu.inr(r['flat'])} 📈 | Power of Compounding"
+        body = [f"Start with ₹{r['monthly']:,}/month for {r['years']} years.",
+                f"Flat SIP: {edu.inr(r['flat_inv'])} invested → {edu.inr(r['flat'])}",
+                f"Increase it {r['step'] * 100:.0f}% every year: {edu.inr(r['up_inv'])} invested → {edu.inr(r['up'])}", "",
+                "Raise your SIP when your salary rises. It rarely feels like a sacrifice, and it can transform the result."]
+    else:
+        head = f"{edu.inr(r['amount'])} Invested Once at {rate} for 30 Years 💰 | Power of Compounding"
+        body = [f"After {y} years: {edu.inr(v)}" for y, v in r["values"]] + [
+                "", f"Rule of 72: at {rate}, money roughly doubles every {r['double']:.0f} years (72 ÷ {r['rate'] * 100:.0f}). "
+                "Time is the most powerful ingredient."]
+    return "\n".join([head, ""] + body + [
+        "", "💬 What would you do with this corpus? Comment below.",
+        "🔖 Save this · 📤 Share with a friend who keeps postponing their SIP",
+        "Follow @hbecapital for daily mutual fund insights.", "",
+        f"⚠️ {EDU} {ill} {MF_DISCLAIMER}\nHBE Capital · AMFI-registered Mutual Fund Distributor · {ARN}", "",
+        "#compounding #sip #wealthcreation #mutualfunds #financialfreedom"])
+
+
 def cap_pms(r):
     hz = mf.HORIZON_LABEL[r["horizon"]]
     rows = [(f"{mf.short_name(n)} ({mf.short_name(p)})", pct(v)) for n, p, v in r["top"]]
@@ -138,7 +198,7 @@ def cap_pms(r):
         f"Strategies with AUM ≥ ₹100 cr · month-end {mf.nice_date(r['asof'])} · {r['screened']} screened", "",
         numbered(rows), "",
         "Returns as reported by PMS providers to APMI (1Y+ annualised). Minimum investment ₹50 lakh.", "",
-        "Past performance may or may not be sustained in future. PMS investments are subject to market risks. "
+        f"⚠️ {EDU} Past performance may or may not be sustained in future. PMS investments are subject to market risks. "
         "This is not a recommendation to invest in any strategy. Data not independently verified by HBE Capital.", "",
         "🔖 Save this · 📤 Share with someone exploring PMS", "", TAGS["pms"]])
 
@@ -160,11 +220,13 @@ def build(day: dt.date):
     out.mkdir(parents=True, exist_ok=True)
     plan = []
 
-    def add(slot, image, caption, kind, rows=None):
-        story = story_version(image, label="DAILY MINDSET" if kind == "psych" else "NEW POST")
+    def add(slot, image, caption, kind, rows=None, carousel=None):
+        story = story_version(image, label={"psych": "DAILY MINDSET", "edu": "NEW LESSON"}.get(kind, "NEW POST"))
         item = {"slot": slot, "time_ist": SLOTS[slot], "kind": kind,
                 "image": str(Path(image).relative_to(ROOT)),
                 "story_image": str(story.relative_to(ROOT)), "caption": caption}
+        if carousel:
+            item["carousel"] = [str(Path(c).relative_to(ROOT)) for c in carousel]
         if rows:   # ranked cards also go out as a countdown Reel (built at publish time)
             item["reel"] = {"rows": rows}
         plan.append(item)
@@ -178,6 +240,21 @@ def build(day: dt.date):
     # 12:30 long-horizon leaderboard
     r = leaderboard_with_fallback(d % len(CATS), LONG_HORIZONS[(d // len(CATS)) % 3], out / "2_long")
     add("long", out / "2_long.jpg", cap_leader(r), "leaderboard", rows=len(r["top"]))
+
+    # 15:00 education: MF Basics carousel / compounding illustration, alternating days
+    if d % 2 == 0:
+        topics = json.loads((ROOT / "content" / "education.json").read_text())
+        k = (d // 2) % len(topics)
+        slides = edu.edu_carousel(topics[k], k + 1, out / "edu")
+        add("edu", slides[0], cap_edu(topics[k], k + 1), "edu", carousel=slides)
+    else:
+        typ, amt, yrs, rate = COMPOUNDING[(d // 2) % len(COMPOUNDING)]
+        f = out / "5_compounding"
+        r = {"sip": lambda: edu.compounding_sip(amt, yrs, rate, f),
+             "early": lambda: edu.compounding_early(amt, rate, f),
+             "stepup": lambda: edu.compounding_stepup(amt, yrs, rate, f),
+             "lump": lambda: edu.compounding_lumpsum(amt, rate, f)}[typ]()
+        add("edu", f.with_suffix(".jpg"), cap_comp(r), "compounding")
 
     # 17:30 weekday feature
     feat, arg = FEATURE[day.weekday()]
@@ -206,6 +283,7 @@ def build(day: dt.date):
     r = leaderboard_with_fallback((d + 4) % len(CATS), SHORT_HORIZONS[(d // len(CATS)) % 3], out / "4_short")
     add("short", out / "4_short.jpg", cap_leader(r), "leaderboard", rows=len(r["top"]))
 
+    plan.sort(key=lambda p: p["time_ist"])
     for p in plan:
         assert len(p["caption"]) <= 2200, f"{p['slot']} caption too long for Instagram ({len(p['caption'])})"
     (out / "plan.json").write_text(json.dumps(plan, indent=1, ensure_ascii=False))
