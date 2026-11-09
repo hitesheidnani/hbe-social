@@ -57,7 +57,8 @@ def cap_leader(r):
     lines = [f"Top 10 {r['category']} funds by {hz} returns ({kind}) 📊", "",
              numbered([(n, pct(v)) for n, v in r["top"]]), ""]
     if bval is not None:
-        lines += [f"Benchmark ({bname}): {pct(bval)}",
+        label = "Broad market, for comparison" if r.get("broad") else "Benchmark"
+        lines += [f"{label} ({bname}): {pct(bval)}",
                   f"{r['beat']} of {r['count']} funds beat the index over this period. Median fund: {pct(r['median'])}.", ""]
     lines += [f"Data: Regular plan, Growth option. NAV as of {mf.nice_date(r['asof'])}. "
               "Source: AMFI NAVs and NSE Indices, computed by HBE Capital FundNavigator.", "",

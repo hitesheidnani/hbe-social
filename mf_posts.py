@@ -37,6 +37,10 @@ DATA_URLS = [DATA_URL, "https://fundnavigator.pages.dev/data"]
 _cache = {}
 
 
+# Nifty 500 is the official benchmark only for some categories; elsewhere it is a broad-market comparison
+BROAD_ONLY = {"Large Cap", "Multi Cap", "Large & Mid Cap"}
+
+
 def load(name):
     if name in _cache:
         return _cache[name]
@@ -80,6 +84,7 @@ def dedupe(funds):
 
 
 def short_name(n):
+    n = re.sub(r"\s*\((erstwhile|formerly|earlier)[^)]*\)?", "", n, flags=re.I)
     n = re.split(r"\s*[-–]\s*(Regular|Growth|Reg\b)", n, flags=re.I)[0]
     n = tidy_case(re.sub(r"\s+", " ", n).strip())
     return n if len(n) <= 40 else n[:38].rstrip() + "…"
@@ -158,17 +163,20 @@ def leaderboard(category, horizon, out, n=N, metric="cagr"):
         row(fig, row_y(i), RH, i + 1, short_name(f["n"]), f["h"], f[metric][horizon])
     y = row_y(n) - 0.006
     if bval is not None:
-        row(fig, y, RH, None, f"{bench['name']} TRI", "Category benchmark", bval, highlight=True)
+        sub = "Broad market, for comparison" if label in BROAD_ONLY else "Category benchmark"
+        row(fig, y, RH, None, f"{bench['name']} TRI", sub, bval, highlight=True)
     y -= 0.022
     stat = f"Category median: {fmt(median(vals))}  ·  {len(vals)} funds with {HORIZON_LABEL[horizon]} history"
     if beat is not None:
-        stat = f"{beat} of {len(vals)} funds beat the index  ·  Median: {fmt(median(vals))}"
+        stat = (f"{beat} of {len(vals)} funds beat the "
+                f"{'Nifty 500' if label in BROAD_ONLY else 'index'}  ·  Median: {fmt(median(vals))}")
     fig.text(0.5, y, stat, color=TEXT, fontsize=13.5, ha="center", weight="medium")
     mf_footer(fig, "AMFI NAVs, NSE Indices. Computed by HBE Capital FundNavigator.")
     save(fig, out)
     return {"category": label, "horizon": horizon, "metric": metric, "asof": rk["asof"],
             "top": [(short_name(f["n"]), f[metric][horizon]) for f in funds[:n]],
-            "benchmark": (bench["name"] + " TRI", bval), "beat": beat, "count": len(vals), "median": median(vals)}
+            "benchmark": (bench["name"] + " TRI", bval), "broad": label in BROAD_ONLY,
+            "beat": beat, "count": len(vals), "median": median(vals)}
 
 
 def sip_value(xirr_pct, monthly=10000, months=60):
