@@ -237,7 +237,7 @@ def pms_leaderboard(horizon, out, n=N, min_aum=100, kind="Equity"):
             "screened": len(rows)}
 
 
-def sif_tracker(out, horizon="3m"):
+def sif_tracker(out, horizon="1y"):
     rk = load("rankings.json")
     sifs = [f for f in rk["funds"] if f["k"].startswith("SIF")]
     have = [f for f in sifs if f["cagr"].get(horizon) is not None]

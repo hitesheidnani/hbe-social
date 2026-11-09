@@ -15,6 +15,7 @@ from pathlib import Path
 ROOT = Path(__file__).parent
 GRAPH = "https://graph.facebook.com"
 IST = dt.timezone(dt.timedelta(hours=5, minutes=30))
+MAX_LATE_HOURS = 3
 
 
 def graph(method, path, **params):
@@ -63,8 +64,17 @@ def main():
     if a.slot:
         due = [p for p in plan if p["slot"] == a.slot]
     else:
-        due = [p for p in plan if p["time_ist"] <= now.strftime("%H:%M")
-               and status.get(p["slot"], {}).get("instagram", {}).get("ok") is not True]
+        due = []
+        for p in plan:
+            if status.get(p["slot"], {}).get("instagram", {}).get("ok") is True or p["time_ist"] > now.strftime("%H:%M"):
+                continue
+            slot_time = dt.datetime.combine(now.date(), dt.time.fromisoformat(p["time_ist"]), IST)
+            if now - slot_time > dt.timedelta(hours=MAX_LATE_HOURS):
+                # too late: skip rather than post out of order (e.g. a missed morning build)
+                status.setdefault(p["slot"], {}).setdefault("instagram", {"ok": None, "skipped": "too late"})
+                continue
+            due.append(p)
+        status_file.write_text(json.dumps(status, indent=1))
     if not due:
         print("Nothing due.")
         return
