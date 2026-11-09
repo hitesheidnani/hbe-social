@@ -31,9 +31,14 @@ def graph(method, path, **params):
                            f"subcode {err.get('error_subcode')})") from None
 
 
-def post_instagram(image_url, caption):
+def post_instagram(image_url, caption=None, story=False):
     ig, token = os.environ["IG_USER_ID"], os.environ["META_PAGE_TOKEN"]
-    container = graph("POST", f"{ig}/media", image_url=image_url, caption=caption, access_token=token)["id"]
+    params = {"image_url": image_url, "access_token": token}
+    if story:
+        params["media_type"] = "STORIES"
+    else:
+        params["caption"] = caption
+    container = graph("POST", f"{ig}/media", **params)["id"]
     for _ in range(30):                      # wait until Instagram has fetched and processed the image
         status = graph("GET", container, fields="status_code", access_token=token).get("status_code")
         if status == "FINISHED":
@@ -87,13 +92,25 @@ def main():
         return
 
     rec = status.setdefault(p["slot"], {})
-    try:
-        media, link = post_instagram(image_url, p["caption"])
-        rec["instagram"] = {"ok": True, "id": media, "url": link, "at": now.isoformat(timespec="seconds")}
-        print("✅ Posted to Instagram:", link)
-    except Exception as e:
-        rec["instagram"] = {"ok": False, "error": str(e), "at": now.isoformat(timespec="seconds")}
-        print("❌", e)
+    if rec.get("instagram", {}).get("ok") is True:
+        print("Feed post already published:", rec["instagram"].get("url"))   # never post twice
+    else:
+        try:
+            media, link = post_instagram(image_url, p["caption"])
+            rec["instagram"] = {"ok": True, "id": media, "url": link, "at": now.isoformat(timespec="seconds")}
+            print("✅ Posted to Instagram:", link)
+        except Exception as e:
+            rec["instagram"] = {"ok": False, "error": str(e), "at": now.isoformat(timespec="seconds")}
+            print("❌", e)
+    # Same post as a Story (a Story failure never undoes the feed post)
+    if rec["instagram"]["ok"] and p.get("story_image") and not rec.get("instagram_story", {}).get("ok"):
+        try:
+            sid, _ = post_instagram(f"https://raw.githubusercontent.com/{repo}/main/{p['story_image']}", story=True)
+            rec["instagram_story"] = {"ok": True, "id": sid, "at": now.isoformat(timespec="seconds")}
+            print("✅ Posted as a Story")
+        except Exception as e:
+            rec["instagram_story"] = {"ok": False, "error": str(e), "at": now.isoformat(timespec="seconds")}
+            print("⚠️ Story failed:", e)
     status_file.write_text(json.dumps(status, indent=1))
     if not rec["instagram"]["ok"]:
         sys.exit(1)

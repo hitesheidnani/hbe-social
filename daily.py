@@ -12,7 +12,7 @@ import json, sys, datetime as dt
 from pathlib import Path
 
 import mf_posts as mf
-from brand import quote_card, ARN, MF_DISCLAIMER
+from brand import quote_card, story_version, ARN, MF_DISCLAIMER
 
 ROOT = Path(__file__).parent
 SLOTS = {"psych": "09:00", "long": "12:30", "feature": "17:30", "short": "20:00"}
@@ -160,8 +160,10 @@ def build(day: dt.date):
     plan = []
 
     def add(slot, image, caption, kind):
+        story = story_version(image, label="DAILY MINDSET" if kind == "psych" else "NEW POST")
         plan.append({"slot": slot, "time_ist": SLOTS[slot], "kind": kind,
-                     "image": str(Path(image).relative_to(ROOT)), "caption": caption})
+                     "image": str(Path(image).relative_to(ROOT)),
+                     "story_image": str(story.relative_to(ROOT)), "caption": caption})
 
     # 09:00 psychology
     quotes = json.loads((ROOT / "content" / "psychology.json").read_text())

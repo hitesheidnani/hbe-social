@@ -88,3 +88,21 @@ def quote_card(text, tag, out, author=None):
     fig.add_artist(plt.Line2D([0.07, 0.19], [0.16, 0.16], color=GOLD, lw=3, transform=fig.transFigure))
     footer(fig)
     return save(fig, out)
+
+
+def story_version(card_path, label="NEW POST", footer_text="See the full post on our profile"):
+    """Make a 1080x1920 Instagram Story image from a 4:5 card: card centred, brand background,
+    short prompts above and below, all inside the Story safe zone."""
+    from PIL import Image, ImageDraw, ImageFont
+    card_path = Path(card_path)
+    card = Image.open(card_path).convert("RGB").resize((1080, 1350), Image.LANCZOS)
+    story = Image.new("RGB", (1080, 1920), BG)
+    story.paste(card, (0, 285))
+    d = ImageDraw.Draw(story)
+    bold = ImageFont.truetype(str(ROOT / "fonts" / "Inter-Bold.ttf"), 40)
+    reg = ImageFont.truetype(str(ROOT / "fonts" / "Inter-Medium.ttf"), 34)
+    d.text((540, 215), f"{label}  ·  {HANDLE}", font=bold, fill=ACCENT, anchor="mm")
+    d.text((540, 1700), footer_text, font=reg, fill=MUTED, anchor="mm")
+    out = card_path.with_name(card_path.stem + "_story.jpg")
+    story.save(out, quality=92, optimize=True)
+    return out
