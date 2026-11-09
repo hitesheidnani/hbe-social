@@ -51,6 +51,32 @@ def post_instagram(image_url, caption=None, story=False):
     return media, link
 
 
+def post_reel(mp4, caption, thumb_ms):
+    """Upload a local MP4 as a Reel (Reels tab only, not the main grid) via resumable upload."""
+    ig, token = os.environ["IG_USER_ID"], os.environ["META_PAGE_TOKEN"]
+    c = graph("POST", f"{ig}/media", media_type="REELS", upload_type="resumable", caption=caption,
+              share_to_feed="false", thumb_offset=str(thumb_ms), access_token=token)
+    data = Path(mp4).read_bytes()
+    req = urllib.request.Request(c["uri"], data=data, method="POST", headers={
+        "Authorization": f"OAuth {token}", "offset": "0", "file_size": str(len(data))})
+    try:
+        urllib.request.urlopen(req, timeout=300).read()
+    except urllib.error.HTTPError as e:
+        raise RuntimeError(f"Reel upload failed: {e.read()[:300]!r}") from None
+    for _ in range(60):                      # video processing can take a few minutes
+        st = graph("GET", c["id"], fields="status_code,status", access_token=token)
+        if st.get("status_code") == "FINISHED":
+            break
+        if st.get("status_code") in ("ERROR", "EXPIRED"):
+            raise RuntimeError(f"Instagram could not process the Reel: {st.get('status')}")
+        time.sleep(10)
+    else:
+        raise RuntimeError("Reel processing timed out")
+    media = graph("POST", f"{ig}/media_publish", creation_id=c["id"], access_token=token)["id"]
+    link = graph("GET", media, fields="permalink", access_token=token).get("permalink")
+    return media, link
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--slot")
@@ -111,6 +137,18 @@ def main():
         except Exception as e:
             rec["instagram_story"] = {"ok": False, "error": str(e), "at": now.isoformat(timespec="seconds")}
             print("⚠️ Story failed:", e)
+    # Countdown Reel for ranked cards (Reels tab only)
+    if rec["instagram"]["ok"] and p.get("reel") and not rec.get("instagram_reel", {}).get("ok"):
+        try:
+            import tempfile
+            from reel import make_reel
+            mp4, secs = make_reel(ROOT / p["image"], p["reel"]["rows"], Path(tempfile.mkdtemp()) / "reel.mp4")
+            rid, rlink = post_reel(mp4, p["caption"], int((secs - 1) * 1000))
+            rec["instagram_reel"] = {"ok": True, "id": rid, "url": rlink, "at": now.isoformat(timespec="seconds")}
+            print("✅ Posted Reel:", rlink)
+        except Exception as e:
+            rec["instagram_reel"] = {"ok": False, "error": str(e), "at": now.isoformat(timespec="seconds")}
+            print("⚠️ Reel failed:", e)
     status_file.write_text(json.dumps(status, indent=1))
     if not rec["instagram"]["ok"]:
         sys.exit(1)

@@ -159,11 +159,14 @@ def build(day: dt.date):
     out.mkdir(parents=True, exist_ok=True)
     plan = []
 
-    def add(slot, image, caption, kind):
+    def add(slot, image, caption, kind, rows=None):
         story = story_version(image, label="DAILY MINDSET" if kind == "psych" else "NEW POST")
-        plan.append({"slot": slot, "time_ist": SLOTS[slot], "kind": kind,
-                     "image": str(Path(image).relative_to(ROOT)),
-                     "story_image": str(story.relative_to(ROOT)), "caption": caption})
+        item = {"slot": slot, "time_ist": SLOTS[slot], "kind": kind,
+                "image": str(Path(image).relative_to(ROOT)),
+                "story_image": str(story.relative_to(ROOT)), "caption": caption}
+        if rows:   # ranked cards also go out as a countdown Reel (built at publish time)
+            item["reel"] = {"rows": rows}
+        plan.append(item)
 
     # 09:00 psychology
     quotes = json.loads((ROOT / "content" / "psychology.json").read_text())
@@ -173,32 +176,32 @@ def build(day: dt.date):
 
     # 12:30 long-horizon leaderboard
     r = leaderboard_with_fallback(d % len(CATS), LONG_HORIZONS[(d // len(CATS)) % 3], out / "2_long")
-    add("long", out / "2_long.jpg", cap_leader(r), "leaderboard")
+    add("long", out / "2_long.jpg", cap_leader(r), "leaderboard", rows=len(r["top"]))
 
     # 17:30 weekday feature
     feat, arg = FEATURE[day.weekday()]
     if feat == "sip":
         r = mf.sip_card(SIP_CATS[(d // 7) % len(SIP_CATS)], out / "3_feature", years=arg)
-        add("feature", out / "3_feature.jpg", cap_sip(r), "sip")
+        add("feature", out / "3_feature.jpg", cap_sip(r), "sip", rows=len(r["rows"]))
     elif feat == "momentum":
         r = mf.momentum_tracker(out / "3_feature", horizon=arg)
-        add("feature", out / "3_feature.jpg", cap_momentum(r), "momentum")
+        add("feature", out / "3_feature.jpg", cap_momentum(r), "momentum", rows=len(r["top"]))
     elif feat == "sif":
         sifs = [f for f in mf.load("rankings.json")["funds"]
                 if f["k"].startswith("SIF") and f["cagr"].get(arg) is not None]
         if len(sifs) >= MIN_SIFS:
             r = mf.sif_tracker(out / "3_feature", horizon=arg)
-            add("feature", out / "3_feature.jpg", cap_sif(r), "sif")
+            add("feature", out / "3_feature.jpg", cap_sif(r), "sif", rows=len(r["top"]))
         else:   # SIFs too new for a 1-year view: SIP card instead
             r = mf.sip_card(SIP_CATS[(d // 7 + 3) % len(SIP_CATS)], out / "3_feature", years=7)
-            add("feature", out / "3_feature.jpg", cap_sip(r), "sip")
+            add("feature", out / "3_feature.jpg", cap_sip(r), "sip", rows=len(r["rows"]))
     else:
         r = mf.pms_leaderboard(arg, out / "3_feature")
-        add("feature", out / "3_feature.jpg", cap_pms(r), "pms")
+        add("feature", out / "3_feature.jpg", cap_pms(r), "pms", rows=len(r["top"]))
 
     # 20:00 short-horizon leaderboard (different category from 12:30)
     r = leaderboard_with_fallback((d + 4) % len(CATS), SHORT_HORIZONS[(d // len(CATS)) % 3], out / "4_short")
-    add("short", out / "4_short.jpg", cap_leader(r), "leaderboard")
+    add("short", out / "4_short.jpg", cap_leader(r), "leaderboard", rows=len(r["top"]))
 
     for p in plan:
         assert len(p["caption"]) <= 2200, f"{p['slot']} caption too long for Instagram ({len(p['caption'])})"
