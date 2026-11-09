@@ -280,7 +280,7 @@ def build(day: dt.date):
 
     # 08:00 market update (skipped if too much data is missing)
     try:
-        r = upd.market_update(out / "00_update")
+        r = upd.market_update(out / "00_update", day=day)
         add("update", out / "00_update.jpg", upd.caption(r, EDU), "update")
     except Exception as e:
         print("update: skipped,", e)

@@ -72,14 +72,14 @@ def trend_tag(s):
     return ("Bullish" if s["above"] else "Bearish"), (UP if s["above"] else DOWN)
 
 
-def market_update(out, rows=None):
+def market_update(out, rows=None, day=None):
     rows = rows or collect()
     have = [s for sec in rows.values() for _, s in sec if s]
     if len(have) < 8:
         raise RuntimeError(f"only {len(have)} of 12 instruments available; skipping the update")
     india_d = max((s["date"] for _, s in rows["India"] if s), default=None)
     us_d = max((s["date"] for _, s in rows["US"] if s), default=None)
-    today = dt.date.today()
+    today = day or dt.date.today()
 
     fig = canvas()
     brand_badge(fig, 0.06, 0.955, size=0.85)
