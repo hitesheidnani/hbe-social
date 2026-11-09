@@ -81,7 +81,7 @@ def post_facebook(image_urls, caption):
     """Post to the HBE Capital Investments Facebook Page: one photo, or several photos in one post."""
     page, token = os.environ["FB_PAGE_ID"], os.environ["META_PAGE_TOKEN"]
     # Facebook captions can carry a clickable link instead of 'link in bio'
-    caption = caption.replace("link in bio", "funds.hbecapital.net")
+    caption = caption.replace("link in bio", "hbecapital.net/funds")
     if len(image_urls) == 1:
         r = graph("POST", f"{page}/photos", url=image_urls[0], message=caption, access_token=token)
         post_id = r.get("post_id") or r["id"]
