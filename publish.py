@@ -7,7 +7,7 @@ Usage:
   python publish.py                      # normal scheduled run
   python publish.py --slot psych         # publish a specific slot now (manual/test)
   python publish.py --dry-run            # show what would be posted
-Env: IG_USER_ID, META_PAGE_TOKEN, GITHUB_REPOSITORY (owner/name), optional POST_DATE (YYYY-MM-DD)
+Env: IG_USER_ID, META_PAGE_TOKEN, FB_PAGE_ID, GITHUB_REPOSITORY (owner/name), optional POST_DATE (YYYY-MM-DD)
 """
 import argparse, json, os, sys, time, urllib.parse, urllib.request, urllib.error, datetime as dt
 from pathlib import Path
@@ -74,6 +74,23 @@ def post_carousel(image_urls, caption):
     media = graph("POST", f"{ig}/media_publish", creation_id=parent, access_token=token)["id"]
     link = graph("GET", media, fields="permalink", access_token=token).get("permalink")
     return media, link
+
+
+def post_facebook(image_urls, caption):
+    """Post to the HBE Capital Investments Facebook Page: one photo, or several photos in one post."""
+    page, token = os.environ["FB_PAGE_ID"], os.environ["META_PAGE_TOKEN"]
+    # Facebook captions can carry a clickable link instead of 'link in bio'
+    caption = caption.replace("link in bio", "funds.hbecapital.net")
+    if len(image_urls) == 1:
+        r = graph("POST", f"{page}/photos", url=image_urls[0], message=caption, access_token=token)
+        post_id = r.get("post_id") or r["id"]
+    else:
+        ids = [graph("POST", f"{page}/photos", url=u, published="false", access_token=token)["id"] for u in image_urls]
+        params = {"message": caption, "access_token": token}
+        for i, pid in enumerate(ids):
+            params[f"attached_media[{i}]"] = json.dumps({"media_fbid": pid})
+        post_id = graph("POST", f"{page}/feed", **params)["id"]
+    return post_id, f"https://www.facebook.com/{post_id}"
 
 
 def post_reel(mp4, caption, thumb_ms):
@@ -166,6 +183,18 @@ def main():
         except Exception as e:
             rec["instagram_story"] = {"ok": False, "error": str(e), "at": now.isoformat(timespec="seconds")}
             print("⚠️ Story failed:", e)
+    # Same post on the Facebook Page (independent of Instagram's result)
+    if os.environ.get("FB_PAGE_ID") and not rec.get("facebook", {}).get("ok"):
+        urls = ([f"https://raw.githubusercontent.com/{repo}/main/{c}" for c in p["carousel"]]
+                if p.get("carousel") else [image_url])
+        try:
+            fid, flink = post_facebook(urls, p["caption"])
+            rec["facebook"] = {"ok": True, "id": fid, "url": flink, "at": now.isoformat(timespec="seconds")}
+            print("✅ Posted to Facebook Page:", flink)
+        except Exception as e:
+            rec["facebook"] = {"ok": False, "error": str(e), "at": now.isoformat(timespec="seconds")}
+            print("⚠️ Facebook failed:", e)
+
     # Countdown Reel for ranked cards (Reels tab only)
     if rec["instagram"]["ok"] and p.get("reel") and not rec.get("instagram_reel", {}).get("ok"):
         try:
