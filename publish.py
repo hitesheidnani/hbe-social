@@ -16,6 +16,7 @@ ROOT = Path(__file__).parent
 GRAPH = "https://graph.facebook.com"
 IST = dt.timezone(dt.timedelta(hours=5, minutes=30))
 MAX_LATE_HOURS = 3
+LINKEDIN_SLOTS = {"update", "edu"}   # 1-2 quality posts a day on LinkedIn: 08:00 update, 15:00 education
 
 
 def graph(method, path, **params):
@@ -194,6 +195,18 @@ def main():
         except Exception as e:
             rec["facebook"] = {"ok": False, "error": str(e), "at": now.isoformat(timespec="seconds")}
             print("⚠️ Facebook failed:", e)
+
+    # LinkedIn (personal profile), selected slots only
+    if p["slot"] in LINKEDIN_SLOTS and os.environ.get("LI_TOKEN") and not rec.get("linkedin", {}).get("ok"):
+        try:
+            import linkedin
+            files = [ROOT / c for c in p["carousel"]] if p.get("carousel") else [ROOT / p["image"]]
+            lid, llink = linkedin.post(files, p["caption"])
+            rec["linkedin"] = {"ok": True, "id": lid, "url": llink, "at": now.isoformat(timespec="seconds")}
+            print("✅ Posted to LinkedIn:", llink)
+        except Exception as e:
+            rec["linkedin"] = {"ok": False, "error": str(e), "at": now.isoformat(timespec="seconds")}
+            print("⚠️ LinkedIn failed:", e)
 
     # Countdown Reel for ranked cards (Reels tab only)
     if rec["instagram"]["ok"] and p.get("reel") and not rec.get("instagram_reel", {}).get("ok"):

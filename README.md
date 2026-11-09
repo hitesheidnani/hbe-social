@@ -24,10 +24,18 @@ Instagram fetches each image from this repo's raw URL, which is why the repo is 
 - Actions → **Publish to Instagram** → Run workflow, slot `psych` / `long` / `feature` / `short`
 - Locally: `DATA_DIR=../fundnavigator/web/public/data python daily.py 2026-11-10`
 
+## Where posts go
+
+- Instagram (post + Story; ranked cards also as a countdown Reel) and the HBE Capital Investments Facebook Page: every slot
+- LinkedIn (Hitesh's profile): 08:00 market update and 15:00 education/compounding only
+
 ## Secrets (Settings → Secrets → Actions)
 
 - `IG_USER_ID`: Instagram business account id
 - `META_PAGE_TOKEN`: non-expiring Page token from the "HBE Social Poster" Meta app
+- `FB_PAGE_ID`: HBE Capital Investments Facebook Page
+- `LI_TOKEN`, `LI_PERSON_URN`: LinkedIn member token (expires every 60 days; regenerate at
+  linkedin.com/developers/tools/oauth/token-generator with openid, profile, w_member_social)
 
 ## Editing content
 
