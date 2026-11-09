@@ -249,7 +249,8 @@ def sif_tracker(out, horizon="1y"):
     for k, f in enumerate(have[:n]):
         row(fig, row_y(k), RH, k + 1, short_name(f["n"]), f["k"].replace("SIF - ", ""), f["cagr"][horizon])
     y = row_y(n - 1) - 0.035
-    fig.text(0.5, y, "SIFs are new (2025) and need ₹10 lakh minimum. Short track records, so judge with care.",
+    note = " Returns under 1 year are absolute." if horizon in ("3m", "6m") else ""
+    fig.text(0.5, y, "SIFs are new (2025) and need ₹10 lakh minimum. Short track records, so judge with care." + note,
              color=MUTED, fontsize=12.5, ha="center")
     mf_footer(fig, "AMFI NAVs. Computed by HBE Capital FundNavigator.")
     save(fig, out)

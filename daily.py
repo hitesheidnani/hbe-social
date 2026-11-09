@@ -25,7 +25,7 @@ CATS = [  # rotation order for leaderboards
 SIP_CATS = ["Equity Scheme - Small Cap Fund", "Equity Scheme - Mid Cap Fund", "Equity Scheme - Flexi Cap Fund",
             "Equity Scheme - Large Cap Fund", "Equity Scheme - ELSS", "Equity Scheme - Large & Mid Cap Fund"]
 # weekday (Mon=0) -> feature for the 17:30 slot
-# Rule: never show returns for periods under 1 year.
+# Rule: never show returns for periods under 1 year (exception: SIFs, a new category, may use 3m/6m).
 FEATURE = {0: ("sip", 5), 1: ("sif", "1y"), 2: ("momentum", "1y"), 3: ("pms", "1y"),
            4: ("sip", 10), 5: ("pms", "3y"), 6: ("momentum", "3y")}
 LONG_HORIZONS = ["5y", "10y", "7y"]
@@ -106,7 +106,8 @@ def cap_sif(r):
         numbered([(n, pct(v)) for n, v in r["top"]]), "",
         "SIFs sit between mutual funds and PMS: long-short strategies, ₹10 lakh minimum, regulated by SEBI. "
         "Track records are still short, so judge them with care.",
-        f"NAV as of {mf.nice_date(r['asof'])}. Regular plan, Growth option.", "",
+        f"NAV as of {mf.nice_date(r['asof'])}. Regular plan, Growth option."
+        + (" Returns under 1 year are absolute, not annualised." if r["horizon"] in ("3m", "6m") else ""), "",
         "Past performance may or may not be sustained in future. Not a recommendation. "
         f"Investments are subject to market risks, read all scheme related documents carefully.\n"
         f"HBE Capital · AMFI-registered Mutual Fund Distributor · {ARN}", "",
@@ -187,12 +188,14 @@ def build(day: dt.date):
         r = mf.momentum_tracker(out / "3_feature", horizon=arg)
         add("feature", out / "3_feature.jpg", cap_momentum(r), "momentum", rows=len(r["top"]))
     elif feat == "sif":
-        sifs = [f for f in mf.load("rankings.json")["funds"]
-                if f["k"].startswith("SIF") and f["cagr"].get(arg) is not None]
-        if len(sifs) >= MIN_SIFS:
-            r = mf.sif_tracker(out / "3_feature", horizon=arg)
+        # SIFs are new (2025), the one exception to the 1-year rule: longest period with enough history
+        funds = [f for f in mf.load("rankings.json")["funds"] if f["k"].startswith("SIF")]
+        hz = next((h for h in ("1y", "6m", "3m")
+                   if sum(f["cagr"].get(h) is not None for f in funds) >= MIN_SIFS), None)
+        if hz:
+            r = mf.sif_tracker(out / "3_feature", horizon=hz)
             add("feature", out / "3_feature.jpg", cap_sif(r), "sif", rows=len(r["top"]))
-        else:   # SIFs too new for a 1-year view: SIP card instead
+        else:
             r = mf.sip_card(SIP_CATS[(d // 7 + 3) % len(SIP_CATS)], out / "3_feature", years=7)
             add("feature", out / "3_feature.jpg", cap_sip(r), "sip", rows=len(r["rows"]))
     else:
