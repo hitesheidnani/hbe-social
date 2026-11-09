@@ -59,7 +59,7 @@ def cap_leader(r):
     if bval is not None:
         label = "Broad market, for comparison" if r.get("broad") else "Benchmark"
         lines += [f"{label} ({bname}): {pct(bval)}",
-                  f"{r['beat']} of {r['count']} funds beat the index over this period. Median fund: {pct(r['median'])}.", ""]
+                  f"{r['beat']} of {r['count']} funds beat {'the Nifty 500' if r.get('broad') else 'the index'} over this period. Median fund: {pct(r['median'])}.", ""]
     lines += [f"Data: Regular plan, Growth option. NAV as of {mf.nice_date(r['asof'])}. "
               "Source: AMFI NAVs and NSE Indices, computed by HBE Capital FundNavigator.", "",
               LINK, "", MF_FOOT, "",
