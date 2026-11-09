@@ -16,7 +16,7 @@ ROOT = Path(__file__).parent
 GRAPH = "https://graph.facebook.com"
 IST = dt.timezone(dt.timedelta(hours=5, minutes=30))
 MAX_LATE_HOURS = 3
-LINKEDIN_SLOTS = {"update", "edu"}   # 1-2 quality posts a day on LinkedIn: 08:00 update, 15:00 education
+LINKEDIN_SLOTS = {"update", "psych", "market", "long", "edu", "feature", "short"}   # every slot, as the user asked
 
 
 def graph(method, path, **params):

@@ -27,7 +27,7 @@ Instagram fetches each image from this repo's raw URL, which is why the repo is 
 ## Where posts go
 
 - Instagram (post + Story; ranked cards also as a countdown Reel) and the HBE Capital Investments Facebook Page: every slot
-- LinkedIn (Hitesh's profile): 08:00 market update and 15:00 education/compounding only
+- LinkedIn (Hitesh's profile): every slot
 
 ## Secrets (Settings → Secrets → Actions)
 
