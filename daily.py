@@ -3,6 +3,7 @@
 Usage:  python daily.py [YYYY-MM-DD]
 Daily mix (IST):
   09:00  market psychology quote
+  11:00  Market Monitor: Nifty index heatmap (1y/3y/5y) or drawdown-from-high table, by weekday
   12:30  top-10 leaderboard, long horizon (5y / 7y / 10y), rotating category
   15:00  MF Basics carousel (even days) or power-of-compounding illustration (odd days)
   17:30  weekday feature: SIP card (Mon, Fri), SIF (Tue), momentum funds (Wed, Sun), PMS (Thu, Sat)
@@ -14,10 +15,16 @@ from pathlib import Path
 
 import mf_posts as mf
 import edu_posts as edu
+import market_posts as mkt
 from brand import quote_card, story_version, ARN, MF_DISCLAIMER, EDU
 
 ROOT = Path(__file__).parent
-SLOTS = {"psych": "09:00", "long": "12:30", "edu": "15:00", "feature": "17:30", "short": "20:00"}
+SLOTS = {"psych": "09:00", "market": "11:00", "long": "12:30", "edu": "15:00", "feature": "17:30", "short": "20:00"}
+
+# 11:00 Market Monitor (Nifty indices, price returns), by weekday: heatmaps rotate 1y/3y/5y week to week
+MARKET = {0: ("heat", "Broad Market"), 1: ("heat", "Sectoral"), 2: ("dd", "Broad Market"), 3: ("heat", "Strategy"),
+          4: ("heat", "Thematic"), 5: ("dd", "Sectoral"), 6: ("dd", "Thematic|Strategy")}
+MAX_INDEX_AGE_DAYS = 5   # skip the market post if NSE data could not be refreshed for this long
 
 # 15:00 alternates: MF Basics carousel (even days) / power-of-compounding card (odd days)
 COMPOUNDING = [  # (type, amount, years, rate)
@@ -190,6 +197,43 @@ def cap_comp(r):
         "#compounding #sip #wealthcreation #mutualfunds #financialfreedom"])
 
 
+MKT_FOOT = (f"⚠️ {EDU} Index figures are price returns (dividends excluded); indices cannot be invested in "
+            "directly. Past performance may or may not be sustained in future. Not a recommendation.\n"
+            f"HBE Capital · AMFI-registered Mutual Fund Distributor · {ARN}")
+MKT_TAGS = {"Broad Market": "#nifty50 #stockmarketindia #midcap #smallcap #investing",
+            "Sectoral": "#sectorrotation #niftysectors #stockmarketindia #nifty #investing",
+            "Strategy": "#factorinvesting #momentuminvesting #smartbeta #stockmarketindia #investing",
+            "Thematic": "#thematicinvesting #stockmarketindia #nifty #defence #investing"}
+
+
+def cap_heat(r):
+    hz = {"1y": "1-Year", "3y": "3-Year", "5y": "5-Year"}[r["horizon"]]
+    per = "" if r["horizon"] == "1y" else " a year (CAGR)"
+    return "\n".join([
+        f"Nifty {r['category']} Indices: {hz} Returns Heatmap | {r['asof']:%b %Y} 🟩🟥", "",
+        f"{r['up']} of {r['count']} {r['category'].lower()} indices are up over {hz.lower()}{per}.", "",
+        "🏆 Leaders: " + ", ".join(f"{n} {v:+.1f}%" for n, v in r["best"]),
+        "🔻 Laggards: " + ", ".join(f"{n} {v:+.1f}%" for n, v in r["worst"]), "",
+        "Leadership rotates. Last period's winners are rarely next period's, which is why diversification "
+        "and a disciplined process matter more than chasing the hottest theme.", "",
+        f"Data as of {r['asof']:%d %b %Y}. Source: NSE Indices.", "",
+        "💬 Which of these surprised you? Comment below.", "🔖 Save this · 📤 Share with a fellow investor", "",
+        MKT_FOOT, "", MKT_TAGS[r["category"]]])
+
+
+def cap_dd(r):
+    return "\n".join([
+        f"How Far Are Nifty {r['category']} Indices From Their All-Time Highs? | {r['asof']:%b %Y} 📉", "",
+        f"{r['near']} of {r['count']} are within 5% of their all-time high; {r['deep']} are down 20% or more.", "",
+        "Closest to the top: " + ", ".join(f"{n} ({'at high' if v > -0.5 else f'{v:.1f}%'})" for n, v, _ in r["closest"]),
+        "Furthest below: " + ", ".join(f"{n} ({v:.1f}%, {days:,} days since the high)" for n, v, _, days in r["deepest"]), "",
+        "Drawdowns are part of investing. Knowing how deep and how long they've been helps you keep perspective, "
+        "and avoid panic.", "",
+        f"Data as of {r['asof']:%d %b %Y}. ATH = all-time high on daily closes. Source: NSE Indices.", "",
+        "🔖 Save this · 📤 Share with someone who checks the market too often", "",
+        MKT_FOOT, "", MKT_TAGS[r["category"]]])
+
+
 def cap_pms(r):
     hz = mf.HORIZON_LABEL[r["horizon"]]
     rows = [(f"{mf.short_name(n)} ({mf.short_name(p)})", pct(v)) for n, p, v in r["top"]]
@@ -240,6 +284,26 @@ def build(day: dt.date):
     # 12:30 long-horizon leaderboard
     r = leaderboard_with_fallback(d % len(CATS), LONG_HORIZONS[(d // len(CATS)) % 3], out / "2_long")
     add("long", out / "2_long.jpg", cap_leader(r), "leaderboard", rows=len(r["top"]))
+
+    # 11:00 Market Monitor (skipped if index data is stale)
+    try:
+        ms = mkt.all_metrics()
+        age = (day - max(m["asof"] for m in ms)).days
+        if age > MAX_INDEX_AGE_DAYS:
+            print(f"market: index data is {age} days old; skipping the market post")
+        else:
+            kind, cat = MARKET[day.weekday()]
+            if "|" in cat:
+                cat = cat.split("|")[(d // 7) % 2]
+            f = out / "0_market"
+            if kind == "heat":
+                r = mkt.heatmap(cat, ["1y", "3y", "5y"][(d // 7) % 3], f, ms)
+                add("market", f.with_suffix(".jpg"), cap_heat(r), "heatmap")
+            else:
+                r = mkt.drawdown_table(cat, f, ms)
+                add("market", f.with_suffix(".jpg"), cap_dd(r), "drawdown")
+    except Exception as e:      # a market-data problem must never block the fund posts
+        print("market: skipped,", e)
 
     # 15:00 education: MF Basics carousel / compounding illustration, alternating days
     if d % 2 == 0:

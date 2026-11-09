@@ -8,6 +8,7 @@ Automated Instagram posts for HBE Capital (@hbecapital), built from FundNavigato
 |-------|------|
 | 06:00 | Build: `daily.py` renders the day's cards and captions into `posts/<date>/` |
 | 09:00 | Market psychology quote (`content/psychology.json`, rotates daily) |
+| 11:00 | Market Monitor: Nifty index heatmaps (1y/3y/5y) or drawdown-from-high tables (`market_posts.py`, history in `data/indices/`) |
 | 12:30 | Top 10 funds in a category, long horizon (5y / 7y / 10y) |
 | 15:00 | MF Basics carousel (even days, `content/education.json`) or power-of-compounding card (odd days) |
 | 17:30 | Feature: SIP card (Mon, Fri), SIF tracker (Tue), momentum funds (Wed, Sun), PMS (Thu, Sat) |

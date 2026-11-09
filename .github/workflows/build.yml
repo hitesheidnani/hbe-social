@@ -28,12 +28,15 @@ jobs:
           python-version: "3.12"
           cache: pip
       - run: pip install -r requirements.txt
+      - name: Refresh Nifty index history (NSE)
+        run: python -c "import market_posts; market_posts.update_all()"
+        continue-on-error: true
       - name: Build posts
         run: python daily.py ${{ inputs.date }}
       - name: Commit images and plan
         run: |
           git config user.name "hbe-social-bot"
           git config user.email "actions@users.noreply.github.com"
-          git add posts
+          git add posts data/indices
           git diff --cached --quiet || git commit -m "posts: build $(TZ=Asia/Kolkata date +%F)"
           git pull --rebase && git push

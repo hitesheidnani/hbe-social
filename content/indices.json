@@ -1,0 +1,793 @@
+[
+ {
+  "name": "Nifty 50",
+  "nse": "Nifty 50",
+  "category": "Broad Market",
+  "exposure": "Largecap",
+  "file": "Nifty_50.json"
+ },
+ {
+  "name": "Nifty Next 50",
+  "nse": "Nifty Next 50",
+  "category": "Broad Market",
+  "exposure": "Largecap",
+  "file": "Nifty_Next_50.json"
+ },
+ {
+  "name": "Nifty 100",
+  "nse": "NIFTY 100",
+  "category": "Broad Market",
+  "exposure": "Largecap",
+  "file": "NIFTY_100.json"
+ },
+ {
+  "name": "Nifty 200",
+  "nse": "Nifty 200",
+  "category": "Broad Market",
+  "exposure": "Largecap+Midcap",
+  "file": "Nifty_200.json"
+ },
+ {
+  "name": "Nifty 500",
+  "nse": "NIFTY 500",
+  "category": "Broad Market",
+  "exposure": "Largecap+Midcap+Smallcap",
+  "file": "NIFTY_500.json"
+ },
+ {
+  "name": "Nifty500 Multicap 50:25:25",
+  "nse": "Nifty500 Multicap 50:25:25",
+  "category": "Broad Market",
+  "exposure": "Largecap+Midcap+Smallcap",
+  "file": "Nifty500_Multicap_50:25:25.json"
+ },
+ {
+  "name": "Nifty Midcap 150",
+  "nse": "NIFTY MIDCAP 150",
+  "category": "Broad Market",
+  "exposure": "Midcap",
+  "file": "NIFTY_MIDCAP_150.json"
+ },
+ {
+  "name": "Nifty Smallcap 250",
+  "nse": "NIFTY SMALLCAP 250",
+  "category": "Broad Market",
+  "exposure": "Smallcap",
+  "file": "NIFTY_SMALLCAP_250.json"
+ },
+ {
+  "name": "NIFTY LargeMidcap 250",
+  "nse": "NIFTY LargeMidcap 250",
+  "category": "Broad Market",
+  "exposure": "Largecap+Midcap",
+  "file": "NIFTY_LargeMidcap_250.json"
+ },
+ {
+  "name": "Nifty MidSmallcap 400",
+  "nse": "Nifty MidSmallcap 400",
+  "category": "Broad Market",
+  "exposure": "Midcap+Smallcap",
+  "file": "Nifty_MidSmallcap_400.json"
+ },
+ {
+  "name": "Nifty Microcap 250",
+  "nse": "NIFTY MICROCAP 250",
+  "category": "Broad Market",
+  "exposure": "Microcap",
+  "file": "NIFTY_MICROCAP_250.json"
+ },
+ {
+  "name": "Nifty Total Market",
+  "nse": "Nifty Total Market",
+  "category": "Broad Market",
+  "exposure": "Largecap+Midcap+Smallcap+Microcap",
+  "file": "Nifty_Total_Market.json"
+ },
+ {
+  "name": "Nifty Midcap 50",
+  "nse": "Nifty Midcap 50",
+  "category": "Broad Market",
+  "exposure": "Midcap",
+  "file": "Nifty_Midcap_50.json"
+ },
+ {
+  "name": "NIFTY Midcap 100",
+  "nse": "NIFTY Midcap 100",
+  "category": "Broad Market",
+  "exposure": "Midcap",
+  "file": "NIFTY_Midcap_100.json"
+ },
+ {
+  "name": "Nifty Smallcap 50",
+  "nse": "Nifty Smallcap 50",
+  "category": "Broad Market",
+  "exposure": "Smallcap",
+  "file": "Nifty_Smallcap_50.json"
+ },
+ {
+  "name": "NIFTY Smallcap 100",
+  "nse": "NIFTY Smallcap 100",
+  "category": "Broad Market",
+  "exposure": "Smallcap",
+  "file": "NIFTY_Smallcap_100.json"
+ },
+ {
+  "name": "Nifty Smallcap 500",
+  "nse": "Nifty Smallcap 500",
+  "category": "Broad Market",
+  "exposure": "Smallcap+Microcap",
+  "file": "Nifty_Smallcap_500.json"
+ },
+ {
+  "name": "Nifty Next 100",
+  "nse": "Nifty Next 100",
+  "category": "Broad Market",
+  "exposure": "Largecap+Midcap",
+  "file": "Nifty_Next_100.json"
+ },
+ {
+  "name": "Nifty200 Momentum 30",
+  "nse": "Nifty200 Momentum 30",
+  "category": "Strategy",
+  "exposure": "Momentum",
+  "file": "Nifty200_Momentum_30.json"
+ },
+ {
+  "name": "Nifty500 Momentum 50",
+  "nse": "Nifty500 Momentum 50",
+  "category": "Strategy",
+  "exposure": "Momentum",
+  "file": "Nifty500_Momentum_50.json"
+ },
+ {
+  "name": "Nifty Midcap150 Momentum 50",
+  "nse": "Nifty Midcap150 Momentum 50",
+  "category": "Strategy",
+  "exposure": "Momentum",
+  "file": "Nifty_Midcap150_Momentum_50.json"
+ },
+ {
+  "name": "Nifty MidSmallcap400 Momentum Quality 100",
+  "nse": "Nifty MidSmallcap400 Momentum Quality 100",
+  "category": "Strategy",
+  "exposure": "Momentum+Quality",
+  "file": "Nifty_MidSmallcap400_Momentum_Quality_100.json"
+ },
+ {
+  "name": "Nifty Smallcap250 Momentum Quality 100",
+  "nse": "Nifty Smallcap250 Momentum Quality 100",
+  "category": "Strategy",
+  "exposure": "Momentum+Quality",
+  "file": "Nifty_Smallcap250_Momentum_Quality_100.json"
+ },
+ {
+  "name": "Nifty500 Multicap Momentum Quality 50",
+  "nse": "Nifty500 Multicap Momentum Quality 50",
+  "category": "Strategy",
+  "exposure": "Momentum+Quality",
+  "file": "Nifty500_Multicap_Momentum_Quality_50.json"
+ },
+ {
+  "name": "NIFTY500 MULTIFACTOR MQVLV 50",
+  "nse": "NIFTY500 MULTIFACTOR MQVLV 50",
+  "category": "Strategy",
+  "exposure": "Momentum+Quality+Value+Low Volatility",
+  "file": "NIFTY500_MULTIFACTOR_MQVLV_50.json"
+ },
+ {
+  "name": "Nifty Alpha 50",
+  "nse": "NIFTY ALPHA 50",
+  "category": "Strategy",
+  "exposure": "Alpha",
+  "file": "NIFTY_ALPHA_50.json"
+ },
+ {
+  "name": "NIFTY100 ALPHA 30",
+  "nse": "NIFTY100 ALPHA 30",
+  "category": "Strategy",
+  "exposure": "Alpha",
+  "file": "NIFTY100_ALPHA_30.json"
+ },
+ {
+  "name": "NIFTY200 ALPHA 30",
+  "nse": "NIFTY200 ALPHA 30",
+  "category": "Strategy",
+  "exposure": "Alpha",
+  "file": "NIFTY200_ALPHA_30.json"
+ },
+ {
+  "name": "NIFTY HIGH BETA 50",
+  "nse": "NIFTY HIGH BETA 50",
+  "category": "Strategy",
+  "exposure": "Beta",
+  "file": "NIFTY_HIGH_BETA_50.json"
+ },
+ {
+  "name": "NIFTY MIDCAP150 QUALITY 50",
+  "nse": "NIFTY MIDCAP150 QUALITY 50",
+  "category": "Strategy",
+  "exposure": "Quality",
+  "file": "NIFTY_MIDCAP150_QUALITY_50.json"
+ },
+ {
+  "name": "NIFTY SMALLCAP250 QUALITY 50",
+  "nse": "NIFTY SMALLCAP250 QUALITY 50",
+  "category": "Strategy",
+  "exposure": "Quality",
+  "file": "NIFTY_SMALLCAP250_QUALITY_50.json"
+ },
+ {
+  "name": "NIFTY100 QUALITY 30",
+  "nse": "NIFTY100 QUALITY 30",
+  "category": "Strategy",
+  "exposure": "Quality",
+  "file": "NIFTY100_QUALITY_30.json"
+ },
+ {
+  "name": "NIFTY200 QUALITY 30",
+  "nse": "NIFTY200 QUALITY 30",
+  "category": "Strategy",
+  "exposure": "Quality",
+  "file": "NIFTY200_QUALITY_30.json"
+ },
+ {
+  "name": "NIFTY500 QUALITY 50",
+  "nse": "NIFTY500 QUALITY 50",
+  "category": "Strategy",
+  "exposure": "Quality",
+  "file": "NIFTY500_QUALITY_50.json"
+ },
+ {
+  "name": "NIFTY50 VALUE 20",
+  "nse": "NIFTY50 VALUE 20",
+  "category": "Strategy",
+  "exposure": "Value",
+  "file": "NIFTY50_VALUE_20.json"
+ },
+ {
+  "name": "NIFTY200 VALUE 30",
+  "nse": "NIFTY200 VALUE 30",
+  "category": "Strategy",
+  "exposure": "Value",
+  "file": "NIFTY200_VALUE_30.json"
+ },
+ {
+  "name": "NIFTY500 VALUE 50",
+  "nse": "NIFTY500 VALUE 50",
+  "category": "Strategy",
+  "exposure": "Value",
+  "file": "NIFTY500_VALUE_50.json"
+ },
+ {
+  "name": "NIFTY100 LOW VOLATILITY 30",
+  "nse": "NIFTY100 LOW VOLATILITY 30",
+  "category": "Strategy",
+  "exposure": "Low Volatility",
+  "file": "NIFTY100_LOW_VOLATILITY_30.json"
+ },
+ {
+  "name": "NIFTY ALPHA LOW-VOLATILITY 30",
+  "nse": "NIFTY ALPHA LOW-VOLATILITY 30",
+  "category": "Strategy",
+  "exposure": "Alpha+Low Volatility",
+  "file": "NIFTY_ALPHA_LOW-VOLATILITY_30.json"
+ },
+ {
+  "name": "NIFTY ALPHA QUALITY LOW-VOLATILITY 30",
+  "nse": "NIFTY ALPHA QUALITY LOW-VOLATILITY 30",
+  "category": "Strategy",
+  "exposure": "Alpha+Quality+Low Volatility",
+  "file": "NIFTY_ALPHA_QUALITY_LOW-VOLATILITY_30.json"
+ },
+ {
+  "name": "NIFTY ALPHA QUALITY VALUE LOW-VOLATILITY 30",
+  "nse": "NIFTY ALPHA QUALITY VALUE LOW-VOLATILITY 30",
+  "category": "Strategy",
+  "exposure": "Alpha+Quality+Value+Low Volatility",
+  "file": "NIFTY_ALPHA_QUALITY_VALUE_LOW-VOLATILITY_30.json"
+ },
+ {
+  "name": "NIFTY LOW VOLATILITY 50",
+  "nse": "NIFTY LOW VOLATILITY 50",
+  "category": "Strategy",
+  "exposure": "Low Volatility",
+  "file": "NIFTY_LOW_VOLATILITY_50.json"
+ },
+ {
+  "name": "NIFTY QUALITY LOW-VOLATILITY 30",
+  "nse": "NIFTY QUALITY LOW-VOLATILITY 30",
+  "category": "Strategy",
+  "exposure": "Quality+Low Volatility",
+  "file": "NIFTY_QUALITY_LOW-VOLATILITY_30.json"
+ },
+ {
+  "name": "NIFTY500 FLEXICAP QUALITY 30",
+  "nse": "NIFTY500 FLEXICAP QUALITY 30",
+  "category": "Strategy",
+  "exposure": "Quality",
+  "file": "NIFTY500_FLEXICAP_QUALITY_30.json"
+ },
+ {
+  "name": "NIFTY500 LOW VOLATILITY 50",
+  "nse": "NIFTY500 LOW VOLATILITY 50",
+  "category": "Strategy",
+  "exposure": "Low Volatility",
+  "file": "NIFTY500_LOW_VOLATILITY_50.json"
+ },
+ {
+  "name": "Nifty Total Market Momentum Quality 50",
+  "nse": "Nifty Total Market Momentum Quality 50",
+  "category": "Strategy",
+  "exposure": "Momentum+Quality",
+  "file": "Nifty_Total_Market_Momentum_Quality_50.json"
+ },
+ {
+  "name": "Nifty Auto",
+  "nse": "Nifty Auto",
+  "category": "Sectoral",
+  "exposure": "Sector-Auto",
+  "file": "Nifty_Auto.json"
+ },
+ {
+  "name": "NIFTY BANK",
+  "nse": "NIFTY BANK",
+  "category": "Sectoral",
+  "exposure": "Sector-Financials",
+  "file": "NIFTY_BANK.json"
+ },
+ {
+  "name": "NIFTY CHEMICALS",
+  "nse": "NIFTY CHEMICALS",
+  "category": "Sectoral",
+  "exposure": "Sector-Chemicals",
+  "file": "NIFTY_CHEMICALS.json"
+ },
+ {
+  "name": "Nifty Consumer Durables",
+  "nse": "Nifty Consumer Durables",
+  "category": "Sectoral",
+  "exposure": "Sector-Consumer",
+  "file": "Nifty_Consumer_Durables.json"
+ },
+ {
+  "name": "Nifty Financial Services",
+  "nse": "Nifty Financial Services",
+  "category": "Sectoral",
+  "exposure": "Sector-Financials",
+  "file": "Nifty_Financial_Services.json"
+ },
+ {
+  "name": "NIFTY FINANCIAL SERVICES 25/50",
+  "nse": "NIFTY FINANCIAL SERVICES 25/50",
+  "category": "Sectoral",
+  "exposure": "Sector-Financials",
+  "file": "NIFTY_FINANCIAL_SERVICES_25-50.json"
+ },
+ {
+  "name": "NIFTY FINANCIAL SERVICES EX-BANK",
+  "nse": "NIFTY FINANCIAL SERVICES EX-BANK",
+  "category": "Sectoral",
+  "exposure": "Sector-Financials",
+  "file": "NIFTY_FINANCIAL_SERVICES_EX-BANK.json"
+ },
+ {
+  "name": "Nifty FMCG",
+  "nse": "Nifty FMCG",
+  "category": "Sectoral",
+  "exposure": "Sector-Consumer",
+  "file": "Nifty_FMCG.json"
+ },
+ {
+  "name": "Nifty Healthcare",
+  "nse": "Nifty Healthcare",
+  "category": "Sectoral",
+  "exposure": "Sector-Pharma&Healthcare",
+  "file": "Nifty_Healthcare.json"
+ },
+ {
+  "name": "Nifty IT",
+  "nse": "Nifty IT",
+  "category": "Sectoral",
+  "exposure": "Sector-IT&Telecom",
+  "file": "Nifty_IT.json"
+ },
+ {
+  "name": "NIFTY MEDIA",
+  "nse": "NIFTY MEDIA",
+  "category": "Sectoral",
+  "exposure": "Sector-Media",
+  "file": "NIFTY_MEDIA.json"
+ },
+ {
+  "name": "Nifty Metal",
+  "nse": "Nifty Metal",
+  "category": "Sectoral",
+  "exposure": "Sector-Metals",
+  "file": "Nifty_Metal.json"
+ },
+ {
+  "name": "NIFTY MIDSMALL FINANCIAL SERVICES",
+  "nse": "NIFTY MIDSMALL FINANCIAL SERVICES",
+  "category": "Sectoral",
+  "exposure": "Sector-Financials",
+  "file": "NIFTY_MIDSMALL_FINANCIAL_SERVICES.json"
+ },
+ {
+  "name": "NIFTY MIDSMALL HEALTHCARE",
+  "nse": "NIFTY MIDSMALL HEALTHCARE",
+  "category": "Sectoral",
+  "exposure": "Sector-Pharma&Healthcare",
+  "file": "NIFTY_MIDSMALL_HEALTHCARE.json"
+ },
+ {
+  "name": "NIFTY MIDSMALL IT & TELECOM",
+  "nse": "NIFTY MIDSMALL IT & TELECOM",
+  "category": "Sectoral",
+  "exposure": "Sector-IT&Telecom",
+  "file": "NIFTY_MIDSMALL_IT_&_TELECOM.json"
+ },
+ {
+  "name": "Nifty Oil & Gas",
+  "nse": "Nifty Oil & Gas",
+  "category": "Sectoral",
+  "exposure": "Sector-Oil&Gas",
+  "file": "Nifty_Oil_&_Gas.json"
+ },
+ {
+  "name": "Nifty Pharma",
+  "nse": "Nifty Pharma",
+  "category": "Sectoral",
+  "exposure": "Sector-Pharma&Healthcare",
+  "file": "Nifty_Pharma.json"
+ },
+ {
+  "name": "Nifty Private Bank",
+  "nse": "Nifty Private Bank",
+  "category": "Sectoral",
+  "exposure": "Sector-Financials",
+  "file": "Nifty_Private_Bank.json"
+ },
+ {
+  "name": "Nifty PSU Bank",
+  "nse": "Nifty PSU Bank",
+  "category": "Sectoral",
+  "exposure": "Sector-Financials",
+  "file": "Nifty_PSU_Bank.json"
+ },
+ {
+  "name": "Nifty Realty",
+  "nse": "Nifty Realty",
+  "category": "Sectoral",
+  "exposure": "Sector-Realty&Construction",
+  "file": "Nifty_Realty.json"
+ },
+ {
+  "name": "NIFTY CAPITAL GOODS",
+  "nse": "NIFTY CAPITAL GOODS",
+  "category": "Sectoral",
+  "exposure": "Sector-Capital Goods",
+  "file": "NIFTY_CAPITAL_GOODS.json"
+ },
+ {
+  "name": "NIFTY CEMENT",
+  "nse": "NIFTY CEMENT",
+  "category": "Sectoral",
+  "exposure": "Sector-Realty&Construction",
+  "file": "NIFTY_CEMENT.json"
+ },
+ {
+  "name": "NIFTY COMMERCIAL & TRANSPORT SERVICES",
+  "nse": "NIFTY COMMERCIAL & TRANSPORT SERVICES",
+  "category": "Sectoral",
+  "exposure": "Sector-Infrastructure&Logistics",
+  "file": "NIFTY_COMMERCIAL_&_TRANSPORT_SERVICES.json"
+ },
+ {
+  "name": "NIFTY CONSTRUCTION",
+  "nse": "NIFTY CONSTRUCTION",
+  "category": "Sectoral",
+  "exposure": "Sector-Realty&Construction",
+  "file": "NIFTY_CONSTRUCTION.json"
+ },
+ {
+  "name": "NIFTY CONSUMER SERVICES",
+  "nse": "NIFTY CONSUMER SERVICES",
+  "category": "Sectoral",
+  "exposure": "Sector-Consumer",
+  "file": "NIFTY_CONSUMER_SERVICES.json"
+ },
+ {
+  "name": "NIFTY HOSPITALS",
+  "nse": "NIFTY HOSPITALS",
+  "category": "Sectoral",
+  "exposure": "Sector-Pharma&Healthcare",
+  "file": "NIFTY_HOSPITALS.json"
+ },
+ {
+  "name": "NIFTY HOUSING FINANCE",
+  "nse": "NIFTY HOUSING FINANCE",
+  "category": "Sectoral",
+  "exposure": "Sector-Financials",
+  "file": "NIFTY_HOUSING_FINANCE.json"
+ },
+ {
+  "name": "NIFTY INSURANCE",
+  "nse": "NIFTY INSURANCE",
+  "category": "Sectoral",
+  "exposure": "Sector-Financials",
+  "file": "NIFTY_INSURANCE.json"
+ },
+ {
+  "name": "NIFTY NBFC",
+  "nse": "NIFTY NBFC",
+  "category": "Sectoral",
+  "exposure": "Sector-Financials",
+  "file": "NIFTY_NBFC.json"
+ },
+ {
+  "name": "NIFTY POWER",
+  "nse": "NIFTY POWER",
+  "category": "Sectoral",
+  "exposure": "Sector-Power",
+  "file": "NIFTY_POWER.json"
+ },
+ {
+  "name": "NIFTY RETAIL",
+  "nse": "NIFTY RETAIL",
+  "category": "Sectoral",
+  "exposure": "Sector-Consumer",
+  "file": "NIFTY_RETAIL.json"
+ },
+ {
+  "name": "NIFTY TELECOMMUNICATIONS",
+  "nse": "NIFTY TELECOMMUNICATIONS",
+  "category": "Sectoral",
+  "exposure": "Sector-IT&Telecom",
+  "file": "NIFTY_TELECOMMUNICATIONS.json"
+ },
+ {
+  "name": "NIFTY500 HEALTHCARE",
+  "nse": "NIFTY500 HEALTHCARE",
+  "category": "Sectoral",
+  "exposure": "Sector-Pharma&Healthcare",
+  "file": "NIFTY500_HEALTHCARE.json"
+ },
+ {
+  "name": "NIFTY CAPITAL MARKETS",
+  "nse": "NIFTY CAPITAL MARKETS",
+  "category": "Thematic",
+  "exposure": "Sector-Financials",
+  "file": "NIFTY_CAPITAL_MARKETS.json"
+ },
+ {
+  "name": "Nifty Commodities",
+  "nse": "Nifty Commodities",
+  "category": "Thematic",
+  "exposure": "Sector-Commodities",
+  "file": "Nifty_Commodities.json"
+ },
+ {
+  "name": "NIFTY CORE HOUSING",
+  "nse": "NIFTY CORE HOUSING",
+  "category": "Thematic",
+  "exposure": "Sector-Realty&Construction",
+  "file": "NIFTY_CORE_HOUSING.json"
+ },
+ {
+  "name": "Nifty CPSE",
+  "nse": "Nifty CPSE",
+  "category": "Thematic",
+  "exposure": "Sector-PSE",
+  "file": "Nifty_CPSE.json"
+ },
+ {
+  "name": "Nifty Energy",
+  "nse": "Nifty Energy",
+  "category": "Thematic",
+  "exposure": "Sector-Energy",
+  "file": "Nifty_Energy.json"
+ },
+ {
+  "name": "NIFTY EV & NEW AGE AUTOMOTIVE",
+  "nse": "NIFTY EV & NEW AGE AUTOMOTIVE",
+  "category": "Thematic",
+  "exposure": "Sector-Auto",
+  "file": "NIFTY_EV_&_NEW_AGE_AUTOMOTIVE.json"
+ },
+ {
+  "name": "NIFTY HOUSING",
+  "nse": "NIFTY HOUSING",
+  "category": "Thematic",
+  "exposure": "Sector-Realty&Construction",
+  "file": "NIFTY_HOUSING.json"
+ },
+ {
+  "name": "Nifty India Consumption",
+  "nse": "Nifty India Consumption",
+  "category": "Thematic",
+  "exposure": "Sector-Consumer",
+  "file": "Nifty_India_Consumption.json"
+ },
+ {
+  "name": "NIFTY INDIA CORPORATE GROUP INDEX - ADITYA BIRLA GROUP",
+  "nse": "NIFTY INDIA CORPORATE GROUP INDEX - ADITYA BIRLA GROUP",
+  "category": "Thematic",
+  "exposure": "Sector-Corporate Group",
+  "file": "NIFTY_INDIA_CORPORATE_GROUP_INDEX_-_ADITYA_BIRLA_GROUP.json"
+ },
+ {
+  "name": "NIFTY INDIA CORPORATE GROUP INDEX - MAHINDRA GROUP",
+  "nse": "NIFTY INDIA CORPORATE GROUP INDEX - MAHINDRA GROUP",
+  "category": "Thematic",
+  "exposure": "Sector-Corporate Group",
+  "file": "NIFTY_INDIA_CORPORATE_GROUP_INDEX_-_MAHINDRA_GROUP.json"
+ },
+ {
+  "name": "NIFTY INDIA CORPORATE GROUP INDEX - TATA GROUP",
+  "nse": "NIFTY INDIA CORPORATE GROUP INDEX - TATA GROUP",
+  "category": "Thematic",
+  "exposure": "Sector-Corporate Group",
+  "file": "NIFTY_INDIA_CORPORATE_GROUP_INDEX_-_TATA_GROUP.json"
+ },
+ {
+  "name": "NIFTY INDIA DEFENCE",
+  "nse": "NIFTY INDIA DEFENCE",
+  "category": "Thematic",
+  "exposure": "Sector-Defence",
+  "file": "NIFTY_INDIA_DEFENCE.json"
+ },
+ {
+  "name": "NIFTY INDIA DIGITAL",
+  "nse": "NIFTY INDIA DIGITAL",
+  "category": "Thematic",
+  "exposure": "Sector-IT&Telecom",
+  "file": "NIFTY_INDIA_DIGITAL.json"
+ },
+ {
+  "name": "Nifty India Manufacturing",
+  "nse": "Nifty India Manufacturing",
+  "category": "Thematic",
+  "exposure": "Sector-Manufacturing",
+  "file": "Nifty_India_Manufacturing.json"
+ },
+ {
+  "name": "NIFTY500 MULTICAP INDIA MANUFACTURING 50:30:20",
+  "nse": "NIFTY500 MULTICAP INDIA MANUFACTURING 50:30:20",
+  "category": "Thematic",
+  "exposure": "Sector-Manufacturing",
+  "file": "NIFTY500_MULTICAP_INDIA_MANUFACTURING_50:30:20.json"
+ },
+ {
+  "name": "NIFTY500 MULTICAP INFRASTRUCTURE 50:30:20",
+  "nse": "NIFTY500 MULTICAP INFRASTRUCTURE 50:30:20",
+  "category": "Thematic",
+  "exposure": "Sector-Infrastructure&Logistics",
+  "file": "NIFTY500_MULTICAP_INFRASTRUCTURE_50:30:20.json"
+ },
+ {
+  "name": "NIFTY INDIA NEW AGE CONSUMPTION",
+  "nse": "NIFTY INDIA NEW AGE CONSUMPTION",
+  "category": "Thematic",
+  "exposure": "Sector-Consumer",
+  "file": "NIFTY_INDIA_NEW_AGE_CONSUMPTION.json"
+ },
+ {
+  "name": "Nifty Infrastructure",
+  "nse": "Nifty Infrastructure",
+  "category": "Thematic",
+  "exposure": "Sector-Infrastructure&Logistics",
+  "file": "Nifty_Infrastructure.json"
+ },
+ {
+  "name": "NIFTY INDIA INFRASTRUCTURE & LOGISTICS",
+  "nse": "NIFTY INDIA INFRASTRUCTURE & LOGISTICS",
+  "category": "Thematic",
+  "exposure": "Sector-Infrastructure&Logistics",
+  "file": "NIFTY_INDIA_INFRASTRUCTURE_&_LOGISTICS.json"
+ },
+ {
+  "name": "NIFTY INDIA INTERNET",
+  "nse": "NIFTY INDIA INTERNET",
+  "category": "Thematic",
+  "exposure": "Sector-IT&Telecom",
+  "file": "NIFTY_INDIA_INTERNET.json"
+ },
+ {
+  "name": "NIFTY MIDSMALL INDIA CONSUMPTION",
+  "nse": "NIFTY MIDSMALL INDIA CONSUMPTION",
+  "category": "Thematic",
+  "exposure": "Sector-Consumer",
+  "file": "NIFTY_MIDSMALL_INDIA_CONSUMPTION.json"
+ },
+ {
+  "name": "Nifty MNC",
+  "nse": "Nifty MNC",
+  "category": "Thematic",
+  "exposure": "Sector-Corporate Group",
+  "file": "Nifty_MNC.json"
+ },
+ {
+  "name": "NIFTY MOBILITY",
+  "nse": "NIFTY MOBILITY",
+  "category": "Thematic",
+  "exposure": "Sector-Mix",
+  "file": "NIFTY_MOBILITY.json"
+ },
+ {
+  "name": "NIFTY NON-CYCLICAL CONSUMER",
+  "nse": "NIFTY NON-CYCLICAL CONSUMER",
+  "category": "Thematic",
+  "exposure": "Sector-Consumer",
+  "file": "NIFTY_NON-CYCLICAL_CONSUMER.json"
+ },
+ {
+  "name": "Nifty PSE",
+  "nse": "Nifty PSE",
+  "category": "Thematic",
+  "exposure": "Sector-PSE",
+  "file": "Nifty_PSE.json"
+ },
+ {
+  "name": "NIFTY INDIA RAILWAYS PSU",
+  "nse": "NIFTY INDIA RAILWAYS PSU",
+  "category": "Thematic",
+  "exposure": "Sector-PSE",
+  "file": "NIFTY_INDIA_RAILWAYS_PSU.json"
+ },
+ {
+  "name": "NIFTY REITS & INVITS",
+  "nse": "NIFTY REITS & INVITS",
+  "category": "Thematic",
+  "exposure": "Sector-Realty&Construction",
+  "file": "NIFTY_REITS_&_INVITS.json"
+ },
+ {
+  "name": "NIFTY RURAL",
+  "nse": "NIFTY RURAL",
+  "category": "Thematic",
+  "exposure": "Sector-Mix",
+  "file": "NIFTY_RURAL.json"
+ },
+ {
+  "name": "Nifty Services Sector",
+  "nse": "Nifty Services Sector",
+  "category": "Thematic",
+  "exposure": "Sector-Mix",
+  "file": "Nifty_Services_Sector.json"
+ },
+ {
+  "name": "NIFTY TRANSPORTATION & LOGISTICS",
+  "nse": "NIFTY TRANSPORTATION & LOGISTICS",
+  "category": "Thematic",
+  "exposure": "Sector-Infrastructure&Logistics",
+  "file": "NIFTY_TRANSPORTATION_&_LOGISTICS.json"
+ },
+ {
+  "name": "NIFTY INDIA TOURISM",
+  "nse": "NIFTY INDIA TOURISM",
+  "category": "Thematic",
+  "exposure": "Sector-Tourism",
+  "file": "NIFTY_INDIA_TOURISM.json"
+ },
+ {
+  "name": "NIFTY WAVES",
+  "nse": "NIFTY WAVES",
+  "category": "Thematic",
+  "exposure": "Sector-Media",
+  "file": "NIFTY_WAVES.json"
+ },
+ {
+  "name": "NIFTY SMALL FINANCE BANKS & MICROFINANCE INSTITUTIONS",
+  "nse": "NIFTY SMALL FINANCE BANKS & MICROFINANCE INSTITUTIONS",
+  "category": "Thematic",
+  "exposure": "Sector-Financials",
+  "file": "NIFTY_SMALL_FINANCE_BANKS_&_MICROFINANCE_INSTITUTIONS.json"
+ },
+ {
+  "name": "NIFTY SUGAR & ETHANOL",
+  "nse": "NIFTY SUGAR & ETHANOL",
+  "category": "Thematic",
+  "exposure": "Sector-Agriculture",
+  "file": "NIFTY_SUGAR_&_ETHANOL.json"
+ }
+]
