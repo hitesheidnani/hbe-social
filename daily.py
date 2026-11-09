@@ -2,6 +2,7 @@
 
 Usage:  python daily.py [YYYY-MM-DD]
 Daily mix (IST):
+  08:00  Market update: key Indian & US indices, gold, oil, US 10Y, USD/INR with 200-DMA trend
   09:00  market psychology quote
   11:00  Market Monitor: Nifty index heatmap (1y/3y/5y) or drawdown-from-high table, by weekday
   12:30  top-10 leaderboard, long horizon (5y / 7y / 10y), rotating category
@@ -16,10 +17,11 @@ from pathlib import Path
 import mf_posts as mf
 import edu_posts as edu
 import market_posts as mkt
+import update_post as upd
 from brand import quote_card, story_version, ARN, MF_DISCLAIMER, EDU
 
 ROOT = Path(__file__).parent
-SLOTS = {"psych": "09:00", "market": "11:00", "long": "12:30", "edu": "15:00", "feature": "17:30", "short": "20:00"}
+SLOTS = {"update": "08:00", "psych": "09:00", "market": "11:00", "long": "12:30", "edu": "15:00", "feature": "17:30", "short": "20:00"}
 
 # 11:00 Market Monitor (Nifty indices, price returns), by weekday: heatmaps rotate 1y/3y/5y week to week
 MARKET = {0: ("heat", "Broad Market"), 1: ("heat", "Sectoral"), 2: ("dd", "Broad Market"), 3: ("heat", "Strategy"),
@@ -265,7 +267,8 @@ def build(day: dt.date):
     plan = []
 
     def add(slot, image, caption, kind, rows=None, carousel=None):
-        story = story_version(image, label={"psych": "DAILY MINDSET", "edu": "NEW LESSON"}.get(kind, "NEW POST"))
+        story = story_version(image, label={"psych": "DAILY MINDSET", "edu": "NEW LESSON",
+                                            "update": "MORNING UPDATE"}.get(kind, "NEW POST"))
         item = {"slot": slot, "time_ist": SLOTS[slot], "kind": kind,
                 "image": str(Path(image).relative_to(ROOT)),
                 "story_image": str(story.relative_to(ROOT)), "caption": caption}
@@ -274,6 +277,13 @@ def build(day: dt.date):
         if rows:   # ranked cards also go out as a countdown Reel (built at publish time)
             item["reel"] = {"rows": rows}
         plan.append(item)
+
+    # 08:00 market update (skipped if too much data is missing)
+    try:
+        r = upd.market_update(out / "00_update")
+        add("update", out / "00_update.jpg", upd.caption(r, EDU), "update")
+    except Exception as e:
+        print("update: skipped,", e)
 
     # 09:00 psychology
     quotes = json.loads((ROOT / "content" / "psychology.json").read_text())

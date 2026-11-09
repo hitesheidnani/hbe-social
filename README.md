@@ -7,6 +7,7 @@ Automated Instagram posts for HBE Capital (@hbecapital), built from FundNavigato
 | Time  | Post |
 |-------|------|
 | 06:00 | Build: `daily.py` renders the day's cards and captions into `posts/<date>/` |
+| 08:00 | Market update: Nifty 50/Bank/Midcap 150/Smallcap 250, S&P 500, Nasdaq, Dow, Russell 2000, gold, Brent, US 10Y, USD/INR; 1-day change and 200-DMA trend (`update_post.py`) |
 | 09:00 | Market psychology quote (`content/psychology.json`, rotates daily) |
 | 11:00 | Market Monitor: Nifty index heatmaps (1y/3y/5y) or drawdown-from-high tables (`market_posts.py`, history in `data/indices/`) |
 | 12:30 | Top 10 funds in a category, long horizon (5y / 7y / 10y) |
