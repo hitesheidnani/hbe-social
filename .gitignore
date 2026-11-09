@@ -1,0 +1,4 @@
+.mplcache/
+__pycache__/
+*.pyc
+_secrets/
