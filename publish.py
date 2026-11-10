@@ -40,7 +40,7 @@ CHANNELS = {
     "instagram": ("Instagram", "@hbecapital", "https://instagram.com/hbecapital"),
     "youtube": ("YouTube", "@hbecapital", "https://youtube.com/@hbecapital"),
     "x": ("X", "@hitesheidnani", "https://x.com/hitesheidnani"),
-    "linkedin": ("LinkedIn", "Hitesh Eidnani", os.environ.get("LI_PROFILE_URL", "")),
+    "linkedin": ("LinkedIn", "Hitesh Eidnani", "https://linkedin.com/in/hitesheidnani"),
     "facebook": ("Facebook", "HBE Capital Investments", f"https://facebook.com/{os.environ.get('FB_PAGE_ID', '')}"),
 }
 
