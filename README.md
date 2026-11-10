@@ -8,11 +8,13 @@ Automated Instagram posts for HBE Capital (@hbecapital), built from FundNavigato
 |-------|------|
 | 06:00 | Build: `daily.py` renders the day's cards and captions into `posts/<date>/` |
 | 08:00 | Market update: Nifty 50/Bank/Midcap 150/Smallcap 250, S&P 500, Nasdaq 100, Dow, Russell 2000, gold, Brent, US 10Y, USD/INR; 1-day change and 200-DMA trend (`update_post.py`) |
+| 08:30 | US close (Tue-Fri): indices, VIX, Magnificent 7, 11 sectors · Saturday: weekly US market health (trend vs 50/100/200 DMA + S&P 500 breadth) (`us_posts.py`) |
 | 09:00 | Market psychology quote (`content/psychology.json`, rotates daily) |
 | 11:00 | Market Monitor: Nifty index heatmaps (1y/3y/5y) or drawdown-from-high tables (`market_posts.py`, history in `data/indices/`) |
 | 12:30 | Top 10 funds in a category, long horizon (5y / 7y / 10y) |
 | 15:00 | MF Basics carousel (even days, `content/education.json`) or power-of-compounding card (odd days) |
 | 17:30 | Feature: SIP card (Mon, Fri), SIF tracker (Tue), momentum funds (Wed, Sun), PMS (Thu, Sat) |
+| 19:00 | US theme: Mon sector heatmap · Tue S&P 500 in ₹ vs Nifty · Wed from highs · Thu style monitor · Fri S&P 500 calendar years · Sat US investing basics (`content/us_education.json`) · Sun weekly wrap |
 | 20:00 | Top 10 funds in a category, 1y / 2y / 3y (never under 1 year, except SIFs) |
 
 Data comes from https://funds.hbecapital.net/data (FundNavigator's nightly refresh).

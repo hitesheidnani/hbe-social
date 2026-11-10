@@ -2,6 +2,8 @@
 
 Usage:  python daily.py [YYYY-MM-DD]
 Daily mix (IST):
+  08:30  US close (Tue-Fri, after Mon-Thu sessions) · Sat: weekly US market health (trend + breadth)
+  19:00  US theme: Mon sectors · Tue US vs India · Wed from highs · Thu style · Fri S&P years · Sat US basics · Sun wrap
   08:00  Market update: key Indian & US indices, gold, oil, US 10Y, USD/INR with 200-DMA trend
   09:00  market psychology quote
   11:00  Market Monitor: Nifty index heatmap (1y/3y/5y) or drawdown-from-high table, by weekday
@@ -19,10 +21,15 @@ import mf_posts as mf
 import edu_posts as edu
 import market_posts as mkt
 import update_post as upd
+import us_posts as us
 from brand import quote_card, story_version, ARN, MF_DISCLAIMER, EDU
 
 ROOT = Path(__file__).parent
-SLOTS = {"update": "08:00", "psych": "09:00", "market": "11:00", "long": "12:30", "edu": "15:00", "feature": "17:30", "short": "20:00"}
+SLOTS = {"update": "08:00", "us_close": "08:30", "psych": "09:00", "market": "11:00", "long": "12:30", "edu": "15:00",
+         "feature": "17:30", "us_theme": "19:00", "short": "20:00"}
+# 19:00 US theme by weekday (Mon=0); heatmap / style periods rotate 1y -> 3y -> 5y week to week
+US_THEME = {0: "sectors", 1: "vs_india", 2: "drawdown", 3: "style", 4: "years", 5: "us_edu", 6: "wrap"}
+US_TAGS = "#usstocks #sp500 #nasdaq #wallstreet #investinus"
 
 # 11:00 Market Monitor (Nifty indices, price returns), by weekday: heatmaps rotate 1y/3y/5y week to week
 MARKET = {0: ("heat", "Broad Market"), 1: ("heat", "Sectoral"), 2: ("dd", "Broad Market"), 3: ("heat", "Strategy"),
@@ -268,6 +275,76 @@ def cap_pms_sheet(r):
         "#PMS #portfoliomanagement #wealthmanagement #HNI #investing"])
 
 
+US_FOOT = (f"⚠️ {EDU} Not a recommendation to buy or sell any security. Past performance may or may not be "
+           "sustained in future. US data: Yahoo Finance.\nHBE Capital")
+
+
+def cap_us_close(r):
+    idx = " · ".join(f"{n} {v:+.2f}%" for n, _, v in r["idx"])
+    mag = sorted(r["mag"], key=lambda x: x[1], reverse=True)
+    sec = sorted(r["sec"], key=lambda x: x[1], reverse=True)
+    return "\n".join([
+        f"US Market Close | {r['session']:%a, %d %b %Y} 🇺🇸", "", idx,
+        f"VIX {r['vix'][0]:.2f} ({r['vix'][1]:+.1f}%)", "",
+        f"Magnificent 7: best {mag[0][0]} {mag[0][1]:+.2f}%, weakest {mag[-1][0]} {mag[-1][1]:+.2f}%.",
+        f"Sectors: {sum(v >= 0 for _, v in sec)} of 11 up. Leader {sec[0][0]} {sec[0][1]:+.2f}%, laggard {sec[-1][0]} {sec[-1][1]:+.2f}%.", "",
+        "🔔 Follow for the US close every morning.", "", US_FOOT, "", US_TAGS])
+
+
+def cap_us_health(r):
+    trends = ", ".join(f"{n}: {t}" for n, _, _, _, t, _ in r["rows"])
+    n = r["now"]
+    return "\n".join([
+        f"US Market Health Check | Week Ending {r['asof']:%d %b %Y}: {r['score']} 🩺", "",
+        f"Trend vs 50/100/200-day averages: {trends}.", "",
+        f"Breadth (all S&P 500 stocks): {n['above50']:.0f}% above their 50-day average, {n['above200']:.0f}% above "
+        f"their 200-day; {n['nh']} new 52-week highs vs {n['nl']} new lows; {n['adv']} stocks rose this week, {n['dec']} fell.", "",
+        "How we score it: Risk-on when the S&P 500 is above all three averages, most stocks are above their "
+        "200-day and new highs outnumber new lows; Risk-off when the trend or breadth breaks down; Neutral in between.", "",
+        "🔖 Save this · check back every Saturday", "", US_FOOT, "", "#marketbreadth #sp500 #technicalanalysis #usstocks #investing"])
+
+
+def cap_us_theme(kind, r):
+    if kind == "sectors":
+        y_ = r["horizon"]
+        head = f"S&P 500 Sectors: {y_.replace('y', '-Year')} Returns | {r['asof']:%b %Y} 🇺🇸"
+        body = [f"Leader: {r['items'][0][0]} {r['items'][0][1]:+.1f}% · Laggard: {r['items'][-1][0]} {r['items'][-1][1]:+.1f}%",
+                f"{r['beat']} of {len(r['items'])} sectors beat the S&P 500 ({r['spy']:+.1f}%).",
+                "", "Sector leadership rotates. A diversified index quietly owns tomorrow's winners too."]
+    elif kind == "vs_india":
+        head = f"S&P 500 in Rupees vs Nifty 50 | {r['asof']:%b %Y} 🇺🇸🇮🇳"
+        body = [f"{y_} yr: S&P 500 {u:+.1f}%/yr in USD, {i:+.1f}%/yr in ₹ · Nifty 50 {n:+.1f}%/yr" for y_, u, i, n, _ in r["rows"]]
+        body += ["", "The gap between the dollar and rupee figures is the currency effect: a weaker rupee boosts US returns "
+                 "for Indian investors, and a stronger rupee does the opposite."]
+    elif kind == "drawdown":
+        head = f"How Far Are US Markets From Their All-Time Highs? | {r['asof']:%b %Y} 📉"
+        body = [f"{n}: {'at its high' if dd > -0.5 else f'{dd:.1f}% below (high on {d_:%d %b %Y})'}" for n, dd, d_, _, _, _ in r["rows"]]
+    elif kind == "style":
+        head = f"US Style Monitor: Which Style Is Winning? ({r['horizon'].replace('y', '-Year')}) | {r['asof']:%b %Y} 🧭"
+        body = [f"{a} {ra:+.1f}% vs {b} {rb:+.1f}% → {a if ra >= rb else b} leads" for a, ra, b, rb in r["rows"]]
+        body += ["", "Styles take turns. Owning a blend means you never need to guess which one leads next."]
+    elif kind == "years":
+        head = f"{len(r['rets'])} Years of S&P 500 Returns, Year by Year 📅"
+        body = [f"Up in {r['pos']} of {len(r['rets'])} years. Average year: {r['avg']:+.1f}%.",
+                f"Best: {r['best'][0]} ({r['best'][1]:+.0f}%). Worst: {r['worst'][0]} ({r['worst'][1]:+.0f}%).",
+                "", "Bad years are part of the deal. Long-term investors are paid for sitting through them."]
+    else:  # wrap
+        head = f"The Week on Wall Street | {r['start']:%d %b} – {r['end']:%d %b %Y} 🇺🇸"
+        body = [" · ".join(f"{n} {v:+.2f}%" for n, v in r["idx"]),
+                f"Mag 7 best: {r['mag'][0][0]} {r['mag'][0][1]:+.1f}% · worst: {r['mag'][-1][0]} {r['mag'][-1][1]:+.1f}%",
+                f"Top sector: {r['sec'][0][0]} {r['sec'][0][1]:+.1f}% · bottom: {r['sec'][-1][0]} {r['sec'][-1][1]:+.1f}%"]
+    return "\n".join([head, ""] + body + ["", "🔖 Save this · 📤 Share with someone investing in the US", "",
+                                          US_FOOT, "", US_TAGS])
+
+
+def cap_us_edu(t, n):
+    points = "\n".join(f"→ {h}" for h, _ in t["slides"])
+    return "\n".join([f"US Investing Basics #{n}: {t['title']} 🇺🇸", "", t["hook"], "", points, "",
+                      f"💡 {t['takeaway']}", "", "👉 Swipe through and save this 🔖", "",
+                      f"⚠️ {EDU} Rules on LRS, TCS and taxes change; check the latest with your bank or tax adviser.\nHBE Capital",
+                      "", t["tags"]])
+
+
 def cap_pms(r):
     hz = mf.HORIZON_LABEL[r["horizon"]]
     rows = [(f"{mf.short_name(n)} ({mf.short_name(p)})", pct(v)) for n, p, v in r["top"]]
@@ -316,6 +393,41 @@ def build(day: dt.date):
         add("update", out / "00_update.jpg", upd.caption(r, EDU), "update")
     except Exception as e:
         print("update: skipped,", e)
+
+    # 08:30 US close (Tue-Fri) / weekly US market health (Sat)
+    try:
+        wd = day.weekday()
+        if 1 <= wd <= 4:
+            r = us.us_close_card(out / "01_us_close")
+            if (day - r["session"]).days <= 4:
+                add("us_close", out / "01_us_close.jpg", cap_us_close(r), "us_close")
+        elif wd == 5:
+            r = us.us_health(out / "01_us_health")
+            add("us_close", out / "01_us_health.jpg", cap_us_health(r), "us_health")
+    except Exception as e:
+        print("us_close: skipped,", e)
+
+    # 19:00 US theme
+    try:
+        kind = US_THEME[day.weekday()]
+        f = out / "6_us_theme"
+        hz = ["1y", "3y", "5y"][(d // 7) % 3]
+        if kind == "us_edu":
+            topics = json.loads((ROOT / "content" / "us_education.json").read_text())
+            k = (d // 7) % len(topics)
+            slides = edu.edu_carousel(topics[k], k + 1, out / "us_edu", series="US INVESTING BASICS", foot="generic")
+            add("us_theme", slides[0], cap_us_edu(topics[k], k + 1), "us_edu", carousel=slides)
+        else:
+            if kind == "vs_india":
+                look = {x["name"].lower(): x for x in mkt.INDEX_LIST}
+                r = us.us_vs_india(f, mkt.series(look["nifty 50"]))
+            else:
+                r = {"sectors": lambda: us.us_sector_heatmap(f, hz), "drawdown": lambda: us.us_drawdown(f),
+                     "style": lambda: us.us_style(f, hz), "years": lambda: us.sp500_years(f),
+                     "wrap": lambda: us.us_weekly_wrap(f)}[kind]()
+            add("us_theme", f.with_suffix(".jpg"), cap_us_theme(kind, r), "us_" + kind)
+    except Exception as e:
+        print("us_theme: skipped,", e)
 
     # 09:00 psychology
     quotes = json.loads((ROOT / "content" / "psychology.json").read_text())

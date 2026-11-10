@@ -14,7 +14,7 @@ def wrap(text, width):
 
 
 # ---------------------------------------------------------------- education carousel
-def edu_carousel(topic, number, out_dir):
+def edu_carousel(topic, number, out_dir, series="MF BASICS", foot="mf"):
     """Cover + one slide per point + takeaway slide. Returns list of JPEG paths."""
     out_dir = Path(out_dir)
     slides, total = [], len(topic["slides"]) + 2
@@ -23,7 +23,7 @@ def edu_carousel(topic, number, out_dir):
         fig = canvas()
         brand_badge(fig, 0.06, 0.955, size=0.85)
         fig.text(0.94, 0.955, f"{i}/{total}", color=MUTED, fontsize=15, ha="right", va="center")
-        fig.text(0.06, 0.885, f"MF BASICS #{number}", color=ACCENT, fontsize=15, weight="semibold")
+        fig.text(0.06, 0.885, f"{series} #{number}", color=ACCENT, fontsize=15, weight="semibold")
         return fig
 
     fig = frame(1)                                                          # cover
@@ -31,7 +31,7 @@ def edu_carousel(topic, number, out_dir):
              va="center", linespacing=1.12)
     fig.text(0.06, 0.34, wrap(topic["hook"], 34), color=MUTED, fontsize=25, va="center", linespacing=1.4)
     fig.text(0.06, 0.21, "Swipe  →", color=GOLD, fontsize=22, weight="bold")
-    footer(fig, "mf")
+    footer(fig, foot)
     slides.append(save(fig, out_dir / "slide_01"))
 
     for k, (head, body) in enumerate(topic["slides"], 1):                   # one point per slide
@@ -42,7 +42,7 @@ def edu_carousel(topic, number, out_dir):
         line_y = 0.68 - 0.055 * n_head - 0.02
         fig.add_artist(plt.Line2D([0.06, 0.16], [line_y, line_y], color=ACCENT, lw=3, transform=fig.transFigure))
         fig.text(0.06, line_y - 0.04, wrap(body, 34), color=MUTED, fontsize=28, va="top", linespacing=1.55)
-        footer(fig, "mf")
+        footer(fig, foot)
         slides.append(save(fig, out_dir / f"slide_{k + 1:02d}"))
 
     fig = frame(total)                                                      # takeaway + CTA
@@ -51,10 +51,10 @@ def edu_carousel(topic, number, out_dir):
              va="center", linespacing=1.3)
     fig.add_artist(FancyBboxPatch((0.06, 0.17), 0.88, 0.13, boxstyle="round,pad=0,rounding_size=0.02",
                                   transform=fig.transFigure, fc=PANEL, ec=ACCENT, lw=1.5))
-    fig.text(0.5, 0.255, f"Follow {HANDLE} for daily MF basics", color=TEXT, fontsize=24,
+    fig.text(0.5, 0.255, f"Follow {HANDLE} for daily investing basics", color=TEXT, fontsize=24,
              weight="semibold", ha="center", va="center")
     fig.text(0.5, 0.205, "Save this post to revisit later", color=MUTED, fontsize=19, ha="center", va="center")
-    footer(fig, "mf")
+    footer(fig, foot)
     slides.append(save(fig, out_dir / f"slide_{total:02d}"))
     return slides
 
