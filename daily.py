@@ -627,6 +627,14 @@ def build(day: dt.date):
     r = leaderboard_with_fallback((d + 4) % len(CATS), SHORT_HORIZONS[(d // len(CATS)) % 3], out / "4_short")
     add("short", out / "4_short.jpg", cap_leader(r), "leaderboard", rows=len(r["top"]))
 
+    # Sundays: next week's X pack (evergreen posts for manual scheduling in X's free scheduler)
+    if day.weekday() == 6:
+        try:
+            import x_pack
+            x_pack.build_week(day + dt.timedelta(days=1))
+        except Exception as e:
+            print("x pack: skipped,", e)
+
     plan.sort(key=lambda p: p["time_ist"])
     for p in plan:
         assert len(p["caption"]) <= 2200, f"{p['slot']} caption too long for Instagram ({len(p['caption'])})"
