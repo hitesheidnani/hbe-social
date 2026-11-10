@@ -47,7 +47,7 @@ def build(out):
          Paragraph("Channels: every post goes automatically to <b>Instagram @hbecapital</b> (post + Story; ranked lists also as a "
                    "10→1 countdown Reel; personal cards as Reels), the <b>HBE Capital Investments Facebook Page</b> and "
                    "<b>LinkedIn</b> (Hitesh Eidnani's profile). <b>X @hitesheidnani</b>: weekly pack you schedule manually "
-                   "(free). <b>YouTube Shorts</b>: being set up. The system checks every 15 minutes, so each post goes out within "
+                   "(free). <b>YouTube @hbecapital</b>: every Reel also uploads as a public Short (up to 5 a day). The system checks every 15 minutes, so each post goes out within "
                    "about 15 minutes of its slot; a slot more than 3 hours late is skipped rather than posted out of order.", P),
          Paragraph("Daily posts (13-14 a day; 4 on US markets)", H2),
          table([
@@ -130,8 +130,6 @@ def build(out):
              ["Item", "Plan"],
              ["X automation (optional)", "Fully automatic X needs paid API credits (about $0.015 per post, $0.20 with a "
               "link). Declined for now; weekly manual pack instead. Developer Console account 'HBE Capital' exists, $0 balance."],
-             ["YouTube Shorts", "Free API. Google keeps uploads from new apps private until a one-time API audit is approved "
-              "(can take weeks). Plan: set up the Google project and channel, submit the audit, then up to 5 Shorts a day."],
              ["Chart Report-style charts", "Decision pending (reminder set). Third-party charts are copyrighted; options: our "
               "own 'Chart of the Day' from public data, native X reposts, or a collaboration."],
              ["LinkedIn company page", "Needs LinkedIn's Community Management API approval; posts go to your profile until then"],
@@ -159,6 +157,9 @@ def build(out):
               "expires. Reset the app secret once (it was shown in chat)"],
              ["LinkedIn", "Hitesh Eidnani profile; app 'HBE Social Poster'", "Token expires every 60 days (next ~8 Jan 2027)"],
              ["X", "@hitesheidnani; Developer Console 'HBE Capital'", "No credits bought; weekly manual pack"],
+             ["YouTube", "Channel 'HBE Capital' @hbecapital, owned by hitesh@hbecapital.net", "Google Cloud project "
+              "'HBE Social' (hbecapital.net org), OAuth client 'HBE Social Desktop' (Internal). Shorts upload public. "
+              "Studio: studio.youtube.com"],
              ["GitHub: social posts & FundNavigator", "hitesheidnani", "Repos hbe-social (public) and fundnavigator. Weekly X "
               "reminder and notifications go to this account's email"],
              ["GitHub: crescendo", "quantboy8", "Separate; each project folder now uses its own account automatically"],
