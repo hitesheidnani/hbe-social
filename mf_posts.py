@@ -225,7 +225,7 @@ def pms_leaderboard(horizon, out, n=N, min_aum=0, kind="Equity"):
            (f"Strategies with AUM ≥ ₹{min_aum} cr" if min_aum else "All strategies")
            + f" · as reported to APMI · month-end {nice_date(p['asof'])}")
     for k, s in enumerate(rows[:n]):
-        row(fig, row_y(k), RH, k + 1, short_name(s["n"]), f"{short_name(s['p'])} · AUM ₹{s['aum']:,.0f} cr", s["r"][i])
+        row(fig, row_y(k), RH, k + 1, short_name(s["n"]), f"{short_name(s['p'])}" + (f" · AUM ₹{s['aum']:,.0f} cr" if s["aum"] else ""), s["r"][i])
     y = row_y(n) - 0.006
     bv = lambda b: p["benchmarks"].get(b, [None] * 9)[i] if i < len(p["horizons"]) - 1 else None
     row(fig, y, RH, None, "BSE 500 TRI", f"Benchmark  ·  Nifty 50 TRI {fmt(bv('Nifty 50 TRI'))}",
@@ -427,7 +427,7 @@ def pms_sheet(out_dir, min_aum=0, top_equity=20):
         return r[:limit] if limit else r
 
     def row(s):
-        return (tidy_case(s["n"]), [f"{s['aum']:,.0f}"] + [s["r"][H[h]] for h in cols])
+        return (tidy_case(s["n"]), [f"{s['aum']:,.0f}" if s["aum"] else "–"] + [s["r"][H[h]] for h in cols])
 
     def bench(name):
         b = p["benchmarks"].get(name)
