@@ -24,9 +24,12 @@ def yahoo(symbol, tries=3):
                      "?range=1y&interval=1d")
                 d = json.load(urllib.request.urlopen(urllib.request.Request(u, headers={"User-Agent": "Mozilla/5.0"}),
                                                      timeout=20))["chart"]["result"][0]
-                pts = [(dt.date.fromtimestamp(t), c) for t, c in zip(d["timestamp"], d["indicators"]["quote"][0]["close"])
-                       if c is not None]
-                return pts
+                # Use completed sessions only. Gold, Brent and USD/INR trade almost 24 hours, so at 8am IST
+                # Yahoo already has a partial bar for 'today' (UTC); drop it so every row is a true close.
+                today_utc = dt.datetime.now(dt.UTC).date()
+                pts = [(dt.datetime.fromtimestamp(t, dt.UTC).date(), c)
+                       for t, c in zip(d["timestamp"], d["indicators"]["quote"][0]["close"]) if c is not None]
+                return [(d_, c) for d_, c in pts if d_ < today_utc]
             except Exception as e:
                 last = e
                 time.sleep(2 * (k + 1))
@@ -129,7 +132,7 @@ def market_update(out, rows=None, day=None):
                  [s for _, s in rows["Global"] if s and s["kind"] == "px"]
     bull = sum(s["above"] for s in trend_rows)
     note = (f"{bull} of {len(trend_rows)} indices & commodities above their 200-day average · "
-            f"India: NSE close {india_d:%d %b} · US & global: close {us_d:%d %b} · price indices")
+            f"India: NSE close {india_d:%d %b} · US & global: close {us_d:%d %b} · 200-day simple moving average of closes")
     fig.text(0.5, 0.083, note, color=MUTED, fontsize=9.5, ha="center")
     footer(fig, "generic")
     save(fig, out)
