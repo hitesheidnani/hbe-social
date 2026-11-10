@@ -1,0 +1,59 @@
+name: Ticker
+
+# Keeps posting on time without relying on GitHub's cron (which often runs hours late or not at all).
+# Each run loops for ~5 h: every 10 minutes it builds the day's posts if missing and publishes whatever
+# is due, then it starts a fresh run of itself. The hourly schedule only restarts the chain if it breaks.
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "17 * * * *"
+
+permissions:
+  contents: write
+  actions: write
+
+concurrency:
+  group: ticker
+  cancel-in-progress: false
+
+jobs:
+  tick:
+    runs-on: ubuntu-latest
+    timeout-minutes: 320
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+      - run: pip install -r requirements.txt
+      - name: Post on time (loop ~5 hours)
+        env:
+          IG_USER_ID: ${{ secrets.IG_USER_ID }}
+          META_PAGE_TOKEN: ${{ secrets.META_PAGE_TOKEN }}
+          FB_PAGE_ID: ${{ secrets.FB_PAGE_ID }}
+          LI_TOKEN: ${{ secrets.LI_TOKEN }}
+          LI_PERSON_URN: ${{ secrets.LI_PERSON_URN }}
+        run: |
+          git config user.name "hbe-social-bot"
+          git config user.email "actions@users.noreply.github.com"
+          end=$(( $(date +%s) + 290*60 ))
+          while [ "$(date +%s)" -lt "$end" ]; do
+            git pull -q --rebase || true
+            D=$(TZ=Asia/Kolkata date +%F)
+            if [ ! -f "posts/$D/plan.json" ]; then
+              python -c "import market_posts; market_posts.update_all()" || true
+              python daily.py "$D" || true
+            fi
+            # publish everything due (one post per call; loop until nothing is due)
+            for i in 1 2 3; do python publish.py | tee /tmp/out.txt || true; grep -q "Nothing due" /tmp/out.txt && break; done
+            git add posts data/indices
+            git diff --cached --quiet || git commit -q -m "posts: ticker $(TZ=Asia/Kolkata date '+%F %H:%M')"
+            git pull -q --rebase && git push -q || true
+            sleep 600
+          done
+      - name: Hand over to a fresh run
+        if: always()
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh workflow run tick.yml -R ${{ github.repository }}

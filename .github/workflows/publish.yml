@@ -1,11 +1,7 @@
 name: Publish to Instagram
 
-# GitHub can start scheduled runs late; a late run simply posts what is due.
 on:
-  schedule:
-    # Every 15 minutes, 07:37-21:22 IST, at off-peak minutes. GitHub's scheduler often runs late or
-    # skips busy times, so frequent checks make sure each slot goes out close to its time.
-    - cron: "7,22,37,52 2-15 * * *"
+  # Manual runs only; scheduled posting is done by tick.yml.
   workflow_dispatch:
     inputs:
       slot:
