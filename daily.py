@@ -7,7 +7,8 @@ Daily mix (IST):
   11:00  Market Monitor: Nifty index heatmap (1y/3y/5y) or drawdown-from-high table, by weekday
   12:30  top-10 leaderboard, long horizon (5y / 7y / 10y), rotating category
   15:00  MF Basics carousel (even days) or power-of-compounding illustration (odd days)
-  17:30  weekday feature: SIP card (Mon, Fri), SIF (Tue), momentum funds (Wed, Sun), PMS (Thu, Sat)
+  17:30  weekday feature: SIP card (Mon, Fri), SIF Performance Sheet (Tue), momentum funds (Wed, Sun),
+         PMS Performance Sheet (Thu), PMS top 10 (Sat)
   20:00  top-10 leaderboard, shorter horizon (1y / 2y / 3y), rotating category
 Returns for periods under 1 year are never shown.
 """
@@ -45,7 +46,7 @@ SIP_CATS = ["Equity Scheme - Small Cap Fund", "Equity Scheme - Mid Cap Fund", "E
             "Equity Scheme - Large Cap Fund", "Equity Scheme - ELSS", "Equity Scheme - Large & Mid Cap Fund"]
 # weekday (Mon=0) -> feature for the 17:30 slot
 # Rule: never show returns for periods under 1 year (exception: SIFs, a new category, may use 3m/6m).
-FEATURE = {0: ("sip", 5), 1: ("sif", "1y"), 2: ("momentum", "1y"), 3: ("pms", "1y"),
+FEATURE = {0: ("sip", 5), 1: ("sif_sheet", None), 2: ("momentum", "1y"), 3: ("pms_sheet", None),
            4: ("sip", 10), 5: ("pms", "3y"), 6: ("momentum", "3y")}
 LONG_HORIZONS = ["5y", "10y", "7y"]
 SHORT_HORIZONS = ["1y", "3y", "2y"]
@@ -236,6 +237,37 @@ def cap_dd(r):
         MKT_FOOT, "", MKT_TAGS[r["category"]]])
 
 
+def cap_sif_sheet(r):
+    return "\n".join([
+        f"SIF Performance Sheet | Week Ending {r['asof']:%d %b %Y} 📋", "",
+        f"All {r['count']} Specialised Investment Funds in one place, grouped by strategy: "
+        + ", ".join(f"{t} ({n})" for t, n in r["groups"].items() if n) + ".", "",
+        "Best 1-month: " + ", ".join(f"{b} {c} {v:+.1f}%" for b, c, v in r["top"]),
+        "Weakest 1-month: " + ", ".join(f"{b} {c} {v:+.1f}%" for b, c, v in r["bottom"]), "",
+        "👉 Swipe for hybrid and asset-allocator SIFs, plus benchmarks.",
+        "SIFs (SEBI, 2025) sit between mutual funds and PMS: long-short strategies with a ₹10 lakh minimum. "
+        "Most are under a year old, so short-term numbers can swing a lot.", "",
+        "🔖 Save this · 📤 Share with someone exploring SIFs", "",
+        f"⚠️ {EDU} Returns under 1 year are absolute. Past performance may or may not be sustained in future. "
+        f"Not a recommendation. Investments are subject to market risks, read all scheme related documents carefully.\n"
+        f"HBE Capital · AMFI-registered Mutual Fund Distributor · {ARN}", "",
+        "#SIF #specialisedinvestmentfund #longshort #mutualfunds #investing"])
+
+
+def cap_pms_sheet(r):
+    return "\n".join([
+        f"PMS Performance Sheet | Month-End {mf.nice_date(r['asof'])} 📋", "",
+        f"{r['screened']} PMS strategies with AUM of ₹100 crore or more, as reported to APMI: top equity strategies "
+        "by 1-year return, plus multi-asset, hybrid and debt PMS, with benchmarks.", "",
+        "Top 1-year (equity): " + "; ".join(f"{fit} {v:+.1f}%" for fit, _, v in r["top"]), "",
+        "👉 Swipe for multi-asset, hybrid & debt PMS and benchmarks.",
+        "PMS needs ₹50 lakh minimum. Returns are reported by providers and are not verified by HBE Capital.", "",
+        "🔖 Save this · 📤 Share with someone comparing PMS options", "",
+        f"⚠️ {EDU} Past performance may or may not be sustained in future. PMS investments are subject to market "
+        "risks. This is not a recommendation to invest in any strategy.", "",
+        "#PMS #portfoliomanagement #wealthmanagement #HNI #investing"])
+
+
 def cap_pms(r):
     hz = mf.HORIZON_LABEL[r["horizon"]]
     rows = [(f"{mf.short_name(n)} ({mf.short_name(p)})", pct(v)) for n, p, v in r["top"]]
@@ -335,6 +367,14 @@ def build(day: dt.date):
     if feat == "sip":
         r = mf.sip_card(SIP_CATS[(d // 7) % len(SIP_CATS)], out / "3_feature", years=arg)
         add("feature", out / "3_feature.jpg", cap_sip(r), "sip", rows=len(r["rows"]))
+    elif feat == "sif_sheet":
+        look = {x["name"].lower(): x for x in mkt.INDEX_LIST}
+        bench = [(lab, mkt.series(look[n.lower()])) for lab, n in mf.SIF_BENCH if n.lower() in look]
+        slides, r = mf.sif_sheet(out / "sif_sheet", bench)
+        add("feature", slides[0], cap_sif_sheet(r), "sif_sheet", carousel=slides)
+    elif feat == "pms_sheet":
+        slides, r = mf.pms_sheet(out / "pms_sheet")
+        add("feature", slides[0], cap_pms_sheet(r), "pms_sheet", carousel=slides)
     elif feat == "momentum":
         r = mf.momentum_tracker(out / "3_feature", horizon=arg)
         add("feature", out / "3_feature.jpg", cap_momentum(r), "momentum", rows=len(r["top"]))

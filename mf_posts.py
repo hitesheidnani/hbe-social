@@ -285,3 +285,174 @@ def momentum_tracker(out, horizon="1y", n=N):
     return {"horizon": horizon, "asof": rk["asof"], "count": len(funds), "total": total,
             "top": [(short_name(f["n"]), f["cagr"][horizon]) for f in funds[:n]],
             "benchmark": ("Nifty 500 TRI", bval), "beat": beat}
+
+
+# ---------------------------------------------------------------- SIF performance sheet (weekly carousel)
+SIF_GROUPS = [  # (AMFI category suffix, display title), split over two slides
+    [("Equity Long-Short Fund", "Equity Long-Short"), ("Equity Ex-Top 100 Long-Short Fund", "Equity Ex-Top 100 Long-Short"),
+     ("Sector Rotation Long-Short Fund", "Sector Rotation Long-Short")],
+    [("Hybrid Long-Short Fund", "Hybrid Long-Short"), ("Active Asset Allocator Long-Short Fund", "Active Asset Allocator Long-Short")],
+]
+SIF_BENCH = [("Nifty 50", "Nifty 50"), ("Nifty 500", "Nifty 500"), ("Nifty MidSmallcap 400", "Nifty MidSmallcap 400")]
+
+
+def _period_returns(points):
+    """points: ascending [(date, value)] -> 1W/1M/3M/6M absolute % and since-inception (abs <1y, CAGR >=1y)."""
+    import datetime as _dt
+    last_d, last = points[-1]
+    first_d, first = points[0]
+
+    def back(days):
+        target = last_d - _dt.timedelta(days=days)
+        prior = [v for d_, v in points if d_ <= target]
+        return (last / prior[-1] - 1) * 100 if prior and first_d <= target else None
+    yrs = (last_d - first_d).days / 365.25
+    si = ((last / first) ** (1 / yrs) - 1) * 100 if yrs >= 1 else (last / first - 1) * 100
+    return {"1w": back(7), "1m": back(30), "3m": back(91), "6m": back(182), "si": si, "si_years": yrs,
+            "asof": last_d, "last": last}
+
+
+SHEET_X = [0.33, 0.50, 0.585, 0.67, 0.755, 0.84, 0.94]   # value columns (right-aligned except the first)
+
+
+def fit_name(n, limit):
+    n = re.sub(r"^.*?\b(LLP|Ltd\.?|Limited)\s*-\s*", "", n).strip()   # drop 'Provider LLP - ' prefixes
+    if len(n) <= limit:
+        return n
+    cut = n[:limit - 1].rsplit(" ", 1)[0]
+    return cut + "…"
+
+
+def sheet_frame(i, n, kicker, title, subtitle, col_labels, xs=None):
+    xs = xs or SHEET_X
+    fig = canvas(1080, 1350)
+    brand_badge(fig, 0.06, 0.955, size=0.85)
+    fig.text(0.94, 0.955, f"{i}/{n}", color=MUTED, fontsize=15, ha="right", va="center")
+    fig.text(0.06, 0.895, kicker, color=ACCENT, fontsize=15, weight="semibold")
+    fig.text(0.06, 0.85, title, color=TEXT, fontsize=34, weight="heavy", va="center")
+    fig.text(0.06, 0.807, subtitle, color=MUTED, fontsize=13, va="center")
+    fig.add_artist(FancyBboxPatch((0.05, 0.752), 0.90, 0.03, boxstyle="round,pad=0,rounding_size=0.006",
+                                  transform=fig.transFigure, fc=PANEL, ec=GRID, zorder=-1))
+    fig.text(0.06, 0.767, "Name", color=MUTED, fontsize=11, va="center", weight="semibold")
+    for j, lab in enumerate(col_labels):
+        fig.text(xs[j], 0.767, lab, color=MUTED, fontsize=11, va="center", weight="semibold",
+                 ha="left" if (j == 0 and lab == "Launched") else "right")
+    return fig
+
+
+def sheet_rows(fig, sections, top=0.74, bottom=0.12, xs=None, name_chars=24):
+    xs = xs or SHEET_X
+    """sections: [(title, [(name, [cell, ...]), ...])]. Text cells as-is; numbers coloured +/-; None -> '–'."""
+    n_rows = sum(len(r) for _, r in sections)
+    rh = min(0.03, (top - bottom - 0.032 * len(sections)) / max(n_rows, 1))
+    fs = 12.5 if rh >= 0.026 else 11
+    y = top
+    for title, rows in sections:
+        fig.text(0.06, y - 0.014, title, color=GOLD, fontsize=13, weight="bold", va="center")
+        y -= 0.032
+        for name, cells in rows:
+            yc = y - rh / 2
+            fig.text(0.06, yc, fit_name(str(name), name_chars), color=TEXT, fontsize=fs, weight="semibold", va="center")
+            for j, v in enumerate(cells):
+                if isinstance(v, str):
+                    fig.text(xs[j], yc, v, color=MUTED if j == 0 else TEXT, fontsize=fs - 1, va="center",
+                             ha="left" if (j == 0 and xs is SHEET_X) else "right")
+                else:
+                    fig.text(xs[j], yc, "–" if v is None else f"{v:+.2f}",
+                             color=MUTED if v is None else (UP if v >= 0 else DOWN), fontsize=fs - 1,
+                             weight="bold", ha="right", va="center")
+            y -= rh
+
+
+def sif_sheet(out_dir, bench_series=None):
+    """Weekly SIF performance sheet: every SIF grouped by strategy, 1W/1M/3M/6M/since launch."""
+    import datetime as _dt
+    dash = load("dashboard.json")
+    funds = []
+    for f in dash["categories"]["SIF"]["funds"]:
+        try:
+            nav = [(_dt.date.fromisoformat(d_), v) for d_, v in load(f"nav/{f['code']}.json")]
+        except Exception as e:
+            print("sif: no NAV for", f["name"], e)
+            continue
+        if len(nav) < 5:
+            continue
+        funds.append({**f, **_period_returns(nav), "brand": f["fund_house"].replace(" SIF", "").strip()})
+    asof = max(f["asof"] for f in funds)
+    out_dir = Path(out_dir)
+    cols = [(0.06, "SIF", "left"), (0.33, "Launched", "left"), (0.50, "NAV", "right"), (0.585, "1W", "right"),
+            (0.67, "1M", "right"), (0.755, "3M", "right"), (0.84, "6M", "right"), (0.94, "Since launch", "right")]
+    slides = []
+    for si, groups in enumerate(SIF_GROUPS, 1):
+        sections = [(t, sorted([f for f in funds if f["amfi_category"].endswith(k)],
+                               key=lambda f: -999 if f["1m"] is None else f["1m"], reverse=True)) for k, t in groups]
+        sections = [(t, r) for t, r in sections if r]
+        bench = []
+        if si == len(SIF_GROUPS) and bench_series:
+            bench = [(label, _period_returns([p for p in pts if p[0] <= asof])) for label, pts in bench_series]
+            sections.append(("Benchmarks (price index, same dates)", bench))
+        fig = sheet_frame(si, len(SIF_GROUPS), "SPECIALISED INVESTMENT FUNDS · WEEKLY", "SIF Performance Sheet",
+                          f"{len(funds)} SIFs · Regular plan, Growth · NAV as of {asof:%d %b %Y} · sorted by 1-month return",
+                          ["Launched", "NAV", "1W", "1M", "3M", "6M", "Since launch"])
+
+        def cells(f):
+            if "launch_date" not in f:          # benchmark row
+                return ["", ""] + [f[k] for k in ("1w", "1m", "3m", "6m")] + [None]
+            ld = f["launch_date"]
+            return [f"{ld[8:10]}-{ld[5:7]}-{ld[2:4]}", f"{f['last']:,.2f}"] + [f[k] for k in ("1w", "1m", "3m", "6m", "si")]
+        sheet_rows(fig, [(t, [((f["brand"] if "brand" in f else f[0]) if isinstance(f, dict) else f[0],
+                               cells(f if isinstance(f, dict) else f[1])) for f in rows]) for t, rows in sections])
+        fig.text(0.5, 0.098, "Returns in %. Under 1 year: absolute. Since launch: absolute if under 1 year, CAGR after. "
+                 "SIFs need a ₹10 lakh minimum investment.", color=MUTED, fontsize=9.5, ha="center")
+        mf_footer(fig, "AMFI NAVs, NSE Indices. Computed by HBE Capital FundNavigator.")
+        slides.append(save(fig, out_dir / f"slide_{si:02d}"))
+    top = sorted([f for f in funds if f["1m"] is not None], key=lambda f: f["1m"], reverse=True)
+    return slides, {"asof": asof, "count": len(funds),
+                    "top": [(f["brand"], f["amfi_category"].replace("SIF - ", "").replace(" Fund", ""), f["1m"]) for f in top[:3]],
+                    "bottom": [(f["brand"], f["amfi_category"].replace("SIF - ", "").replace(" Fund", ""), f["1m"]) for f in top[-3:][::-1]],
+                    "groups": {t: sum(1 for f in funds if f["amfi_category"].endswith(k)) for g in SIF_GROUPS for k, t in g}}
+
+
+def pms_sheet(out_dir, min_aum=100, top_equity=20):
+    """Monthly-data PMS sheet: top equity strategies + Multi Asset / Hybrid / Debt, with benchmarks."""
+    p = load("pms.json")
+    H = {h: i for i, h in enumerate(p["horizons"])}
+    cols = ["1m", "3m", "6m", "1y", "3y", "5y"]
+    sel = [s for s in p["strategies"] if (s["aum"] or 0) >= min_aum]
+
+    def rows_for(kind, limit=None):
+        r = sorted([s for s in sel if s["t"] == kind and s["r"][H["1y"]] is not None],
+                   key=lambda s: s["r"][H["1y"]], reverse=True)
+        return r[:limit] if limit else r
+
+    def row(s):
+        return (tidy_case(s["n"]), [f"{s['aum']:,.0f}"] + [s["r"][H[h]] for h in cols])
+
+    def bench(name):
+        b = p["benchmarks"].get(name)
+        return (name, [""] + [b[H[h]] if b and H[h] < len(b) else None for h in cols]) if b else None
+
+    asof = nice_date(p["asof"])
+    labels = ["AUM ₹cr", "1M", "3M", "6M", "1Y", "3Y", "5Y"]
+    xs = [0.50, 0.58, 0.655, 0.73, 0.805, 0.875, 0.94]
+    out_dir = Path(out_dir)
+    slides = []
+    eq = rows_for("Equity", top_equity)
+    pages = [
+        [(f"Equity · top {len(eq)} by 1-year return", [row(s) for s in eq])],
+        [(f"Multi Asset", [row(s) for s in rows_for("Multi Asset", 10)]),
+         (f"Hybrid", [row(s) for s in rows_for("Hybrid", 6)]),
+         (f"Debt", [row(s) for s in rows_for("Debt", 8)]),
+         ("Benchmarks (TRI)", [b for b in (bench("BSE 500 TRI"), bench("Nifty 50 TRI"),
+                                           bench("CRISIL Composite Bond Index")) if b])],
+    ]
+    for i, secs in enumerate(pages, 1):
+        fig = sheet_frame(i, len(pages), "PORTFOLIO MANAGEMENT SERVICES · MONTHLY", "PMS Performance Sheet",
+                          f"Strategies with AUM ≥ ₹{min_aum} cr · as reported to APMI · month-end {asof}", labels, xs)
+        sheet_rows(fig, [(t, r) for t, r in secs if r], xs=xs, name_chars=32)
+        fig.text(0.5, 0.098, "Returns in %, as reported by providers to APMI. 1Y and longer are annualised. "
+                 "PMS minimum investment ₹50 lakh.", color=MUTED, fontsize=9.5, ha="center")
+        mf_footer(fig, "APMI, month-end data.", pms=True)
+        slides.append(save(fig, out_dir / f"slide_{i:02d}"))
+    return slides, {"asof": p["asof"], "screened": len(sel),
+                    "top": [(short_name(s["n"]), short_name(s["p"]), s["r"][H["1y"]]) for s in eq[:3]]}
