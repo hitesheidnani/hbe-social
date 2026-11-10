@@ -42,13 +42,14 @@ def build(out):
                             author="HBE Capital")
     W = landscape(A4)[0] - 28 * mm
     s = [Paragraph("HBE Capital · Social media posting schedule", H1),
-         Paragraph("Updated 10 Nov 2026 (evening) · all times IST · fully automatic (GitHub, runs with your PC off)", SMALL),
+         Paragraph("Updated 10 Nov 2026 · all times IST · fully automatic (GitHub, runs with your PC off)", SMALL),
          Spacer(1, 6),
-         Paragraph("Channels: every post goes to <b>Instagram</b> (post + Story; ranked fund lists also as a "
-                   "10→1 countdown Reel), the <b>HBE Capital Investments Facebook Page</b> and <b>LinkedIn</b> "
-                   "(Hitesh Eidnani's profile). The system checks every 15 minutes, so each post goes out within "
+         Paragraph("Channels: every post goes automatically to <b>Instagram @hbecapital</b> (post + Story; ranked lists also as a "
+                   "10→1 countdown Reel; personal cards as Reels), the <b>HBE Capital Investments Facebook Page</b> and "
+                   "<b>LinkedIn</b> (Hitesh Eidnani's profile). <b>X @hitesheidnani</b>: weekly pack you schedule manually "
+                   "(free). <b>YouTube Shorts</b>: being set up. The system checks every 15 minutes, so each post goes out within "
                    "about 15 minutes of its slot; a slot more than 3 hours late is skipped rather than posted out of order.", P),
-         Paragraph("Daily posts (10-11 a day, 3-4 of them on US markets)", H2),
+         Paragraph("Daily posts (13-14 a day; 4 on US markets)", H2),
          table([
              ["Time", "Post", "What it shows", "Rotation", "Extras"],
              ["08:00", "Market update", "Nifty 50, Nifty Bank, Midcap 150, Smallcap 250 · S&P 500, Nasdaq 100, Dow, Russell 2000 · "
@@ -58,9 +59,11 @@ def build(out):
               "11 S&P sectors, last session's moves. Saturday: weekly US market health: trend vs 50/100/200-day averages "
               "(green/red), breadth of all S&P 500 stocks (% above averages, new highs vs lows, advancers vs decliners), "
               "Risk-on / Neutral / Risk-off", "Tue-Sat", "Story"],
-             ["09:00", "Market psychology", "Quote card with author + short lesson in the caption: Mark Douglas, Livermore, "
-              "Seykota, Buffett, Munger, Templeton, Lynch, maxims (cut losses short, buy high sell higher)",
-              "40 quotes, one a day", "Story"],
+             ["09:00", "Market psychology", "Quote card with author + short lesson in the caption: Mark Douglas, Yvan Byeajee "
+              "(@TradingComposur, credited), Livermore, Seykota, Buffett, Munger, Templeton, Lynch, maxims",
+              "52 quotes, one a day", "Story"],
+             ["10:00", "Personal card (Reel)", "Your photo, name, title & ARN + one short punchy idea (tweet style). "
+              "Posted as an 8-second Reel so Instagram shows it to non-followers", "50 cards, rotating", "Story"],
              ["11:00", "Market Monitor", "Nifty indices from NSE (price returns). Heatmap of 1y / 3y / 5y returns, or "
               "'How far from the top?' table: % from all-time high, ATH date, days since ATH, % from 52-week high",
               "Mon Broad heatmap · Tue Sectoral heatmap · Wed Broad drawdown · Thu Strategy heatmap · Fri Thematic "
@@ -75,10 +78,15 @@ def build(out):
              ["15:00", "Education", "MF Basics carousel (5-6 slides) OR Power of compounding illustration",
               "Alternate days. 25 MF Basics lessons · compounding: SIP at 12%/15%, start early (25 vs 35), "
               "step-up SIP, lumpsum & rule of 72", "Story"],
+             ["16:00", "Momentum & factors", "Mon factor scoreboard (momentum, quality, value, alpha, low vol vs Nifty 200) · "
+              "Tue/Fri lesson carousel (what momentum is, why it works, evidence, rule-based framework, crashes, value vs growth, "
+              "quality, low vol, factor rotation) · Wed/Sun momentum quote · Thu factor calendar-year heatmap · Sat momentum "
+              "drawdown chart", "By weekday", "Story"],
              ["17:30", "Feature", "Mon SIP card (5 yrs) · Tue SIF Performance Sheet (all SIFs by strategy, 1W/1M/3M/6M/"
               "since launch, 2-slide carousel) · Wed Momentum funds (1 yr) · Thu PMS Performance Sheet (all AUMs; equity, "
               "multi-asset, hybrid, debt; carousel) · Fri SIP card (10 yrs) · Sat PMS top 10 (3 yrs) · Sun Momentum (3 yrs)",
               "By weekday", "Story (+ Reel on ranked cards)"],
+             ["18:30", "Personal card (Reel)", "Second personal card of the day", "Rotating", "Story"],
              ["19:00", "US theme", "Mon S&P sector heatmap · Tue S&P 500 in rupees vs Nifty 50 · Wed US indices & Mag 7 "
               "vs all-time highs · Thu US style monitor (growth/value, large/small, equal-weight, momentum, quality, "
               "low vol) · Fri S&P 500 calendar-year returns · Sat US Investing Basics carousel · Sun US weekly wrap",
@@ -91,6 +99,10 @@ def build(out):
          Paragraph("Weekly", H2),
          table([
              ["When", "What", "How"],
+             ["Sunday", "X weekly pack: 21 X-ready posts for the next week (3 a day: personal card 09:00, psychology "
+              "quote 13:00, MF basics / momentum lesson / US wisdom / compounding 18:00)", "Made automatically in GitHub "
+              "(posts/x-week-<date>/README.md). A GitHub to-do 'Schedule this week's X posts' is assigned to hitesheidnani "
+              "(email + GitHub app). You schedule them in X's free scheduler (about 15 min), then close the to-do."],
              ["Weekly", "The Disciplined Investor: LinkedIn Newsletter article (800-1,200 words with charts), "
               "same article on Substack", "Claude drafts it with data and charts; you paste and publish (about 10 min). "
               "Issue #1: 'How many active funds actually beat their index?'"],
@@ -116,7 +128,12 @@ def build(out):
          Paragraph("Planned, not built yet", H2),
          table([
              ["Item", "Plan"],
-             ["X (Twitter)", "Automation setup still to do (developer account, possibly a paid API plan)"],
+             ["X automation (optional)", "Fully automatic X needs paid API credits (about $0.015 per post, $0.20 with a "
+              "link). Declined for now; weekly manual pack instead. Developer Console account 'HBE Capital' exists, $0 balance."],
+             ["YouTube Shorts", "Free API. Google keeps uploads from new apps private until a one-time API audit is approved "
+              "(can take weeks). Plan: set up the Google project and channel, submit the audit, then up to 5 Shorts a day."],
+             ["Chart Report-style charts", "Decision pending (reminder set). Third-party charts are copyrighted; options: our "
+              "own 'Chart of the Day' from public data, native X reposts, or a collaboration."],
              ["LinkedIn company page", "Needs LinkedIn's Community Management API approval; posts go to your profile until then"],
          ], [45 * mm, W - 45 * mm]),
          Paragraph("Maintenance", H2),
@@ -126,8 +143,39 @@ def build(out):
               "(openid, profile, w_member_social) → Claude stores it"],
              ["Reset Meta app secret", "Once (it was shown in chat)", "developers.facebook.com → HBE Social Poster → "
               "App settings → Basic → Reset"],
+             ["Schedule X posts", "Every Sunday (GitHub reminder)", "Open the week's pack, schedule 21 posts in X, close "
+              "the to-do"],
+             ["Weekly article", "Weekly", "Paste The Disciplined Investor into LinkedIn (newsletter) and Substack"],
              ["Change content", "Any time", "Quotes, lessons, rotations live in the hbe-social repo (content/*.json, daily.py)"],
          ], [45 * mm, 55 * mm, W - 100 * mm]),
+         Paragraph("Accounts & logins (no passwords or keys here)", H2),
+         table([
+             ["What", "Account", "Notes"],
+             ["Instagram", "@hbecapital (Business account)", "Linked to Facebook Page 'HBE Capital Investments'. Bio link: "
+              "hbecapital.net/funds"],
+             ["Facebook", "Personal profile Hitesh Eidnani → Page 'HBE Capital Investments'", "Personal profile can't be "
+              "posted to by apps (Meta rule)"],
+             ["Meta developer app", "'HBE Social Poster' at developers.facebook.com", "Instagram + Page posting key never "
+              "expires. Reset the app secret once (it was shown in chat)"],
+             ["LinkedIn", "Hitesh Eidnani profile; app 'HBE Social Poster'", "Token expires every 60 days (next ~8 Jan 2027)"],
+             ["X", "@hitesheidnani; Developer Console 'HBE Capital'", "No credits bought; weekly manual pack"],
+             ["GitHub: social posts & FundNavigator", "hitesheidnani", "Repos hbe-social (public) and fundnavigator. Weekly X "
+              "reminder and notifications go to this account's email"],
+             ["GitHub: crescendo", "quantboy8", "Separate; each project folder now uses its own account automatically"],
+         ], [42 * mm, 70 * mm, W - 112 * mm]),
+         Paragraph("Where things are saved", H2),
+         table([
+             ["Item", "Location"],
+             ["This schedule (PDF)", r"C:\Users\HBE\Projects\Social\HBE Capital - Posting Schedule.pdf"],
+             ["Keys / tokens (private)", r"C:\Users\HBE\Projects\Social\_secrets\ (Meta, LinkedIn, X). Also stored "
+              "encrypted as GitHub secrets"],
+             ["Articles (The Disciplined Investor)", "C:\\Users\\HBE\\Projects\\Social\\articles\\"],
+             ["Daily posts (images + captions + status)", "github.com/hitesheidnani/hbe-social → posts/<date>/"],
+             ["X weekly packs", "github.com/hitesheidnani/hbe-social → posts/x-week-<Monday>/README.md"],
+             ["Content you can edit", "hbe-social/content/: psychology.json, tweets.json, education.json, "
+              "momentum_lessons.json, momentum_quotes.json, us_quotes.json, us_education.json"],
+             ["Post schedule & rotation logic", "hbe-social/daily.py · posting: publish.py · timer: .github/workflows/tick.yml"],
+         ], [55 * mm, W - 55 * mm]),
          Spacer(1, 8),
          Paragraph("Repo: github.com/hitesheidnani/hbe-social · Daily images & captions: posts/&lt;date&gt;/ · "
                    "Run a post by hand: GitHub → Actions → Publish to Instagram → Run workflow (slot name)", SMALL)]
