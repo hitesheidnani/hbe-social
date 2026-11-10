@@ -82,3 +82,18 @@ def make_reel(card_jpg, rows, out_mp4, hook="WAIT FOR #1"):
 if __name__ == "__main__":
     import sys
     print(make_reel(sys.argv[1], int(sys.argv[2]) if len(sys.argv) > 2 else 10, sys.argv[3] if len(sys.argv) > 3 else "reel.mp4"))
+
+
+def static_reel(card_jpg, out_mp4, secs=8.0):
+    """A still card as a 9:16 Reel (card centred on the brand background, soft generated audio)."""
+    from brand import story_version
+    frame = story_version(card_jpg, footer_text="Follow @hbecapital for more")
+    ff = [imageio_ffmpeg.get_ffmpeg_exe(), "-y", "-loglevel", "error", "-loop", "1", "-t", f"{secs}", "-i", str(frame),
+          "-f", "lavfi", "-t", f"{secs}", "-i",
+          "aevalsrc='0.05*sin(2*PI*220*t)+0.04*sin(2*PI*277.2*t)+0.035*sin(2*PI*329.6*t)':s=44100",
+          "-filter_complex", f"[0:v]scale=1080:1920,format=yuv420p[v];[1:a]tremolo=f=0.25:d=0.4,afade=t=in:d=1,"
+          f"afade=t=out:st={secs - 1.5}:d=1.5[a]", "-map", "[v]", "-map", "[a]", "-r", "30", "-c:v", "libx264",
+          "-preset", "medium", "-crf", "20", "-c:a", "aac", "-b:a", "128k", "-shortest", "-movflags", "+faststart",
+          str(out_mp4)]
+    subprocess.run(ff, check=True)
+    return Path(out_mp4), secs

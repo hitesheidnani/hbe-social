@@ -107,3 +107,52 @@ def story_version(card_path, label="NEW POST", footer_text="See the full post on
     out = card_path.with_name(card_path.stem + "_story.jpg")
     story.save(out, quality=92, optimize=True)
     return out
+
+
+PERSON = "Hitesh Eidnani"
+PERSON_TITLE = "Managing Partner, HBE Capital"
+
+
+def _avatar(size=220):
+    """Circular crop of assets/headshot.jpg (face-centred)."""
+    from PIL import Image, ImageDraw
+    import numpy as np
+    im = Image.open(ROOT / "assets" / "headshot.jpg").convert("RGB")
+    w, h = im.size
+    side = int(min(w, h) * 0.62)
+    cx, cy = int(w * 0.54), int(h * 0.27)                # face sits slightly right of centre, upper third
+    box = (max(cx - side // 2, 0), max(cy - side // 2, 0))
+    im = im.crop((box[0], box[1], box[0] + side, box[1] + side)).resize((size, size), Image.LANCZOS)
+    mask = Image.new("L", (size, size), 0)
+    ImageDraw.Draw(mask).ellipse((0, 0, size - 1, size - 1), fill=255)
+    rgba = im.convert("RGBA")
+    rgba.putalpha(mask)
+    return np.asarray(rgba)
+
+
+def tweet_card(paragraphs, out):
+    """Personal 'tweet-style' card: photo, name, title, ARN, then a short punchy message.
+    The text is measured after layout and shrunk until it fits; the whole block is centred vertically."""
+    def wrap_para(p, width):
+        return "\n".join(textwrap.fill(line, width) for line in p.split("\n"))
+    head_h, gap, bottom_limit = 0.15, 0.05, 0.13
+    for size, width in ((40, 28), (36, 31), (32, 35), (29, 38), (26, 42)):
+        fig = canvas()
+        text = "\n\n".join(wrap_para(p, width) for p in paragraphs)
+        t = fig.text(0.08, 0.5, text, color=TEXT, fontsize=size, va="top", linespacing=1.35)
+        fig.canvas.draw()
+        text_h = t.get_window_extent(fig.canvas.get_renderer()).height / fig.bbox.height
+        group = head_h + gap + text_h
+        if group <= 0.9 - bottom_limit:
+            break
+        plt.close(fig)
+    top = min(0.9, 0.5 + group / 2 + 0.03)
+    t.set_y(top - head_h - gap)
+    ax = fig.add_axes([0.075, top - head_h, head_h * 1350 / 1080, head_h])
+    ax.imshow(_avatar())
+    ax.axis("off")
+    fig.text(0.29, top - 0.04, PERSON, color=TEXT, fontsize=34, weight="heavy", va="center")
+    fig.text(0.29, top - 0.085, PERSON_TITLE, color=MUTED, fontsize=19, va="center")
+    fig.text(0.29, top - 0.118, f"AMFI-registered MF Distributor · {ARN}", color=MUTED, fontsize=15, va="center")
+    footer(fig)
+    return save(fig, out)

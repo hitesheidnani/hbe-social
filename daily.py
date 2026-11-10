@@ -3,6 +3,7 @@
 Usage:  python daily.py [YYYY-MM-DD]
 Daily mix (IST):
   08:30  US close (Tue-Fri, after Mon-Thu sessions) · Sat: weekly US market health (trend + breadth)
+  10:00 & 18:30  Personal 'tweet-style' cards (photo, name, ARN, one punchy idea), posted as Reels
   13:30  Magnificent 7 spotlight (one stock a day, rotating) · 21:30 US investing wisdom quote
   19:00  US theme: Mon sectors · Tue US vs India · Wed from highs · Thu style · Fri S&P years · Sat US basics · Sun wrap
   08:00  Market update: key Indian & US indices, gold, oil, US 10Y, USD/INR with 200-DMA trend
@@ -23,11 +24,11 @@ import edu_posts as edu
 import market_posts as mkt
 import update_post as upd
 import us_posts as us
-from brand import quote_card, story_version, ARN, MF_DISCLAIMER, EDU
+from brand import quote_card, story_version, tweet_card, ARN, MF_DISCLAIMER, EDU
 
 ROOT = Path(__file__).parent
-SLOTS = {"update": "08:00", "us_close": "08:30", "psych": "09:00", "market": "11:00", "long": "12:30", "edu": "15:00",
-         "spotlight": "13:30", "feature": "17:30", "us_theme": "19:00", "short": "20:00", "us_wisdom": "21:30"}
+SLOTS = {"update": "08:00", "us_close": "08:30", "psych": "09:00", "tweet_am": "10:00", "market": "11:00", "long": "12:30", "edu": "15:00",
+         "spotlight": "13:30", "feature": "17:30", "tweet_pm": "18:30", "us_theme": "19:00", "short": "20:00", "us_wisdom": "21:30"}
 # 19:00 US theme by weekday (Mon=0); heatmap / style periods rotate 1y -> 3y -> 5y week to week
 US_THEME = {0: "sectors", 1: "vs_india", 2: "drawdown", 3: "style", 4: "years", 5: "us_edu", 6: "wrap"}
 US_TAGS = "#usstocks #sp500 #nasdaq #wallstreet #investinus"
@@ -358,6 +359,15 @@ def cap_us_wisdom(q):
                       f"⚠️ {EDU}", "", "#warrenbuffett #investingwisdom #longterminvesting #stockmarket #investing"])
 
 
+def cap_tweet(paras):
+    body = "\n\n".join(paras)
+    return "\n".join([body, "", "💬 Agree or disagree? Tell me in the comments.",
+                      "📤 Share this with someone who needs to hear it.",
+                      "Follow @hbecapital for daily notes on investing, markets and discipline.", "",
+                      f"⚠️ {EDU}\nHitesh Eidnani · Managing Partner, HBE Capital · AMFI-registered MFD · {ARN}", "",
+                      "#investing #stockmarketindia #mutualfunds #personalfinance #wealthcreation"])
+
+
 def cap_us_edu(t, n):
     points = "\n".join(f"→ {h}" for h, _ in t["slides"])
     return "\n".join([f"US Investing Basics #{n}: {t['title']} 🇺🇸", "", t["hook"], "", points, "",
@@ -449,6 +459,12 @@ def build(day: dt.date):
             add("us_theme", f.with_suffix(".jpg"), cap_us_theme(kind, r), "us_" + kind)
     except Exception as e:
         print("us_theme: skipped,", e)
+
+    # 10:00 and 18:30 personal tweet-style cards (as Reels)
+    tw = json.loads((ROOT / "content" / "tweets.json").read_text())
+    for slot, k, f in (("tweet_am", (2 * d) % len(tw), "1b_tweet_am"), ("tweet_pm", (2 * d + 1) % len(tw), "5b_tweet_pm")):
+        add(slot, tweet_card(tw[k], out / f), cap_tweet(tw[k]), "tweet")
+        plan[-1]["as_reel"] = True
 
     # 13:30 Magnificent 7 spotlight
     try:

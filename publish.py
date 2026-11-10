@@ -115,11 +115,11 @@ def post_facebook(image_urls, caption):
     return post_id, f"https://www.facebook.com/{post_id}"
 
 
-def post_reel(mp4, caption, thumb_ms):
-    """Upload a local MP4 as a Reel (Reels tab only, not the main grid) via resumable upload."""
+def post_reel(mp4, caption, thumb_ms, share_to_feed=False):
+    """Upload a local MP4 as a Reel via resumable upload (Reels tab only unless share_to_feed)."""
     ig, token = os.environ["IG_USER_ID"], os.environ["META_PAGE_TOKEN"]
     c = graph("POST", f"{ig}/media", media_type="REELS", upload_type="resumable", caption=caption,
-              share_to_feed="false", thumb_offset=str(thumb_ms), access_token=token)
+              share_to_feed="true" if share_to_feed else "false", thumb_offset=str(thumb_ms), access_token=token)
     data = Path(mp4).read_bytes()
     req = urllib.request.Request(c["uri"], data=data, method="POST", headers={
         "Authorization": f"OAuth {token}", "offset": "0", "file_size": str(len(data))})
@@ -187,7 +187,12 @@ def main():
         print("Feed post already published:", rec["instagram"].get("url"))   # never post twice
     else:
         try:
-            if p.get("carousel"):
+            if p.get("as_reel"):            # personal cards: post the Reel itself (it also shows in the grid)
+                import tempfile
+                from reel import static_reel
+                mp4, _ = static_reel(ROOT / p["image"], Path(tempfile.mkdtemp()) / "card.mp4")
+                media, link = post_reel(mp4, p["caption"], 1000, share_to_feed=True)
+            elif p.get("carousel"):
                 media, link = post_carousel(
                     [f"https://raw.githubusercontent.com/{repo}/main/{c}" for c in p["carousel"]], p["caption"])
             else:
