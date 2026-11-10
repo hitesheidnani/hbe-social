@@ -185,5 +185,30 @@
    "ok": null,
    "skipped": "too late"
   }
+ },
+ "feature": {
+  "instagram": {
+   "ok": true,
+   "id": "18388514779233855",
+   "url": "https://www.instagram.com/p/Dfj36BAlwf5/",
+   "at": "2026-11-10T17:39:40+05:30"
+  },
+  "instagram_story": {
+   "ok": true,
+   "id": "18163975207497410",
+   "at": "2026-11-10T17:39:40+05:30"
+  },
+  "facebook": {
+   "ok": true,
+   "id": "1610477555472993_122099160711546038",
+   "url": "https://www.facebook.com/1610477555472993_122099160711546038",
+   "at": "2026-11-10T17:39:40+05:30"
+  },
+  "linkedin": {
+   "ok": true,
+   "id": "urn:li:ugcPost:7525892599195365376",
+   "url": "https://www.linkedin.com/feed/update/urn:li:ugcPost:7525892599195365376/",
+   "at": "2026-11-10T17:39:40+05:30"
+  }
  }
 }
