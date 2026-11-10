@@ -1,1 +1,27 @@
-{}
+{
+ "update": {
+  "instagram": {
+   "ok": true,
+   "id": "18073718258759441",
+   "url": "https://www.instagram.com/p/DfjAnczl91y/",
+   "at": "2026-11-10T09:36:41+05:30"
+  },
+  "instagram_story": {
+   "ok": true,
+   "id": "18142990828612790",
+   "at": "2026-11-10T09:36:41+05:30"
+  },
+  "facebook": {
+   "ok": true,
+   "id": "1610477555472993_122098854615546038",
+   "url": "https://www.facebook.com/1610477555472993_122098854615546038",
+   "at": "2026-11-10T09:36:41+05:30"
+  },
+  "linkedin": {
+   "ok": true,
+   "id": "urn:li:share:7525771008708902912",
+   "url": "https://www.linkedin.com/feed/update/urn:li:share:7525771008708902912/",
+   "at": "2026-11-10T09:36:41+05:30"
+  }
+ }
+}
