@@ -4,6 +4,7 @@ Usage:  python daily.py [YYYY-MM-DD]
 Daily mix (IST):
   08:30  US close (Tue-Fri, after Mon-Thu sessions) · Sat: weekly US market health (trend + breadth)
   10:00 & 18:30  Personal 'tweet-style' cards (photo, name, ARN, one punchy idea), posted as Reels
+  16:00  Momentum & factors: Mon scoreboard · Tue/Fri lesson carousel · Wed/Sun quote · Thu factor years · Sat drawdowns
   13:30  Magnificent 7 spotlight (one stock a day, rotating) · 21:30 US investing wisdom quote
   19:00  US theme: Mon sectors · Tue US vs India · Wed from highs · Thu style · Fri S&P years · Sat US basics · Sun wrap
   08:00  Market update: key Indian & US indices, gold, oil, US 10Y, USD/INR with 200-DMA trend
@@ -24,10 +25,11 @@ import edu_posts as edu
 import market_posts as mkt
 import update_post as upd
 import us_posts as us
+import factor_posts as fac
 from brand import quote_card, story_version, tweet_card, ARN, MF_DISCLAIMER, EDU
 
 ROOT = Path(__file__).parent
-SLOTS = {"update": "08:00", "us_close": "08:30", "psych": "09:00", "tweet_am": "10:00", "market": "11:00", "long": "12:30", "edu": "15:00",
+SLOTS = {"update": "08:00", "us_close": "08:30", "psych": "09:00", "tweet_am": "10:00", "market": "11:00", "long": "12:30", "edu": "15:00", "factor": "16:00",
          "spotlight": "13:30", "feature": "17:30", "tweet_pm": "18:30", "us_theme": "19:00", "short": "20:00", "us_wisdom": "21:30"}
 # 19:00 US theme by weekday (Mon=0); heatmap / style periods rotate 1y -> 3y -> 5y week to week
 US_THEME = {0: "sectors", 1: "vs_india", 2: "drawdown", 3: "style", 4: "years", 5: "us_edu", 6: "wrap"}
@@ -368,6 +370,43 @@ def cap_tweet(paras):
                       "#investing #stockmarketindia #mutualfunds #personalfinance #wealthcreation"])
 
 
+FAC_TAGS = "#momentuminvesting #factorinvesting #systematictrading #quant #stockmarketindia"
+FAC_NOTE = ("Index figures are NSE price returns; history before each index's launch is back-calculated by NSE. "
+            "Not a recommendation.")
+
+
+def cap_factor(kind, r):
+    if kind == "scoreboard":
+        rows = {l: v for l, v, _ in r["rows"]}
+        head = f"Factor Scoreboard India: Momentum, Quality, Value, Alpha, Low Vol | {r['asof']:%b %Y} 📊"
+        body = [f"{l}: 10Y {v[3]:.1f}%/yr · since 2005 {v[4]:.1f}%/yr · worst fall {dd:.0f}%" for l, v, dd in r["rows"]
+                if v[3] is not None]
+        body += ["", "Every factor has beaten the market over some periods and lagged in others. "
+                 "The worst-fall column is the price of each factor's long-run return."]
+    elif kind == "years":
+        w = ", ".join(f"{k} {v}" for k, v in sorted(r["wins"].items(), key=lambda x: -x[1]))
+        head = f"Factors Take Turns: {len(r['years']) - 1} Years of Nifty Factor Returns 🔄"
+        body = [f"Years each factor finished first: {w}.", "",
+                "No factor wins every year. Chasing last year's winner is how investors end up buying high and selling low. "
+                "A rule-based, multi-factor approach removes the guesswork."]
+    else:
+        head = "The Price of Momentum: Deeper Falls, Higher Long-Run Returns 📉📈"
+        body = [f"Worst fall since 2005: Nifty200 Momentum 30 {r['mdd_m']:.0f}% vs Nifty 200 {r['mdd_k']:.0f}%.",
+                f"Today: Momentum is {r['now_m']:.1f}% below its peak; Nifty 200 {r['now_k']:.1f}%.",
+                f"10-year CAGR: Momentum {r['r10'][0]:.1f}% vs Nifty 200 {r['r10'][1]:.1f}%.", "",
+                "Momentum's long-run edge comes with sharp drawdowns. That's why a systematic framework sizes it "
+                "sensibly and uses rules, not emotions, to stay the course."]
+    return "\n".join([head, ""] + body + ["", "🔖 Save this · 📤 Share with a fellow systematic investor", "",
+                                          f"⚠️ {EDU} {FAC_NOTE}\nHBE Capital", "", FAC_TAGS])
+
+
+def cap_factor_lesson(t, n):
+    points = "\n".join(f"→ {h}" for h, _ in t["slides"])
+    return "\n".join([f"Momentum & Factors #{n}: {t['title']} 🧠", "", t["hook"], "", points, "",
+                      f"💡 {t['takeaway']}", "", "👉 Swipe through and save this 🔖", "",
+                      f"⚠️ {EDU}\nHBE Capital", "", t["tags"]])
+
+
 def cap_us_edu(t, n):
     points = "\n".join(f"→ {h}" for h, _ in t["slides"])
     return "\n".join([f"US Investing Basics #{n}: {t['title']} 🇺🇸", "", t["hook"], "", points, "",
@@ -465,6 +504,32 @@ def build(day: dt.date):
     for slot, k, f in (("tweet_am", (2 * d) % len(tw), "1b_tweet_am"), ("tweet_pm", (2 * d + 1) % len(tw), "5b_tweet_pm")):
         add(slot, tweet_card(tw[k], out / f), cap_tweet(tw[k]), "tweet")
         plan[-1]["as_reel"] = True
+
+    # 16:00 momentum & factors
+    try:
+        wd = day.weekday()
+        f = out / "5c_factor"
+        if wd == 0:
+            r = fac.factor_scoreboard(f)
+            add("factor", f.with_suffix(".jpg"), cap_factor("scoreboard", r), "factor_scoreboard")
+        elif wd == 3:
+            r = fac.factor_years(f)
+            add("factor", f.with_suffix(".jpg"), cap_factor("years", r), "factor_years")
+        elif wd == 5:
+            r = fac.momentum_drawdown(f)
+            add("factor", f.with_suffix(".jpg"), cap_factor("drawdown", r), "factor_drawdown")
+        elif wd in (1, 4):
+            les = json.loads((ROOT / "content" / "momentum_lessons.json").read_text())
+            k = ((d // 7) * 2 + (0 if wd == 1 else 1)) % len(les)
+            slides = edu.edu_carousel(les[k], k + 1, out / "factor_lesson", series="MOMENTUM & FACTORS", foot="generic")
+            add("factor", slides[0], cap_factor_lesson(les[k], k + 1), "factor_lesson", carousel=slides)
+        else:
+            mq = json.loads((ROOT / "content" / "momentum_quotes.json").read_text())
+            q = mq[(d // 7 * 2 + (0 if wd == 2 else 1)) % len(mq)]
+            add("factor", quote_card(q["quote"], "Momentum investing", f, author=q["author"]), cap_psych(q)
+                .replace(TAGS["psych"], FAC_TAGS), "factor_quote")
+    except Exception as e:
+        print("factor: skipped,", e)
 
     # 13:30 Magnificent 7 spotlight
     try:
