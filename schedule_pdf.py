@@ -48,13 +48,13 @@ def build(out):
                    "10→1 countdown Reel), the <b>HBE Capital Investments Facebook Page</b> and <b>LinkedIn</b> "
                    "(Hitesh Eidnani's profile). The system checks every 15 minutes, so each post goes out within "
                    "about 15 minutes of its slot; a slot more than 3 hours late is skipped rather than posted out of order.", P),
-         Paragraph("Daily posts (8-9 a day)", H2),
+         Paragraph("Daily posts (10-11 a day, 3-4 of them on US markets)", H2),
          table([
              ["Time", "Post", "What it shows", "Rotation", "Extras"],
              ["08:00", "Market update", "Nifty 50, Nifty Bank, Midcap 150, Smallcap 250 · S&P 500, Nasdaq 100, Dow, Russell 2000 · "
               "Gold, Brent, US 10Y, USD/INR. Price, 1-day change, % vs 200-day average, trend (Bullish / Bearish, Neutral within ±1%; "
               "Rising / Falling for yield and USD/INR)", "Same format daily", "Story"],
-             ["08:30", "US close / US market health", "Tue-Fri: S&P 500, Nasdaq 100, Dow, Russell 2000, VIX, Magnificent 7 and "
+             ["08:30", "US close / US market health", "Tue-Fri: S&P 500, Nasdaq 100, Dow, Russell 2000, VIX, US 10Y yield, Dollar Index, Magnificent 7 and "
               "11 S&P sectors, last session's moves. Saturday: weekly US market health: trend vs 50/100/200-day averages "
               "(green/red), breadth of all S&P 500 stocks (% above averages, new highs vs lows, advancers vs decliners), "
               "Risk-on / Neutral / Risk-off", "Tue-Sat", "Story"],
@@ -69,6 +69,9 @@ def build(out):
              ["12:30", "Top 10 funds (long term)", "Top 10 funds in a category by 5 / 7 / 10-year CAGR vs benchmark, "
               "how many beat the index, median fund", "9 categories: Small, Flexi, Mid, Large, ELSS, Large & Mid, "
               "Multi, Value, Focused", "Story + Reel"],
+             ["13:30", "Magnificent 7 spotlight (US)", "One stock a day (Apple, Microsoft, Nvidia, Amazon, Alphabet, Meta, "
+              "Tesla): 1-year chart with 200-day average, trend, distance from all-time high, 52-week range, 1/3/5-year returns",
+              "Rotates daily", "Story"],
              ["15:00", "Education", "MF Basics carousel (5-6 slides) OR Power of compounding illustration",
               "Alternate days. 25 MF Basics lessons · compounding: SIP at 12%/15%, start early (25 vs 35), "
               "step-up SIP, lumpsum & rule of 72", "Story"],
@@ -82,6 +85,8 @@ def build(out):
               "By weekday; periods rotate 1y/3y/5y", "Story"],
              ["20:00", "Top 10 funds (1-3 yrs)", "Top 10 funds in a category by 1 / 2 / 3-year CAGR vs benchmark",
               "Same 9 categories, different one from 12:30", "Story + Reel"],
+             ["21:30", "US investing wisdom", "Quote card: Buffett, Bogle, Lynch, Graham, Munger, Templeton, Fisher",
+              "20 quotes, one a day", "Story"],
          ], [16 * mm, 32 * mm, 105 * mm, 85 * mm, W - 238 * mm]),
          Paragraph("Weekly", H2),
          table([
