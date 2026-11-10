@@ -14,8 +14,13 @@ LIMIT = 270          # X allows 280 characters (emoji count double); keep a marg
 TIMES = ["09:00", "13:00", "18:00"]
 
 
+FOLLOW = "\n\n📲 Insta & YouTube: @hbecapital"
+
+
 def fit(text, limit=LIMIT):
-    """Trim to X's length, cutting at a sentence or word boundary."""
+    """Trim to X's length, cutting at a sentence or word boundary; add the follow line when it fits."""
+    if len(text) + len(FOLLOW) <= limit:
+        return text + FOLLOW
     if len(text) <= limit:
         return text
     cut = text[:limit - 1]

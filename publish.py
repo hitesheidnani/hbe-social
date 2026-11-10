@@ -35,6 +35,39 @@ def with_cta(caption):
     return caption + "\n\n" + CTA
 
 
+# Every post links to the other channels so people can follow everywhere.
+CHANNELS = {
+    "instagram": ("Instagram", "@hbecapital", "https://instagram.com/hbecapital"),
+    "youtube": ("YouTube", "@hbecapital", "https://youtube.com/@hbecapital"),
+    "x": ("X", "@hitesheidnani", "https://x.com/hitesheidnani"),
+    "linkedin": ("LinkedIn", "Hitesh Eidnani", os.environ.get("LI_PROFILE_URL", "")),
+    "facebook": ("Facebook", "HBE Capital Investments", f"https://facebook.com/{os.environ.get('FB_PAGE_ID', '')}"),
+}
+
+
+def follow_line(platform):
+    """'Follow us' line listing the other channels: handles on Instagram, clickable links elsewhere."""
+    parts = []
+    for key, (name, handle, url) in CHANNELS.items():
+        if key == platform or (key == "facebook" and platform == "instagram"):
+            continue
+        if platform == "instagram" or not url or url.endswith("/"):
+            parts.append(f"{name} {handle}")
+        else:
+            parts.append(f"{name}: {url}")
+    return "📲 Follow HBE Capital everywhere: " + " · ".join(parts)
+
+
+def for_platform(caption, platform):
+    """Insert the follow line just above the disclaimer (or at the end)."""
+    line = follow_line(platform)
+    lines = caption.split("\n")
+    for i, l in enumerate(lines):
+        if l.startswith("⚠️"):
+            return "\n".join(lines[:i] + [line, ""] + lines[i:])
+    return caption + "\n\n" + line
+
+
 def web_caption(caption):
     """Facebook / LinkedIn: links are clickable, so drop '(link in bio)' and use a full URL."""
     return caption.replace(f"{FN_URL} (link in bio)", f"https://{FN_URL}").replace("link in bio", f"https://{FN_URL}")
@@ -207,12 +240,13 @@ def main():
     else:
         try:
             if p.get("as_reel"):            # personal cards: post the Reel itself (it also shows in the grid)
-                media, link = post_reel(video_for(p), p["caption"], 1000, share_to_feed=True)
+                media, link = post_reel(video_for(p), for_platform(p["caption"], "instagram"), 1000, share_to_feed=True)
             elif p.get("carousel"):
                 media, link = post_carousel(
-                    [f"https://raw.githubusercontent.com/{repo}/main/{c}" for c in p["carousel"]], p["caption"])
+                    [f"https://raw.githubusercontent.com/{repo}/main/{c}" for c in p["carousel"]],
+                    for_platform(p["caption"], "instagram"))
             else:
-                media, link = post_instagram(image_url, p["caption"])
+                media, link = post_instagram(image_url, for_platform(p["caption"], "instagram"))
             rec["instagram"] = {"ok": True, "id": media, "url": link, "at": now.isoformat(timespec="seconds")}
             print("✅ Posted to Instagram:", link)
         except Exception as e:
@@ -232,7 +266,7 @@ def main():
         urls = ([f"https://raw.githubusercontent.com/{repo}/main/{c}" for c in p["carousel"]]
                 if p.get("carousel") else [image_url])
         try:
-            fid, flink = post_facebook(urls, p["caption"])
+            fid, flink = post_facebook(urls, for_platform(p["caption"], "facebook"))
             rec["facebook"] = {"ok": True, "id": fid, "url": flink, "at": now.isoformat(timespec="seconds")}
             print("✅ Posted to Facebook Page:", flink)
         except Exception as e:
@@ -244,7 +278,7 @@ def main():
         try:
             import linkedin
             files = [ROOT / c for c in p["carousel"]] if p.get("carousel") else [ROOT / p["image"]]
-            lid, llink = linkedin.post(files, p["caption"])
+            lid, llink = linkedin.post(files, for_platform(p["caption"], "linkedin"))
             rec["linkedin"] = {"ok": True, "id": lid, "url": llink, "at": now.isoformat(timespec="seconds")}
             print("✅ Posted to LinkedIn:", llink)
         except Exception as e:
@@ -255,7 +289,7 @@ def main():
     if rec["instagram"]["ok"] and p.get("reel") and not rec.get("instagram_reel", {}).get("ok"):
         try:
             mp4 = video_for(p)
-            rid, rlink = post_reel(mp4, p["caption"], 13000)
+            rid, rlink = post_reel(mp4, for_platform(p["caption"], "instagram"), 13000)
             rec["instagram_reel"] = {"ok": True, "id": rid, "url": rlink, "at": now.isoformat(timespec="seconds")}
             print("✅ Posted Reel:", rlink)
         except Exception as e:
@@ -267,7 +301,7 @@ def main():
         done_today = sum(1 for r in status.values() if r.get("youtube", {}).get("ok"))
         if done_today < youtube.MAX_PER_DAY:
             try:
-                vid, ylink, privacy = youtube.upload_short(video_for(p), p["caption"])
+                vid, ylink, privacy = youtube.upload_short(video_for(p), for_platform(p["caption"], "youtube"))
                 rec["youtube"] = {"ok": True, "id": vid, "url": ylink, "privacy": privacy, "at": now.isoformat(timespec="seconds")}
                 print("✅ Uploaded YouTube Short:", ylink, f"({privacy})")
             except Exception as e:
