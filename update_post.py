@@ -11,7 +11,7 @@ import market_posts as mkt
 
 INDIA = [("Nifty 50", "Nifty 50"), ("Nifty Bank", "Nifty Bank"),
          ("Nifty Midcap 150", "Nifty Midcap 150"), ("Nifty Smallcap 250", "Nifty Smallcap 250")]
-US = [("S&P 500", "^GSPC"), ("Nasdaq", "^IXIC"), ("Dow Jones", "^DJI"), ("Russell 2000", "^RUT")]
+US = [("S&P 500", "^GSPC"), ("Nasdaq 100", "^NDX"), ("Dow Jones", "^DJI"), ("Russell 2000", "^RUT")]
 GLOBAL = [("Gold ($/oz)", "GC=F", "px"), ("Brent crude ($)", "BZ=F", "px"),
           ("US 10Y yield", "^TNX", "yield"), ("USD / INR", "INR=X", "fx")]
 
@@ -66,9 +66,14 @@ def fmt_chg(s):
     return f"{s['chg']:+.0f} bp" if s["kind"] == "yield" else f"{s['chg']:+.2f}%"
 
 
+NEUTRAL_BAND = 1.0   # within ±1% of the 200 DMA the trend is 'Neutral', so tiny moves don't flip the tag
+
+
 def trend_tag(s):
     if s["kind"] in ("yield", "fx"):          # rates and currency: direction, not good/bad
         return ("Rising" if s["above"] else "Falling"), GOLD
+    if abs(s["vs200"]) < NEUTRAL_BAND:
+        return "Neutral", GOLD
     return ("Bullish" if s["above"] else "Bearish"), (UP if s["above"] else DOWN)
 
 
@@ -136,7 +141,7 @@ def caption(r, edu_line, foot_tags="#stockmarket #nifty50 #sp500 #marketupdate #
     def line(label, s):
         if not s:
             return f"{label}: n/a"
-        dot = "🟢" if s["above"] else "🔴"
+        dot = "🟡" if abs(s["vs200"]) < NEUTRAL_BAND else ("🟢" if s["above"] else "🔴")
         if s["kind"] in ("yield", "fx"):
             dot = "⬆️" if s["above"] else "⬇️"
         return f"{dot} {label}: {fmt_price(s)} ({fmt_chg(s)})"
@@ -144,7 +149,8 @@ def caption(r, edu_line, foot_tags="#stockmarket #nifty50 #sp500 #marketupdate #
     for sec, flag in (("India", "🇮🇳 India"), ("US", "🇺🇸 US"), ("Global", "🌍 Global")):
         parts += [flag] + [line(l, s) for l, s in r["rows"][sec]] + [""]
     parts += [f"Trend check: {r['bull']} of {r['total']} indices & commodities are above their 200-day average.",
-              "🟢 above the 200-day average (bullish trend) · 🔴 below (bearish trend) · "
+              "🟢 more than 1% above the 200-day average (bullish) · 🔴 more than 1% below (bearish) · "
+              "🟡 within 1% (neutral) · "
               "⬆️⬇️ rates and USD/INR vs their 200-day average.", "",
               f"India: NSE close {r['india_date']:%d %b}. US & global: close {r['us_date']:%d %b}. "
               "Index figures are price levels.", "",

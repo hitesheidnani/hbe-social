@@ -51,8 +51,8 @@ def build(out):
          Paragraph("Daily posts (7 a day)", H2),
          table([
              ["Time", "Post", "What it shows", "Rotation", "Extras"],
-             ["08:00", "Market update", "Nifty 50, Nifty Bank, Midcap 150, Smallcap 250 · S&P 500, Nasdaq, Dow, Russell 2000 · "
-              "Gold, Brent, US 10Y, USD/INR. Price, 1-day change, % vs 200-day average, trend (Bullish / Bearish; "
+             ["08:00", "Market update", "Nifty 50, Nifty Bank, Midcap 150, Smallcap 250 · S&P 500, Nasdaq 100, Dow, Russell 2000 · "
+              "Gold, Brent, US 10Y, USD/INR. Price, 1-day change, % vs 200-day average, trend (Bullish / Bearish, Neutral within ±1%; "
               "Rising / Falling for yield and USD/INR)", "Same format daily", "Story"],
              ["09:00", "Market psychology", "Quote card with author + short lesson in the caption: Mark Douglas, Livermore, "
               "Seykota, Buffett, Munger, Templeton, Lynch, maxims (cut losses short, buy high sell higher)",
