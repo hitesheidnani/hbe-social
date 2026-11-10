@@ -92,6 +92,8 @@ def numbered(rows):
 # ---------------------------------------------------------------- captions
 def cap_psych(item):
     by = f"\n— {item['author']}" if item.get("author") else ""
+    if item.get("book"):
+        by += f", {item['book']}"
     return (f"\"{item['quote']}\"{by}\n\n{item['note']}\n\n"
             "💬 Which rule do you struggle with most? Tell us below.\n"
             "🔖 Save this for the next time the market tests your patience.\n\n"
