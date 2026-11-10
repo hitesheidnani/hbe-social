@@ -328,10 +328,14 @@ def us_vs_india(out, nifty_points):
     spx_inr = [(d_, v * fx_on(d_)) for d_, v in spx if d_ >= fx_dates[0] and fx_on(d_)]
     asof = min(spx_inr[-1][0], nifty_points[-1][0])
     cut = lambda pts: [p for p in pts if p[0] <= asof]
+    # 10 years needs more history than Yahoo's daily range gives: use the long-run series for that one
+    spx_l, fx_l = yahoo("^GSPC", "max"), yahoo("INR=X", "max")
+    fxl = dict(fx_l)
+    spx_inr_l = [(d_, v * fxl[d_]) for d_, v in spx_l if d_ in fxl]
     rows = []
     for y_ in (1, 3, 5, 10):
-        rows.append((y_, cagr(cut(spx), y_), cagr(cut(spx_inr), y_), cagr(cut(nifty_points), y_),
-                     cagr(cut(fx), y_)))
+        a, b, f = (spx, spx_inr, fx) if y_ < 10 else (spx_l, spx_inr_l, fx_l)
+        rows.append((y_, cagr(cut(a), y_), cagr(cut(b), y_), cagr(cut(nifty_points), y_), cagr(cut(f), y_)))
     rows = [r for r in rows if None not in r]
     fig = canvas()
     header(fig, "US vs India", "S&P 500 in rupees vs Nifty 50",
