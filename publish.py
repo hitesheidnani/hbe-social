@@ -141,6 +141,25 @@ def post_reel(mp4, caption, thumb_ms, share_to_feed=False):
     return media, link
 
 
+_videos = {}
+
+
+def video_for(p):
+    """MP4 for this slot, or None: countdown Reel for ranked cards, static Reel for personal cards."""
+    if p["slot"] in _videos:
+        return _videos[p["slot"]]
+    import tempfile
+    v = None
+    if p.get("as_reel"):
+        from reel import static_reel
+        v, _ = static_reel(ROOT / p["image"], Path(tempfile.mkdtemp()) / "card.mp4")
+    elif p.get("reel"):
+        from reel import make_reel
+        v, _ = make_reel(ROOT / p["image"], p["reel"]["rows"], Path(tempfile.mkdtemp()) / "reel.mp4")
+    _videos[p["slot"]] = v
+    return v
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--slot")
@@ -188,10 +207,7 @@ def main():
     else:
         try:
             if p.get("as_reel"):            # personal cards: post the Reel itself (it also shows in the grid)
-                import tempfile
-                from reel import static_reel
-                mp4, _ = static_reel(ROOT / p["image"], Path(tempfile.mkdtemp()) / "card.mp4")
-                media, link = post_reel(mp4, p["caption"], 1000, share_to_feed=True)
+                media, link = post_reel(video_for(p), p["caption"], 1000, share_to_feed=True)
             elif p.get("carousel"):
                 media, link = post_carousel(
                     [f"https://raw.githubusercontent.com/{repo}/main/{c}" for c in p["carousel"]], p["caption"])
@@ -238,15 +254,25 @@ def main():
     # Countdown Reel for ranked cards (Reels tab only)
     if rec["instagram"]["ok"] and p.get("reel") and not rec.get("instagram_reel", {}).get("ok"):
         try:
-            import tempfile
-            from reel import make_reel
-            mp4, secs = make_reel(ROOT / p["image"], p["reel"]["rows"], Path(tempfile.mkdtemp()) / "reel.mp4")
-            rid, rlink = post_reel(mp4, p["caption"], int((secs - 1) * 1000))
+            mp4 = video_for(p)
+            rid, rlink = post_reel(mp4, p["caption"], 13000)
             rec["instagram_reel"] = {"ok": True, "id": rid, "url": rlink, "at": now.isoformat(timespec="seconds")}
             print("✅ Posted Reel:", rlink)
         except Exception as e:
             rec["instagram_reel"] = {"ok": False, "error": str(e), "at": now.isoformat(timespec="seconds")}
             print("⚠️ Reel failed:", e)
+    # YouTube Short for every video slot (max per day to stay within the free quota)
+    if (p.get("reel") or p.get("as_reel")) and os.environ.get("YT_REFRESH_TOKEN") and not rec.get("youtube", {}).get("ok"):
+        import youtube
+        done_today = sum(1 for r in status.values() if r.get("youtube", {}).get("ok"))
+        if done_today < youtube.MAX_PER_DAY:
+            try:
+                vid, ylink, privacy = youtube.upload_short(video_for(p), p["caption"])
+                rec["youtube"] = {"ok": True, "id": vid, "url": ylink, "privacy": privacy, "at": now.isoformat(timespec="seconds")}
+                print("✅ Uploaded YouTube Short:", ylink, f"({privacy})")
+            except Exception as e:
+                rec["youtube"] = {"ok": False, "error": str(e), "at": now.isoformat(timespec="seconds")}
+                print("⚠️ YouTube failed:", e)
     status_file.write_text(json.dumps(status, indent=1))
     if not rec["instagram"]["ok"]:
         sys.exit(1)

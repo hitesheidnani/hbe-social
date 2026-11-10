@@ -40,6 +40,9 @@ jobs:
           FB_PAGE_ID: ${{ secrets.FB_PAGE_ID }}
           LI_TOKEN: ${{ secrets.LI_TOKEN }}
           LI_PERSON_URN: ${{ secrets.LI_PERSON_URN }}
+          YT_CLIENT_ID: ${{ secrets.YT_CLIENT_ID }}
+          YT_CLIENT_SECRET: ${{ secrets.YT_CLIENT_SECRET }}
+          YT_REFRESH_TOKEN: ${{ secrets.YT_REFRESH_TOKEN }}
         run: python publish.py ${{ inputs.slot && format('--slot {0}', inputs.slot) || '' }}
       - name: Record result
         if: always()
