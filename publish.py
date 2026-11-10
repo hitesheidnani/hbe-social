@@ -38,7 +38,7 @@ def with_cta(caption):
 def web_caption(caption):
     """Facebook / LinkedIn: links are clickable, so drop '(link in bio)' and use a full URL."""
     return caption.replace(f"{FN_URL} (link in bio)", f"https://{FN_URL}").replace("link in bio", f"https://{FN_URL}")
-LINKEDIN_SLOTS = {"update", "psych", "market", "long", "edu", "feature", "short"}   # every slot, as the user asked
+LINKEDIN_SLOTS = None   # None = every slot goes to LinkedIn (user asked for all posts)
 
 
 def graph(method, path, **params):
@@ -219,7 +219,7 @@ def main():
             print("⚠️ Facebook failed:", e)
 
     # LinkedIn (personal profile), selected slots only
-    if p["slot"] in LINKEDIN_SLOTS and os.environ.get("LI_TOKEN") and not rec.get("linkedin", {}).get("ok"):
+    if (LINKEDIN_SLOTS is None or p["slot"] in LINKEDIN_SLOTS) and os.environ.get("LI_TOKEN") and not rec.get("linkedin", {}).get("ok"):
         try:
             import linkedin
             files = [ROOT / c for c in p["carousel"]] if p.get("carousel") else [ROOT / p["image"]]
