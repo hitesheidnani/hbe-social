@@ -42,18 +42,22 @@ def build(out):
                             author="HBE Capital")
     W = landscape(A4)[0] - 28 * mm
     s = [Paragraph("HBE Capital · Social media posting schedule", H1),
-         Paragraph("Updated 10 Nov 2026 · all times IST · fully automatic (GitHub, runs with your PC off)", SMALL),
+         Paragraph("Updated 10 Nov 2026 (evening) · all times IST · fully automatic (GitHub, runs with your PC off)", SMALL),
          Spacer(1, 6),
          Paragraph("Channels: every post goes to <b>Instagram</b> (post + Story; ranked fund lists also as a "
                    "10→1 countdown Reel), the <b>HBE Capital Investments Facebook Page</b> and <b>LinkedIn</b> "
                    "(Hitesh Eidnani's profile). The system checks every 15 minutes, so each post goes out within "
                    "about 15 minutes of its slot; a slot more than 3 hours late is skipped rather than posted out of order.", P),
-         Paragraph("Daily posts (7 a day)", H2),
+         Paragraph("Daily posts (8-9 a day)", H2),
          table([
              ["Time", "Post", "What it shows", "Rotation", "Extras"],
              ["08:00", "Market update", "Nifty 50, Nifty Bank, Midcap 150, Smallcap 250 · S&P 500, Nasdaq 100, Dow, Russell 2000 · "
               "Gold, Brent, US 10Y, USD/INR. Price, 1-day change, % vs 200-day average, trend (Bullish / Bearish, Neutral within ±1%; "
               "Rising / Falling for yield and USD/INR)", "Same format daily", "Story"],
+             ["08:30", "US close / US market health", "Tue-Fri: S&P 500, Nasdaq 100, Dow, Russell 2000, VIX, Magnificent 7 and "
+              "11 S&P sectors, last session's moves. Saturday: weekly US market health: trend vs 50/100/200-day averages "
+              "(green/red), breadth of all S&P 500 stocks (% above averages, new highs vs lows, advancers vs decliners), "
+              "Risk-on / Neutral / Risk-off", "Tue-Sat", "Story"],
              ["09:00", "Market psychology", "Quote card with author + short lesson in the caption: Mark Douglas, Livermore, "
               "Seykota, Buffett, Munger, Templeton, Lynch, maxims (cut losses short, buy high sell higher)",
               "40 quotes, one a day", "Story"],
@@ -68,9 +72,14 @@ def build(out):
              ["15:00", "Education", "MF Basics carousel (5-6 slides) OR Power of compounding illustration",
               "Alternate days. 25 MF Basics lessons · compounding: SIP at 12%/15%, start early (25 vs 35), "
               "step-up SIP, lumpsum & rule of 72", "Story"],
-             ["17:30", "Feature", "Mon SIP card (5 yrs) · Tue SIF tracker (6 months for now, 1 year once 5+ SIFs "
-              "qualify) · Wed Momentum funds (1 yr) · Thu PMS top 10 (1 yr) · Fri SIP card (10 yrs) · Sat PMS (3 yrs) · "
-              "Sun Momentum funds (3 yrs)", "By weekday", "Story + Reel"],
+             ["17:30", "Feature", "Mon SIP card (5 yrs) · Tue SIF Performance Sheet (all SIFs by strategy, 1W/1M/3M/6M/"
+              "since launch, 2-slide carousel) · Wed Momentum funds (1 yr) · Thu PMS Performance Sheet (all AUMs; equity, "
+              "multi-asset, hybrid, debt; carousel) · Fri SIP card (10 yrs) · Sat PMS top 10 (3 yrs) · Sun Momentum (3 yrs)",
+              "By weekday", "Story (+ Reel on ranked cards)"],
+             ["19:00", "US theme", "Mon S&P sector heatmap · Tue S&P 500 in rupees vs Nifty 50 · Wed US indices & Mag 7 "
+              "vs all-time highs · Thu US style monitor (growth/value, large/small, equal-weight, momentum, quality, "
+              "low vol) · Fri S&P 500 calendar-year returns · Sat US Investing Basics carousel · Sun US weekly wrap",
+              "By weekday; periods rotate 1y/3y/5y", "Story"],
              ["20:00", "Top 10 funds (1-3 yrs)", "Top 10 funds in a category by 1 / 2 / 3-year CAGR vs benchmark",
               "Same 9 categories, different one from 12:30", "Story + Reel"],
          ], [16 * mm, 32 * mm, 105 * mm, 85 * mm, W - 238 * mm]),
@@ -96,15 +105,12 @@ def build(out):
              ["Captions", "Keyword-rich first line, save/share/comment prompt, max 5 hashtags (Instagram limit); "
               "on Facebook and LinkedIn 'link in bio' becomes hbecapital.net/funds"],
              ["Branding", "HBE Capital logo top and bottom of every image, @hbecapital"],
+             ["FundNavigator", "Every caption invites readers to try FundNavigator (hbecapital.net/funds); clickable on "
+              "Facebook and LinkedIn, 'link in bio' on Instagram"],
          ], [38 * mm, W - 38 * mm]),
          Paragraph("Planned, not built yet", H2),
          table([
              ["Item", "Plan"],
-             ["US markets (2 a day)", "Morning US close card + evening theme: Mon US sector heatmap · Tue US vs India in "
-              "rupees · Wed drawdown from highs · Thu US style monitor · Fri weekly wrap · Sat US investing education · "
-              "Sun long-term charts. Open questions: Mag 7 stocks or indices only; total daily volume"],
-             ["US Market Health (weekly)", "Saturday: S&P 500, Nasdaq 100, Dow, Russell 2000, equal-weight S&P vs 50/100/200 DMA "
-              "(green/red), breadth (% above DMAs, new highs vs lows, advancers vs decliners), Risk-on / Neutral / Risk-off"],
              ["X (Twitter)", "Automation setup still to do (developer account, possibly a paid API plan)"],
              ["LinkedIn company page", "Needs LinkedIn's Community Management API approval; posts go to your profile until then"],
          ], [45 * mm, W - 45 * mm]),
