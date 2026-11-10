@@ -1,16 +1,11 @@
 name: Publish to Instagram
 
-# 08:00, 09:00, 11:00, 12:30, 15:00, 17:30 and 20:00 IST. Each run posts the earliest due, unposted slot.
 # GitHub can start scheduled runs late; a late run simply posts what is due.
 on:
   schedule:
-    - cron: "30 2 * * *"
-    - cron: "30 3 * * *"
-    - cron: "30 5 * * *"
-    - cron: "0 7 * * *"
-    - cron: "30 9 * * *"
-    - cron: "0 12 * * *"
-    - cron: "30 14 * * *"
+    # Every 15 minutes, 07:37-21:22 IST, at off-peak minutes. GitHub's scheduler often runs late or
+    # skips busy times, so frequent checks make sure each slot goes out close to its time.
+    - cron: "7,22,37,52 2-15 * * *"
   workflow_dispatch:
     inputs:
       slot:
@@ -35,6 +30,13 @@ jobs:
           python-version: "3.12"
           cache: pip
       - run: pip install -r requirements.txt
+      - name: Build today's posts if the morning build did not run
+        run: |
+          D=$(TZ=Asia/Kolkata date +%F)
+          if [ ! -f "posts/$D/plan.json" ]; then
+            python -c "import market_posts; market_posts.update_all()" || true
+            python daily.py "$D"
+          fi
       - name: Publish
         env:
           IG_USER_ID: ${{ secrets.IG_USER_ID }}
@@ -48,6 +50,6 @@ jobs:
         run: |
           git config user.name "hbe-social-bot"
           git config user.email "actions@users.noreply.github.com"
-          git add posts
+          git add posts data/indices
           git diff --cached --quiet || git commit -m "posts: publish log $(TZ=Asia/Kolkata date '+%F %H:%M')"
           git pull --rebase && git push

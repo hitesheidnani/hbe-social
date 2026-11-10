@@ -1,9 +1,11 @@
 name: Build daily posts
 
-# 06:00 IST: after FundNavigator's nightly refresh (23:30 IST) has deployed.
+# ~06:00 IST, after FundNavigator's nightly refresh (23:30 IST) has deployed. Two tries at off-peak
+# minutes; the publish workflow also builds the day's posts itself if neither ran.
 on:
   schedule:
-    - cron: "30 0 * * *"
+    - cron: "13 0 * * *"
+    - cron: "43 1 * * *"
   workflow_dispatch:
     inputs:
       date:
@@ -32,7 +34,11 @@ jobs:
         run: python -c "import market_posts; market_posts.update_all()"
         continue-on-error: true
       - name: Build posts
-        run: python daily.py ${{ inputs.date }}
+        run: |
+          D="${{ inputs.date }}"; [ -z "$D" ] && D=$(TZ=Asia/Kolkata date +%F)
+          # a scheduled re-run must not rebuild a day that is already being posted
+          if [ "${{ github.event_name }}" = "schedule" ] && [ -f "posts/$D/plan.json" ]; then echo "already built"; exit 0; fi
+          python daily.py "$D"
       - name: Commit images and plan
         run: |
           git config user.name "hbe-social-bot"
