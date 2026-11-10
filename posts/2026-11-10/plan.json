@@ -5,7 +5,7 @@
   "kind": "update",
   "image": "posts/2026-11-10/00_update.jpg",
   "story_image": "posts/2026-11-10/00_update_story.jpg",
-  "caption": "Market Update | Tue, 10 Nov 2026 🌏\n\n🇮🇳 India\n🟢 Nifty 50: 25,045 (+0.23%)\n🟢 Nifty Bank: 59,741 (+1.51%)\n🟢 Nifty Midcap 150: 22,409 (+0.36%)\n🟢 Nifty Smallcap 250: 17,577 (-0.10%)\n\n🇺🇸 US\n🟢 S&P 500: 7,550 (+2.35%)\n🟢 Nasdaq: 25,253 (+2.74%)\n🟢 Dow Jones: 52,390 (+2.15%)\n🟢 Russell 2000: 2,841 (+3.15%)\n\n🌍 Global\n🔴 Gold ($/oz): 4,121 (+0.16%)\n🔴 Brent crude ($): 91.60 (-1.05%)\n⬆️ US 10Y yield: 4.86% (+0 bp)\n⬇️ USD / INR: 93.92 (+0.02%)\n\nTrend check: 8 of 10 indices & commodities are above their 200-day average.\n🟢 above the 200-day average (bullish trend) · 🔴 below (bearish trend) · ⬆️⬇️ rates and USD/INR vs their 200-day average.\n\nIndia: NSE close 09 Nov. US & global: close 09 Nov. Index figures are price levels.\n\n🔔 Follow @hbecapital for this update every morning at 8.\n\n⚠️ For educational purposes only. Not investment advice.\n\n#stockmarket #nifty50 #sp500 #marketupdate #investing"
+  "caption": "Market Update | Tue, 10 Nov 2026 🌏\n\n🇮🇳 India\n🟢 Nifty 50: 25,045 (+0.23%)\n🟢 Nifty Bank: 59,741 (+1.51%)\n🟢 Nifty Midcap 150: 22,409 (+0.36%)\n🟢 Nifty Smallcap 250: 17,577 (-0.10%)\n\n🇺🇸 US\n🟢 S&P 500: 7,550 (+2.35%)\n🟡 Nasdaq 100: 27,908 (+3.40%)\n🟢 Dow Jones: 52,390 (+2.15%)\n🟢 Russell 2000: 2,841 (+3.15%)\n\n🌍 Global\n🔴 Gold ($/oz): 4,114 (+0.97%)\n🟡 Brent crude ($): 92.57 (-5.85%)\n⬆️ US 10Y yield: 4.86% (+0 bp)\n⬇️ USD / INR: 93.90 (-0.59%)\n\nTrend check: 7 of 10 indices & commodities are above their 200-day average.\n🟢 more than 1% above the 200-day average (bullish) · 🔴 more than 1% below (bearish) · 🟡 within 1% (neutral) · ⬆️⬇️ rates and USD/INR vs their 200-day average.\n\nIndia: NSE close 09 Nov. US & global: close 09 Nov. Index figures are price levels.\n\n🔔 Follow @hbecapital for this update every morning at 8.\n\n⚠️ For educational purposes only. Not investment advice.\n\n#stockmarket #nifty50 #sp500 #marketupdate #investing"
  },
  {
   "slot": "psych",
@@ -53,13 +53,14 @@
  {
   "slot": "feature",
   "time_ist": "17:30",
-  "kind": "sif",
-  "image": "posts/2026-11-10/3_feature.jpg",
-  "story_image": "posts/2026-11-10/3_feature_story.jpg",
-  "caption": "SIF Tracker: Specialised Investment Funds by 6-Month Returns | India 2026 🧭\n30 Specialised Investment Fund strategies are now live in India.\n\n1. qsif Active Asset Allocator Long-Short…: 27.5%\n2. qsif Hybrid Long-Short Fund: 20.6%\n3. qsif Equity Ex-Top 100 Long-Short Fund: 14.8%\n4. qsif Equity Long Short Fund: 9.9%\n5. Apex Hybrid Long-Short Fund: 8.1%\n6. iSIF Hybrid Long-Short Fund: 6.7%\n7. Titanium Hybrid Long-Short Fund Regula…: 4.3%\n8. Altiva Hybrid Long-Short Fund: 4.1%\n9. Arudha Hybrid Long-Short Fund: 2.9%\n10. DynaSIF Active Asset Allocator Long-Sh…: 2.4%\n\nSIFs sit between mutual funds and PMS: long-short strategies, ₹10 lakh minimum, regulated by SEBI. Track records are still short, so judge them with care.\nNAV as of 10 Nov 2026. Regular plan, Growth option. Returns under 1 year are absolute, not annualised.\n\n⚠️ For educational purposes only. Not investment advice. Past performance may or may not be sustained in future. Not a recommendation. Investments are subject to market risks, read all scheme related documents carefully.\nHBE Capital · AMFI-registered Mutual Fund Distributor · ARN-275597\n\n🔖 Save this for your next review · 📤 Share with someone who invests in mutual funds\n\n#sif #mutualfunds #longshort #wealthmanagement #investing",
-  "reel": {
-   "rows": 10
-  }
+  "kind": "sif_sheet",
+  "image": "posts/2026-11-10/sif_sheet/slide_01.jpg",
+  "story_image": "posts/2026-11-10/sif_sheet/slide_01_story.jpg",
+  "caption": "SIF Performance Sheet | Week Ending 09 Nov 2026 📋\n\nAll 36 Specialised Investment Funds in one place, grouped by strategy: Equity Long-Short (13), Equity Ex-Top 100 Long-Short (7), Sector Rotation Long-Short (1), Hybrid Long-Short (11), Active Asset Allocator Long-Short (4).\n\nBest 1-month: Altiva Equity Long-Short +8.3%, Sapphire Equity Long-Short +6.6%, SUMMIT Equity Long-Short +6.5%\nWeakest 1-month: qsif Hybrid Long-Short -1.1%, Apex Equity Ex-Top 100 Long-Short -0.5%, DynaSIF Equity Ex-Top 100 Long-Short -0.4%\n\n👉 Swipe for hybrid and asset-allocator SIFs, plus benchmarks.\nSIFs (SEBI, 2025) sit between mutual funds and PMS: long-short strategies with a ₹10 lakh minimum. Most are under a year old, so short-term numbers can swing a lot.\n\n🔖 Save this · 📤 Share with someone exploring SIFs\n\n⚠️ For educational purposes only. Not investment advice. Returns under 1 year are absolute. Past performance may or may not be sustained in future. Not a recommendation. Investments are subject to market risks, read all scheme related documents carefully.\nHBE Capital · AMFI-registered Mutual Fund Distributor · ARN-275597\n\n#SIF #specialisedinvestmentfund #longshort #mutualfunds #investing",
+  "carousel": [
+   "posts/2026-11-10/sif_sheet/slide_01.jpg",
+   "posts/2026-11-10/sif_sheet/slide_02.jpg"
+  ]
  },
  {
   "slot": "short",
