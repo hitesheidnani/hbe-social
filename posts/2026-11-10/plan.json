@@ -13,7 +13,7 @@
   "kind": "us_close",
   "image": "posts/2026-11-10/01_us_close.jpg",
   "story_image": "posts/2026-11-10/01_us_close_story.jpg",
-  "caption": "US Market Close | Mon, 09 Nov 2026 🇺🇸\n\nS&P 500 +2.35% · Nasdaq 100 +3.40% · Dow Jones +2.15% · Russell 2000 +3.15%\nVIX 19.92 (-22.3%)\n\nMagnificent 7: best Tesla +5.54%, weakest Nvidia -4.27%.\nSectors: 11 of 11 up. Leader Industrials +3.82%, laggard Energy +0.52%.\n\n🔔 Follow for the US close every morning.\n\n⚠️ For educational purposes only. Not investment advice. Not a recommendation to buy or sell any security. Past performance may or may not be sustained in future. US data: Yahoo Finance.\nHBE Capital\n\n#usstocks #sp500 #nasdaq #wallstreet #investinus"
+  "caption": "US Market Close | Mon, 09 Nov 2026 🇺🇸\n\nS&P 500 +2.35% · Nasdaq 100 +3.40% · Dow Jones +2.15% · Russell 2000 +3.15%\nVIX 19.92 (-22.3%) · US 10Y 4.86% (+0 bp) · Dollar Index 101.65 (-0.64%)\n\nMagnificent 7: best Tesla +5.54%, weakest Nvidia -4.27%.\nSectors: 11 of 11 up. Leader Industrials +3.82%, laggard Energy +0.52%.\n\n🔔 Follow for the US close every morning.\n\n⚠️ For educational purposes only. Not investment advice. Not a recommendation to buy or sell any security. Past performance may or may not be sustained in future. US data: Yahoo Finance.\nHBE Capital\n\n#usstocks #sp500 #nasdaq #wallstreet #investinus"
  },
  {
   "slot": "psych",
@@ -41,6 +41,14 @@
   "reel": {
    "rows": 10
   }
+ },
+ {
+  "slot": "spotlight",
+  "time_ist": "13:30",
+  "kind": "spotlight",
+  "image": "posts/2026-11-10/3b_spotlight.jpg",
+  "story_image": "posts/2026-11-10/3b_spotlight_story.jpg",
+  "caption": "Nvidia (NVDA) Stock Snapshot | 09 Nov 2026 🔍\n\nLast close: $178.67\nTrend: below its 200-day average (-12.7%)\nFrom all-time high: -25.3% (ATH Oct 2026)\n52-week range: $165 – $239\nReturns (incl. dividends): 1y -4.8% · 3y +56.3%/yr · 5y +42.4%/yr\n\nOne Magnificent 7 stock every day. Factual data only, no buy/sell views.\n\n🔖 Save this · 📤 Share with someone investing in US tech\n\n⚠️ For educational purposes only. Not investment advice. Not a recommendation to buy or sell any security. Past performance may or may not be sustained in future. US data: Yahoo Finance.\nHBE Capital\n\n#nvda #magnificent7 #usstocks #nasdaq #investinus"
  },
  {
   "slot": "edu",
@@ -76,7 +84,7 @@
   "kind": "us_vs_india",
   "image": "posts/2026-11-10/6_us_theme.jpg",
   "story_image": "posts/2026-11-10/6_us_theme_story.jpg",
-  "caption": "S&P 500 in Rupees vs Nifty 50 | Nov 2026 🇺🇸🇮🇳\n\n1 yr: S&P 500 +10.2%/yr in USD, +16.9%/yr in ₹ · Nifty 50 -1.8%/yr\n3 yr: S&P 500 +18.2%/yr in USD, +23.2%/yr in ₹ · Nifty 50 +8.9%/yr\n5 yr: S&P 500 +10.6%/yr in USD, +15.9%/yr in ₹ · Nifty 50 +6.8%/yr\n10 yr: S&P 500 +13.1%/yr in USD, +17.1%/yr in ₹ · Nifty 50 +11.5%/yr\n\nThe gap between the dollar and rupee figures is the currency effect: a weaker rupee boosts US returns for Indian investors, and a stronger rupee does the opposite.\n\n🔖 Save this · 📤 Share with someone investing in the US\n\n⚠️ For educational purposes only. Not investment advice. Not a recommendation to buy or sell any security. Past performance may or may not be sustained in future. US data: Yahoo Finance.\nHBE Capital\n\n#usstocks #sp500 #nasdaq #wallstreet #investinus"
+  "caption": "S&P 500 in Rupees vs Nifty 50 | Nov 2026 🇺🇸🇮🇳\n\n1 yr: S&P 500 +12.2%/yr in USD, +18.8%/yr in ₹ · Nifty 50 -1.8%/yr\n3 yr: S&P 500 +20.2%/yr in USD, +25.1%/yr in ₹ · Nifty 50 +8.9%/yr\n5 yr: S&P 500 +10.0%/yr in USD, +15.4%/yr in ₹ · Nifty 50 +6.8%/yr\n10 yr: S&P 500 +13.1%/yr in USD, +17.8%/yr in ₹ · Nifty 50 +11.5%/yr\n\nThe gap between the dollar and rupee figures is the currency effect: a weaker rupee boosts US returns for Indian investors, and a stronger rupee does the opposite.\n\n🔖 Save this · 📤 Share with someone investing in the US\n\n⚠️ For educational purposes only. Not investment advice. Not a recommendation to buy or sell any security. Past performance may or may not be sustained in future. US data: Yahoo Finance.\nHBE Capital\n\n#usstocks #sp500 #nasdaq #wallstreet #investinus"
  },
  {
   "slot": "short",
@@ -88,5 +96,13 @@
   "reel": {
    "rows": 10
   }
+ },
+ {
+  "slot": "us_wisdom",
+  "time_ist": "21:30",
+  "kind": "us_wisdom",
+  "image": "posts/2026-11-10/7_us_wisdom.jpg",
+  "story_image": "posts/2026-11-10/7_us_wisdom_story.jpg",
+  "caption": "\"The big money is not in the buying or the selling, but in the waiting.\"\n— Charlie Munger\n\nActivity is overrated. The fortune is made by holding good investments for long periods.\n\n💬 Agree? Tell us in the comments.\nFollow @hbecapital for daily investing wisdom.\n\n⚠️ For educational purposes only. Not investment advice.\n\n#warrenbuffett #investingwisdom #longterminvesting #stockmarket #investing"
  }
 ]
