@@ -102,7 +102,7 @@ def story_version(card_path, label="NEW POST", footer_text="See the full post on
     d = ImageDraw.Draw(story)
     bold = ImageFont.truetype(str(ROOT / "fonts" / "Inter-Bold.ttf"), 40)
     reg = ImageFont.truetype(str(ROOT / "fonts" / "Inter-Medium.ttf"), 34)
-    d.text((540, 215), f"{label}  ·  {HANDLE}", font=bold, fill=ACCENT, anchor="mm")
+    # (no heading above the card: the card already carries the HBE Capital logo)
     d.text((540, 1700), footer_text, font=reg, fill=MUTED, anchor="mm")
     out = card_path.with_name(card_path.stem + "_story.jpg")
     story.save(out, quality=92, optimize=True)
