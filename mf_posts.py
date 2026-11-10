@@ -214,15 +214,16 @@ def sip_card(category, out, years=5, monthly=10000, n=N):
     return {"category": label, "years": years, "monthly": monthly, "asof": rk["asof"], "rows": rows, "median": med}
 
 
-def pms_leaderboard(horizon, out, n=N, min_aum=100, kind="Equity"):
+def pms_leaderboard(horizon, out, n=N, min_aum=0, kind="Equity"):
     p = load("pms.json")
     i = p["horizons"].index(horizon)
-    rows = [s for s in p["strategies"] if s["t"] == kind and (s["aum"] or 0) >= min_aum
+    rows = [s for s in p["strategies"] if s["t"] == kind and ((s["aum"] or 0) >= min_aum or not min_aum)
             and s["r"][i] is not None]
     rows.sort(key=lambda s: s["r"][i], reverse=True)
     fig = canvas(1080, 1350)
     header(fig, f"PMS · {kind}", f"Top {n} by {HORIZON_LABEL[horizon]} returns",
-           f"Strategies with AUM ≥ ₹{min_aum} cr · as reported to APMI · month-end {nice_date(p['asof'])}")
+           (f"Strategies with AUM ≥ ₹{min_aum} cr" if min_aum else "All strategies")
+           + f" · as reported to APMI · month-end {nice_date(p['asof'])}")
     for k, s in enumerate(rows[:n]):
         row(fig, row_y(k), RH, k + 1, short_name(s["n"]), f"{short_name(s['p'])} · AUM ₹{s['aum']:,.0f} cr", s["r"][i])
     y = row_y(n) - 0.006
@@ -413,12 +414,12 @@ def sif_sheet(out_dir, bench_series=None):
                     "groups": {t: sum(1 for f in funds if f["amfi_category"].endswith(k)) for g in SIF_GROUPS for k, t in g}}
 
 
-def pms_sheet(out_dir, min_aum=100, top_equity=20):
+def pms_sheet(out_dir, min_aum=0, top_equity=20):
     """Monthly-data PMS sheet: top equity strategies + Multi Asset / Hybrid / Debt, with benchmarks."""
     p = load("pms.json")
     H = {h: i for i, h in enumerate(p["horizons"])}
     cols = ["1m", "3m", "6m", "1y", "3y", "5y"]
-    sel = [s for s in p["strategies"] if (s["aum"] or 0) >= min_aum]
+    sel = [s for s in p["strategies"] if (s["aum"] or 0) >= min_aum or not min_aum]
 
     def rows_for(kind, limit=None):
         r = sorted([s for s in sel if s["t"] == kind and s["r"][H["1y"]] is not None],
@@ -448,7 +449,8 @@ def pms_sheet(out_dir, min_aum=100, top_equity=20):
     ]
     for i, secs in enumerate(pages, 1):
         fig = sheet_frame(i, len(pages), "PORTFOLIO MANAGEMENT SERVICES · MONTHLY", "PMS Performance Sheet",
-                          f"Strategies with AUM ≥ ₹{min_aum} cr · as reported to APMI · month-end {asof}", labels, xs)
+                          (f"Strategies with AUM ≥ ₹{min_aum} cr" if min_aum else "All strategies")
+                          + f" · as reported to APMI · month-end {asof}", labels, xs)
         sheet_rows(fig, [(t, r) for t, r in secs if r], xs=xs, name_chars=32)
         fig.text(0.5, 0.098, "Returns in %, as reported by providers to APMI. 1Y and longer are annualised. "
                  "PMS minimum investment ₹50 lakh.", color=MUTED, fontsize=9.5, ha="center")

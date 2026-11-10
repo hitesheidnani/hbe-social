@@ -257,7 +257,7 @@ def cap_sif_sheet(r):
 def cap_pms_sheet(r):
     return "\n".join([
         f"PMS Performance Sheet | Month-End {mf.nice_date(r['asof'])} 📋", "",
-        f"{r['screened']} PMS strategies with AUM of ₹100 crore or more, as reported to APMI: top equity strategies "
+        f"All {r['screened']} PMS strategies reported to APMI: top equity strategies "
         "by 1-year return, plus multi-asset, hybrid and debt PMS, with benchmarks.", "",
         "Top 1-year (equity): " + "; ".join(f"{fit} {v:+.1f}%" for fit, _, v in r["top"]), "",
         "👉 Swipe for multi-asset, hybrid & debt PMS and benchmarks.",
@@ -273,7 +273,7 @@ def cap_pms(r):
     rows = [(f"{mf.short_name(n)} ({mf.short_name(p)})", pct(v)) for n, p, v in r["top"]]
     return "\n".join([
         f"Top 10 PMS Strategies in India by {hz.title()} Returns | {YEAR} 📈",
-        f"Strategies with AUM ≥ ₹100 cr · month-end {mf.nice_date(r['asof'])} · {r['screened']} screened", "",
+        f"All strategies reported to APMI · month-end {mf.nice_date(r['asof'])} · {r['screened']} screened", "",
         numbered(rows), "",
         "Returns as reported by PMS providers to APMI (1Y+ annualised). Minimum investment ₹50 lakh.", "",
         f"⚠️ {EDU} Past performance may or may not be sustained in future. PMS investments are subject to market risks. "
