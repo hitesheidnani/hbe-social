@@ -3,6 +3,7 @@
 Usage:  python daily.py [YYYY-MM-DD]
 Daily mix (IST):
   08:30  US close (Tue-Fri, after Mon-Thu sessions) · Sat: weekly US market health (trend + breadth)
+  13:30  Magnificent 7 spotlight (one stock a day, rotating) · 21:30 US investing wisdom quote
   19:00  US theme: Mon sectors · Tue US vs India · Wed from highs · Thu style · Fri S&P years · Sat US basics · Sun wrap
   08:00  Market update: key Indian & US indices, gold, oil, US 10Y, USD/INR with 200-DMA trend
   09:00  market psychology quote
@@ -26,7 +27,7 @@ from brand import quote_card, story_version, ARN, MF_DISCLAIMER, EDU
 
 ROOT = Path(__file__).parent
 SLOTS = {"update": "08:00", "us_close": "08:30", "psych": "09:00", "market": "11:00", "long": "12:30", "edu": "15:00",
-         "feature": "17:30", "us_theme": "19:00", "short": "20:00"}
+         "spotlight": "13:30", "feature": "17:30", "us_theme": "19:00", "short": "20:00", "us_wisdom": "21:30"}
 # 19:00 US theme by weekday (Mon=0); heatmap / style periods rotate 1y -> 3y -> 5y week to week
 US_THEME = {0: "sectors", 1: "vs_india", 2: "drawdown", 3: "style", 4: "years", 5: "us_edu", 6: "wrap"}
 US_TAGS = "#usstocks #sp500 #nasdaq #wallstreet #investinus"
@@ -285,7 +286,8 @@ def cap_us_close(r):
     sec = sorted(r["sec"], key=lambda x: x[1], reverse=True)
     return "\n".join([
         f"US Market Close | {r['session']:%a, %d %b %Y} 🇺🇸", "", idx,
-        f"VIX {r['vix'][0]:.2f} ({r['vix'][1]:+.1f}%)", "",
+        f"VIX {r['vix'][0]:.2f} ({r['vix'][1]:+.1f}%) · US 10Y {r['tnx'][0]:.2f}% ({r['tnx'][1]:+.0f} bp) · "
+        f"Dollar Index {r['dxy'][0]:.2f} ({r['dxy'][1]:+.2f}%)", "",
         f"Magnificent 7: best {mag[0][0]} {mag[0][1]:+.2f}%, weakest {mag[-1][0]} {mag[-1][1]:+.2f}%.",
         f"Sectors: {sum(v >= 0 for _, v in sec)} of 11 up. Leader {sec[0][0]} {sec[0][1]:+.2f}%, laggard {sec[-1][0]} {sec[-1][1]:+.2f}%.", "",
         "🔔 Follow for the US close every morning.", "", US_FOOT, "", US_TAGS])
@@ -335,6 +337,25 @@ def cap_us_theme(kind, r):
                 f"Top sector: {r['sec'][0][0]} {r['sec'][0][1]:+.1f}% · bottom: {r['sec'][-1][0]} {r['sec'][-1][1]:+.1f}%"]
     return "\n".join([head, ""] + body + ["", "🔖 Save this · 📤 Share with someone investing in the US", "",
                                           US_FOOT, "", US_TAGS])
+
+
+def cap_spotlight(r):
+    rets = " · ".join(f"{y_}y {v:+.1f}%" + ("/yr" if y_ > 1 else "") for y_, v in r["rets"] if v is not None)
+    return "\n".join([
+        f"{r['name']} ({r['sym']}) Stock Snapshot | {r['date']:%d %b %Y} 🔍", "",
+        f"Last close: ${r['last']:,.2f}",
+        f"Trend: {'above' if r['above'] else 'below'} its 200-day average ({r['vs200']:+.1f}%)",
+        f"From all-time high: {'at the high' if r['from_ath'] > -0.5 else f'{r["from_ath"]:.1f}%'} (ATH {r['ath_date']:%b %Y})",
+        f"52-week range: ${r['lo52']:,.0f} – ${r['hi52']:,.0f}", f"Returns (incl. dividends): {rets}", "",
+        "One Magnificent 7 stock every day. Factual data only, no buy/sell views.", "",
+        "🔖 Save this · 📤 Share with someone investing in US tech", "", US_FOOT, "",
+        f"#{r['sym'].lower()} #magnificent7 #usstocks #nasdaq #investinus"])
+
+
+def cap_us_wisdom(q):
+    return "\n".join([f"\"{q['quote']}\"\n— {q['author']}", "", q["note"], "",
+                      "💬 Agree? Tell us in the comments.", "Follow @hbecapital for daily investing wisdom.", "",
+                      f"⚠️ {EDU}", "", "#warrenbuffett #investingwisdom #longterminvesting #stockmarket #investing"])
 
 
 def cap_us_edu(t, n):
@@ -428,6 +449,20 @@ def build(day: dt.date):
             add("us_theme", f.with_suffix(".jpg"), cap_us_theme(kind, r), "us_" + kind)
     except Exception as e:
         print("us_theme: skipped,", e)
+
+    # 13:30 Magnificent 7 spotlight
+    try:
+        name, sym = us.MAG7[d % len(us.MAG7)]
+        r = us.stock_spotlight(name, sym, out / "3b_spotlight")
+        add("spotlight", out / "3b_spotlight.jpg", cap_spotlight(r), "spotlight")
+    except Exception as e:
+        print("spotlight: skipped,", e)
+
+    # 21:30 US investing wisdom
+    usq = json.loads((ROOT / "content" / "us_quotes.json").read_text())
+    q = usq[d % len(usq)]
+    add("us_wisdom", quote_card(q["quote"], "Investing wisdom", out / "7_us_wisdom", author=q["author"]),
+        cap_us_wisdom(q), "us_wisdom")
 
     # 09:00 psychology
     quotes = json.loads((ROOT / "content" / "psychology.json").read_text())

@@ -136,22 +136,32 @@ def us_close_card(out):
     fig = canvas()
     header(fig, "US market close", f"Wall Street, {session:%a %d %b}",
            f"Last session's moves · indices, Magnificent 7 & S&P sectors · closes as of {session:%d %b %Y}")
-    # index strip
-    y = 0.765
-    w = 0.88 / 5
-    for i, (n, pts) in enumerate(idx + [("VIX (fear gauge)", vix)]):
-        x = 0.06 + i * w
-        v = change(pts)
-        col = (UP if v >= 0 else DOWN) if i < 4 else (DOWN if v >= 0 else UP)   # rising VIX = more fear
-        fig.add_artist(FancyBboxPatch((x + 0.004, y - 0.095), w - 0.008, 0.095, boxstyle="round,pad=0,rounding_size=0.01",
+    # row 1: equity indices · row 2: VIX, US 10Y yield, Dollar Index
+    tnx, dxy = yahoo("^TNX"), yahoo("DX-Y.NYB")
+    macro = [("VIX (fear gauge)", vix, "vix"), ("US 10Y yield", tnx, "yield"), ("Dollar Index (DXY)", dxy, "px")]
+
+    def tile(x, y, w, h, label, pts, kind):
+        if kind == "yield":
+            v, txt, val = (pts[-1][1] - pts[-2][1]) * 100, None, f"{pts[-1][1]:.2f}%"
+            txt = f"{v:+.0f} bp"
+            col = GOLD
+        else:
+            v = change(pts)
+            txt, val = f"{v:+.2f}%", (f"{pts[-1][1]:,.0f}" if pts[-1][1] > 1000 else f"{pts[-1][1]:,.2f}")
+            col = (DOWN if v >= 0 else UP) if kind == "vix" else (GOLD if kind == "px" else (UP if v >= 0 else DOWN))
+        fig.add_artist(FancyBboxPatch((x + 0.004, y - h), w - 0.008, h, boxstyle="round,pad=0,rounding_size=0.01",
                                       transform=fig.transFigure, fc=PANEL, ec=GRID))
-        fig.text(x + w / 2, y - 0.022, n, color=MUTED, fontsize=11.5, ha="center", va="center")
-        fig.text(x + w / 2, y - 0.05, f"{pts[-1][1]:,.0f}" if pts[-1][1] > 100 else f"{pts[-1][1]:.2f}",
-                 color=TEXT, fontsize=15, ha="center", va="center", weight="semibold")
-        fig.text(x + w / 2, y - 0.077, f"{v:+.2f}%", color=col, fontsize=15, ha="center", va="center", weight="bold")
+        fig.text(x + w / 2, y - 0.02, label, color=MUTED, fontsize=11.5, ha="center", va="center")
+        fig.text(x + w / 2, y - 0.045, val, color=TEXT, fontsize=15, ha="center", va="center", weight="semibold")
+        fig.text(x + w / 2, y - 0.068, txt, color=col, fontsize=14.5, ha="center", va="center", weight="bold")
+    w4, w3 = 0.88 / 4, 0.88 / 3
+    for i, (n, pts) in enumerate(idx):
+        tile(0.06 + i * w4, 0.775, w4, 0.082, n, pts, "eq")
+    for i, (n, pts, kind) in enumerate(macro):
+        tile(0.06 + i * w3, 0.685, w3, 0.082, n, pts, kind)
     # Magnificent 7 bars
-    section(fig, 0.635, "Magnificent 7")
-    ax = fig.add_axes([0.25, 0.39, 0.69, 0.22])
+    section(fig, 0.575, "Magnificent 7")
+    ax = fig.add_axes([0.25, 0.345, 0.69, 0.21])
     ax.set_facecolor(BG)
     mag_sorted = sorted(mag, key=lambda x: x[1])
     ax.barh([n for n, _ in mag_sorted], [v for _, v in mag_sorted],
@@ -169,14 +179,15 @@ def us_close_card(out):
     ax.yaxis.set_tick_params(pad=12)
     fig.text(0.06, 0.5, "", color=TEXT)
     # sectors
-    section(fig, 0.36, "S&P 500 sectors")
-    tiles(fig, sorted(sec, key=lambda x: x[1], reverse=True), 0.34, 4, 0.052,
+    section(fig, 0.315, "S&P 500 sectors")
+    tiles(fig, sorted(sec, key=lambda x: x[1], reverse=True), 0.297, 4, 0.047,
           max(1.5, max(abs(v) for _, v in sec)))
     up = sum(v >= 0 for _, v in sec)
-    us_footer(fig, f"{up} of 11 sectors up · sectors via SPDR sector ETFs.")
+    us_footer(fig, f"{up} of 11 sectors up · sectors via SPDR sector ETFs · VIX: green when fear falls.")
     save(fig, out)
     return {"session": session, "idx": [(n, pts[-1][1], change(pts)) for n, pts in idx],
-            "vix": (vix[-1][1], change(vix)), "mag": mag, "sec": sec}
+            "vix": (vix[-1][1], change(vix)), "tnx": (tnx[-1][1], (tnx[-1][1] - tnx[-2][1]) * 100),
+            "dxy": (dxy[-1][1], change(dxy)), "mag": mag, "sec": sec}
 
 
 # ---------------------------------------------------------------- 08:30 Saturday: weekly market health
@@ -305,8 +316,8 @@ def us_sector_heatmap(out, horizon="1y"):
 
 
 def us_vs_india(out, nifty_points):
-    spx = yahoo("^GSPC", "max")
-    fx = yahoo("INR=X", "max")
+    spx = yahoo("^GSPC", "10y")            # daily bars
+    fx = yahoo("INR=X", "10y")
     fxd = dict(fx)
     fx_dates = sorted(fxd)
     import bisect
@@ -354,7 +365,7 @@ def us_vs_india(out, nifty_points):
 def us_drawdown(out):
     rows = []
     for n, s in INDICES + MAG7:
-        pts = yahoo(s, "max")
+        pts = yahoo(s, "10y")               # daily bars; every one of these hit its high within 10 years
         last_d, last = pts[-1]
         ath_d, ath = max(pts, key=lambda p: p[1])
         yr = [p for p in pts if p[0] > last_d - dt.timedelta(days=365)]
@@ -464,3 +475,58 @@ def us_weekly_wrap(out):
     us_footer(fig, "Price change, close to close.")
     save(fig, out)
     return {"start": start, "end": end, "idx": idx, "sec": sec, "mag": mag}
+
+
+def stock_spotlight(name, sym, out):
+    """One Magnificent 7 stock: 1-year chart with 200-day SMA, trend, distance from highs, 1/3/5-year returns."""
+    allp = yahoo(sym, "10y")            # daily bars ("max" comes back coarser than daily)
+    adj = yahoo(sym, "10y", adjusted=True)
+    yr = allp[-252:]
+    last_d, last = allp[-1]
+    ma200 = sma(allp, 200)
+    ath_d, ath = max(allp, key=lambda p: p[1])
+    hi52 = max(v for _, v in yr)
+    lo52 = min(v for _, v in yr)
+    rets = [(y_, cagr(adj, y_)) for y_ in (1, 3, 5)]
+    above = last > ma200
+    fig = canvas()
+    header(fig, "Magnificent 7 spotlight", f"{name} ({sym})",
+           f"Last close ${last:,.2f} on {last_d:%d %b %Y} · 1-year chart with 200-day average")
+    ax = fig.add_axes([0.10, 0.44, 0.84, 0.33])
+    ax.set_facecolor(BG)
+    xs = [d_ for d_, _ in yr]
+    ax.plot(xs, [v for _, v in yr], color=TEXT, lw=2.2)
+    ma = [sum(v for _, v in allp[len(allp) - 252 + i - 199:len(allp) - 252 + i + 1]) / 200 for i in range(len(yr))]
+    ax.plot(xs, ma, color=GOLD, lw=1.8, ls="--", label="200-day average")
+    ax.fill_between(xs, [v for _, v in yr], min(v for _, v in yr) * 0.97, color=ACCENT, alpha=0.08)
+    for s_ in ax.spines.values():
+        s_.set_visible(False)
+    ax.grid(color=GRID, lw=0.8)
+    ax.tick_params(colors=MUTED, labelsize=11, length=0)
+    import matplotlib.dates as mdates
+    ax.xaxis.set_major_formatter(mdates.DateFormatter("%b"))
+    ax.legend(loc="upper left", frameon=False, labelcolor=MUTED, fontsize=12)
+    stats = [("vs 200-day avg", f"{pct(last, ma200):+.1f}%", UP if above else DOWN),
+             ("From all-time high", "At high" if last >= ath * 0.995 else f"{pct(last, ath):.1f}%", MUTED),
+             ("52-week range", f"${lo52:,.0f} – ${hi52:,.0f}", TEXT)]
+    w = 0.88 / 3
+    for i, (lab, v, c) in enumerate(stats):
+        x = 0.06 + i * w
+        fig.add_artist(FancyBboxPatch((x + 0.005, 0.315), w - 0.01, 0.085, boxstyle="round,pad=0,rounding_size=0.01",
+                                      transform=fig.transFigure, fc=PANEL, ec=GRID))
+        fig.text(x + w / 2, 0.375, lab, color=MUTED, fontsize=12, ha="center", va="center")
+        fig.text(x + w / 2, 0.343, v, color=c, fontsize=19, weight="bold", ha="center", va="center")
+    for i, (y_, r) in enumerate(rets):
+        x = 0.06 + i * w
+        fig.add_artist(FancyBboxPatch((x + 0.005, 0.205), w - 0.01, 0.085, boxstyle="round,pad=0,rounding_size=0.01",
+                                      transform=fig.transFigure, fc=PANEL, ec=GRID))
+        fig.text(x + w / 2, 0.265, f"{y_}-year return" + (" (CAGR)" if y_ > 1 else ""), color=MUTED, fontsize=12,
+                 ha="center", va="center")
+        fig.text(x + w / 2, 0.233, "–" if r is None else f"{r:+.1f}%", color=MUTED if r is None else (UP if r >= 0 else DOWN),
+                 fontsize=21, weight="bold", ha="center", va="center")
+    fig.text(0.5, 0.165, f"Trend: {'above' if above else 'below'} its 200-day average · ATH ${ath:,.2f} on {ath_d:%d %b %Y}",
+             color=TEXT, fontsize=14, ha="center", weight="medium")
+    us_footer(fig, "Returns include dividends. Factual data only; this is not a view on whether to buy or sell.")
+    save(fig, out)
+    return {"name": name, "sym": sym, "last": last, "date": last_d, "vs200": pct(last, ma200), "above": above,
+            "from_ath": pct(last, ath), "ath_date": ath_d, "lo52": lo52, "hi52": hi52, "rets": rets}
