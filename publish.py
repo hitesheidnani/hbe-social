@@ -16,6 +16,28 @@ ROOT = Path(__file__).parent
 GRAPH = "https://graph.facebook.com"
 IST = dt.timezone(dt.timedelta(hours=5, minutes=30))
 MAX_LATE_HOURS = 3
+FN_URL = "hbecapital.net/funds"
+CTA = (f"🧭 Try FundNavigator, our free tool to compare 2,000+ mutual funds, SIFs & PMS: "
+       f"{FN_URL} (link in bio)")
+
+
+def with_cta(caption):
+    """Every post invites people to try FundNavigator: replace the old 'link in bio' line, or add the
+    invitation just above the disclaimer."""
+    lines = caption.split("\n")
+    for i, l in enumerate(lines):
+        if "link in bio" in l:
+            lines[i] = CTA
+            return "\n".join(lines)
+    for i, l in enumerate(lines):
+        if l.startswith("⚠️"):
+            return "\n".join(lines[:i] + [CTA, ""] + lines[i:])
+    return caption + "\n\n" + CTA
+
+
+def web_caption(caption):
+    """Facebook / LinkedIn: links are clickable, so drop '(link in bio)' and use a full URL."""
+    return caption.replace(f"{FN_URL} (link in bio)", f"https://{FN_URL}").replace("link in bio", f"https://{FN_URL}")
 LINKEDIN_SLOTS = {"update", "psych", "market", "long", "edu", "feature", "short"}   # every slot, as the user asked
 
 
@@ -80,8 +102,7 @@ def post_carousel(image_urls, caption):
 def post_facebook(image_urls, caption):
     """Post to the HBE Capital Investments Facebook Page: one photo, or several photos in one post."""
     page, token = os.environ["FB_PAGE_ID"], os.environ["META_PAGE_TOKEN"]
-    # Facebook captions can carry a clickable link instead of 'link in bio'
-    caption = caption.replace("link in bio", "hbecapital.net/funds")
+    caption = web_caption(caption)
     if len(image_urls) == 1:
         r = graph("POST", f"{page}/photos", url=image_urls[0], message=caption, access_token=token)
         post_id = r.get("post_id") or r["id"]
@@ -152,7 +173,8 @@ def main():
     if not due:
         print("Nothing due.")
         return
-    p = due[0]
+    p = dict(due[0])
+    p["caption"] = with_cta(p["caption"])
     repo = os.environ.get("GITHUB_REPOSITORY", "hitesheidnani/hbe-social")
     image_url = f"https://raw.githubusercontent.com/{repo}/main/{p['image']}"
     print(f"Slot {p['slot']} ({p['time_ist']} IST, {p['kind']}): {image_url}")

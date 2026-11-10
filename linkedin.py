@@ -73,7 +73,8 @@ def little_text(text):
 
 def li_caption(caption):
     """Adapt an Instagram caption for LinkedIn."""
-    c = caption.replace("link in bio", "hbecapital.net/funds").replace("Follow @hbecapital", "Follow HBE Capital")
+    c = (caption.replace("hbecapital.net/funds (link in bio)", "https://hbecapital.net/funds")
+         .replace("link in bio", "https://hbecapital.net/funds").replace("Follow @hbecapital", "Follow HBE Capital"))
     c = c.replace("@hbecapital", "HBE Capital")
     return little_text(c)
 
