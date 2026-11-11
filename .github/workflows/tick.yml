@@ -60,6 +60,8 @@ jobs:
 
           👉 https://github.com/${{ github.repository }}/blob/main/posts/x-week-$NEXT/README.md" && touch "posts/x-week-$NEXT/.reminded"
             fi
+            # official announcements (RBI, SEBI, US Fed, US BEA): queue a headline card for anything new
+            python news_feeds.py || true
             # publish everything due (one post per call; loop until nothing is due)
             for i in 1 2 3; do python publish.py | tee /tmp/out.txt || true; grep -q "Nothing due" /tmp/out.txt && break; done
             git add -A posts data/indices partner_charts
