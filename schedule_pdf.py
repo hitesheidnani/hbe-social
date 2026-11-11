@@ -99,9 +99,9 @@ def build(out):
          Paragraph("Weekly", H2),
          table([
              ["When", "What", "How"],
-             ["Sunday", "X weekly pack: 21 X-ready posts for the next week (3 a day: personal card 09:00, psychology "
+             ["Wednesday", "X weekly pack: 21 X-ready posts for the next 7 days, Thu to Wed (3 a day: personal card 09:00, psychology "
               "quote 13:00, MF basics / momentum lesson / US wisdom / compounding 18:00)", "Made automatically in GitHub "
-              "(posts/x-week-<date>/README.md). A GitHub to-do 'Schedule this week's X posts' is assigned to hitesheidnani "
+              "(posts/x-week-<date>/README.md). A GitHub to-do 'Schedule your X posts' is assigned to hitesheidnani "
               "(email + GitHub app). You schedule them in X's free scheduler (about 15 min), then close the to-do."],
              ["Weekly", "The Disciplined Investor: LinkedIn Newsletter article (800-1,200 words with charts), "
               "same article on Substack", "Claude drafts it with data and charts; you paste and publish (about 10 min). "
@@ -141,7 +141,7 @@ def build(out):
               "(openid, profile, w_member_social) → Claude stores it"],
              ["Reset Meta app secret", "Once (it was shown in chat)", "developers.facebook.com → HBE Social Poster → "
               "App settings → Basic → Reset"],
-             ["Schedule X posts", "Every Sunday (GitHub reminder)", "Open the week's pack, schedule 21 posts in X, close "
+             ["Schedule X posts", "Every Wednesday (GitHub reminder)", "Open the week's pack, schedule 21 posts in X, close "
               "the to-do"],
              ["Weekly article", "Weekly", "Paste The Disciplined Investor into LinkedIn (newsletter) and Substack"],
              ["Change content", "Any time", "Quotes, lessons, rotations live in the hbe-social repo (content/*.json, daily.py)"],
@@ -172,7 +172,7 @@ def build(out):
               "encrypted as GitHub secrets"],
              ["Articles (The Disciplined Investor)", "C:\\Users\\HBE\\Projects\\Social\\articles\\"],
              ["Daily posts (images + captions + status)", "github.com/hitesheidnani/hbe-social → posts/<date>/"],
-             ["X weekly packs", "github.com/hitesheidnani/hbe-social → posts/x-week-<Monday>/README.md"],
+             ["X weekly packs", "github.com/hitesheidnani/hbe-social → posts/x-week-<Thursday>/README.md"],
              ["Content you can edit", "hbe-social/content/: psychology.json, tweets.json, education.json, "
               "momentum_lessons.json, momentum_quotes.json, us_quotes.json, us_education.json"],
              ["Post schedule & rotation logic", "hbe-social/daily.py · posting: publish.py · timer: .github/workflows/tick.yml"],

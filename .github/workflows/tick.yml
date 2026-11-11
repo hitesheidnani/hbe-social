@@ -51,11 +51,11 @@ jobs:
               python -c "import market_posts; market_posts.update_all()" || true
               python daily.py "$D" || true
             fi
-            # Sunday: remind Hitesh (GitHub issue -> email / app notification) to schedule next week's X pack
-            NEXT=$(TZ=Asia/Kolkata date -d "next monday" +%F)
-            if [ "$(TZ=Asia/Kolkata date +%u)" = 7 ] && [ -f "posts/x-week-$NEXT/README.md" ] && [ ! -f "posts/x-week-$NEXT/.reminded" ]; then
+            # Wednesday: remind Hitesh (GitHub issue -> email / app notification) to schedule the next 7 days' X pack (Thu-Wed)
+            NEXT=$(TZ=Asia/Kolkata date -d "tomorrow" +%F)
+            if [ "$(TZ=Asia/Kolkata date +%u)" = 3 ] && [ -f "posts/x-week-$NEXT/README.md" ] && [ ! -f "posts/x-week-$NEXT/.reminded" ]; then
               GH_TOKEN=${{ github.token }} gh issue create -R ${{ github.repository }} --assignee hitesheidnani \
-                --title "📅 Schedule this week's X posts (week of $NEXT)" \
+                --title "📅 Schedule your X posts (7 days from $NEXT)" \
                 --body "21 posts are ready (3 a day). Open the pack, copy each post into X's scheduler (Post → calendar icon), attach the image, schedule. About 15 minutes. Close this issue when done.
 
           👉 https://github.com/${{ github.repository }}/blob/main/posts/x-week-$NEXT/README.md" && touch "posts/x-week-$NEXT/.reminded"

@@ -1,6 +1,6 @@
-"""Weekly X pack: next week's evergreen X posts (3 a day) for manual scheduling in X's free scheduler.
+"""Weekly X pack: the next 7 days' evergreen X posts (3 a day) for manual scheduling in X's free scheduler.
 
-Built every Sunday into posts/x-week-<Monday>/ : images + README.md (renders on GitHub, phone-friendly).
+Built every Wednesday into posts/x-week-<Thursday>/ (Thu to Wed) : images + README.md (renders on GitHub, phone-friendly).
 Evergreen only (no daily prices), so the posts can be scheduled days ahead.
 """
 import json, datetime as dt
@@ -35,7 +35,7 @@ def _load(name):
     return json.loads((ROOT / "content" / name).read_text())
 
 
-def build_week(monday, out_root=None):
+def build_week(monday, out_root=None):      # monday = first day of the pack (now a Thursday)
     tweets, psych = _load("tweets.json"), _load("psychology.json")
     lessons, mlessons, usq = _load("education.json"), _load("momentum_lessons.json"), _load("us_quotes.json")
     out = Path(out_root or ROOT / "posts") / f"x-week-{monday.isoformat()}"
@@ -79,7 +79,7 @@ def build_week(monday, out_root=None):
                     "That's compounding.\n\n(Illustration, not a projection.) #compounding")
         posts.append((day, TIMES[2], fit(text), imgs))
 
-    lines = [f"# X posts for the week of {monday:%d %b %Y}", "",
+    lines = [f"# X posts for {monday:%a %d %b} to {monday + dt.timedelta(days=6):%a %d %b %Y}", "",
              "Schedule each one on x.com: **Post** → write/paste the text → attach the image(s) → "
              "**calendar icon** (Schedule) → pick the date & time → **Confirm** → **Schedule**.", "",
              "All posts are educational only. Images already carry the disclaimer.", ""]
@@ -94,4 +94,4 @@ def build_week(monday, out_root=None):
 if __name__ == "__main__":
     import sys
     today = dt.date.fromisoformat(sys.argv[1]) if len(sys.argv) > 1 else dt.date.today()
-    build_week(today + dt.timedelta(days=(7 - today.weekday()) % 7 or 7))
+    build_week(today + dt.timedelta(days=1))
