@@ -24,6 +24,29 @@
     "url": "https://www.linkedin.com/feed/update/urn:li:share:7526109127237021696/",
     "at": "2026-11-11T08:00:16+05:30"
    }
+  },
+  "instagram": {
+   "ok": true,
+   "id": "18055263149813993",
+   "url": "https://www.instagram.com/p/Dflkdu0Fsb0/",
+   "at": "2026-11-11T09:28:25+05:30"
+  },
+  "instagram_story": {
+   "ok": true,
+   "id": "17955057324312904",
+   "at": "2026-11-11T09:28:25+05:30"
+  },
+  "facebook": {
+   "ok": true,
+   "id": "1610477555472993_122099781333546038",
+   "url": "https://www.facebook.com/1610477555472993_122099781333546038",
+   "at": "2026-11-11T09:28:25+05:30"
+  },
+  "linkedin": {
+   "ok": true,
+   "id": "urn:li:share:7526131281764544512",
+   "url": "https://www.linkedin.com/feed/update/urn:li:share:7526131281764544512/",
+   "at": "2026-11-11T09:28:25+05:30"
   }
  },
  "us_close": {
@@ -51,6 +74,29 @@
     "url": "https://www.linkedin.com/feed/update/urn:li:share:7526116921587720192/",
     "at": "2026-11-11T08:31:08+05:30"
    }
+  },
+  "instagram": {
+   "ok": true,
+   "id": "17915935725481833",
+   "url": "https://www.instagram.com/p/DflkgTRjpLF/",
+   "at": "2026-11-11T09:28:46+05:30"
+  },
+  "instagram_story": {
+   "ok": true,
+   "id": "18122582179757004",
+   "at": "2026-11-11T09:28:46+05:30"
+  },
+  "facebook": {
+   "ok": true,
+   "id": "1610477555472993_122099781915546038",
+   "url": "https://www.facebook.com/1610477555472993_122099781915546038",
+   "at": "2026-11-11T09:28:46+05:30"
+  },
+  "linkedin": {
+   "ok": true,
+   "id": "urn:li:share:7526131370579124224",
+   "url": "https://www.linkedin.com/feed/update/urn:li:share:7526131370579124224/",
+   "at": "2026-11-11T09:28:46+05:30"
   }
  },
  "psych": {
