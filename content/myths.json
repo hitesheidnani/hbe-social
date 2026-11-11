@@ -1,0 +1,16 @@
+[
+ {"myth": "A fund with a ₹10 NAV is cheaper than one at ₹500.", "fact": "NAV is just the price of one unit. ₹1 lakh grows by the same % in both if the portfolios perform the same.", "send": "someone who only buys NFOs"},
+ {"myth": "SIPs can't lose money.", "fact": "A SIP spreads your buying price; it doesn't remove market risk. Over short periods SIP returns can be negative.", "send": "someone who just started a SIP"},
+ {"myth": "You need a lot of money to start investing.", "fact": "Most mutual funds accept SIPs of ₹100 to ₹500 a month. Starting early matters far more than starting big.", "send": "a friend who keeps postponing"},
+ {"myth": "Last year's best fund will be next year's best.", "fact": "Leadership rotates. Chart-toppers often cool off. Judge funds on consistency across many years and market cycles.", "send": "someone who picks funds from a 1-year ranking"},
+ {"myth": "More funds means more diversification.", "fact": "Five large cap funds own mostly the same stocks. Diversify across categories, not by adding more of the same.", "send": "someone with 15 funds"},
+ {"myth": "Stop your SIP when markets fall and restart later.", "fact": "Falls are when a SIP buys the most units. Stopping then gives up the cheapest purchases.", "send": "someone who paused their SIP"},
+ {"myth": "Debt funds are risk-free.", "fact": "Debt funds carry interest-rate risk and credit risk. They are usually steadier than equity, but not guaranteed.", "send": "someone who thinks debt = FD"},
+ {"myth": "Dividend (IDCW) plans give extra income.", "fact": "A payout comes out of your own NAV, which drops by the same amount. For long-term goals, Growth lets compounding work fully.", "send": "someone who loves 'dividends'"},
+ {"myth": "Index funds are only for beginners.", "fact": "Many professionals use index funds as a low-cost core. Beating the index consistently is hard, even for experts.", "send": "someone who looks down on index funds"},
+ {"myth": "Small caps always give the highest returns.", "fact": "Small caps can lead for years and then fall 50%+ and stay down for a long time. They need a 7+ year horizon.", "send": "someone going all-in on small caps"},
+ {"myth": "Timing the market is the key to wealth.", "fact": "Missing a handful of the best days can sharply cut long-term returns, and those days often come right after the worst ones.", "send": "someone waiting for the 'right time'"},
+ {"myth": "Momentum investing is just gambling on hot stocks.", "fact": "Systematic momentum is rule-based: rank, buy strength, exit weakness, rebalance on schedule. It is among the most researched factors in finance.", "send": "a friend who trades on tips"},
+ {"myth": "High returns mean a good fund.", "fact": "Returns without context mislead. Compare with the benchmark and look at how much the fund fell in bad years.", "send": "someone chasing returns"},
+ {"myth": "Once invested, you never need to review.", "fact": "Review once a year: check allocation, overlap and whether each fund still does its job. Then leave it alone.", "send": "someone who hasn't checked in years"}
+]

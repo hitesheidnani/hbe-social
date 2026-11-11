@@ -18,6 +18,22 @@ INTRO, STEP, FADE, OUTRO_FADE, HOLD = 1.2, 0.9, 0.3, 0.5, 3.5
 SUMMARY_BOTTOM = 0.095          # figure fraction just above the 'Past performance' source line
 
 
+TONE = "aevalsrc='0.05*sin(2*PI*220*t)+0.04*sin(2*PI*277.2*t)+0.035*sin(2*PI*329.6*t)':s=44100"
+
+
+def audio_input(secs):
+    """ffmpeg input + filter for the soundtrack: a track from music/ (rotating daily) or a soft generated tone."""
+    import datetime as dt
+    from brand import ROOT
+    tracks = sorted((ROOT / "music").glob("*.mp3"))
+    if tracks:
+        t = tracks[dt.date.today().toordinal() % len(tracks)]
+        return (["-stream_loop", "-1", "-t", f"{secs:.2f}", "-i", str(t)],
+                f"[1:a]volume=0.8,afade=t=in:d=0.8,afade=t=out:st={secs - 1.5:.2f}:d=1.5[a]")
+    return (["-f", "lavfi", "-t", f"{secs:.2f}", "-i", TONE],
+            f"[1:a]tremolo=f=0.25:d=0.4,afade=t=in:d=1,afade=t=out:st={secs - 1.5:.2f}:d=1.5[a]")
+
+
 def _px(frac):
     """Figure fraction (0 = bottom) -> pixel row on the 1080x1350 card."""
     return int(round((1 - frac) * CARD_H))
@@ -46,11 +62,7 @@ def make_reel(card_jpg, rows, out_mp4, hook="WAIT FOR #1"):
 
     ff = [imageio_ffmpeg.get_ffmpeg_exe(), "-y", "-loglevel", "error",
           "-f", "rawvideo", "-pix_fmt", "rgb24", "-s", f"{W}x{H}", "-r", str(FPS), "-i", "-",
-          # soft ambient pad: three quiet sines with slow tremolo, faded in and out
-          "-f", "lavfi", "-t", f"{total:.2f}", "-i",
-          "aevalsrc='0.05*sin(2*PI*220*t)+0.04*sin(2*PI*277.2*t)+0.035*sin(2*PI*329.6*t)':s=44100",
-          "-filter_complex",
-          f"[1:a]tremolo=f=0.25:d=0.4,afade=t=in:d=1.5,afade=t=out:st={total - 2:.2f}:d=2[a]",
+          *audio_input(total)[0], "-filter_complex", audio_input(total)[1],
           "-map", "0:v", "-map", "[a]", "-c:v", "libx264", "-pix_fmt", "yuv420p", "-preset", "medium",
           "-crf", "20", "-c:a", "aac", "-b:a", "128k", "-shortest", "-movflags", "+faststart", str(out_mp4)]
     proc = subprocess.Popen(ff, stdin=subprocess.PIPE)
@@ -89,10 +101,8 @@ def static_reel(card_jpg, out_mp4, secs=8.0):
     from brand import story_version
     frame = story_version(card_jpg, footer_text="Follow @hbecapital for more")
     ff = [imageio_ffmpeg.get_ffmpeg_exe(), "-y", "-loglevel", "error", "-loop", "1", "-t", f"{secs}", "-i", str(frame),
-          "-f", "lavfi", "-t", f"{secs}", "-i",
-          "aevalsrc='0.05*sin(2*PI*220*t)+0.04*sin(2*PI*277.2*t)+0.035*sin(2*PI*329.6*t)':s=44100",
-          "-filter_complex", f"[0:v]scale=1080:1920,format=yuv420p[v];[1:a]tremolo=f=0.25:d=0.4,afade=t=in:d=1,"
-          f"afade=t=out:st={secs - 1.5}:d=1.5[a]", "-map", "[v]", "-map", "[a]", "-r", "30", "-c:v", "libx264",
+          *audio_input(secs)[0],
+          "-filter_complex", "[0:v]scale=1080:1920,format=yuv420p[v];" + audio_input(secs)[1], "-map", "[v]", "-map", "[a]", "-r", "30", "-c:v", "libx264",
           "-preset", "medium", "-crf", "20", "-c:a", "aac", "-b:a", "128k", "-shortest", "-movflags", "+faststart",
           str(out_mp4)]
     subprocess.run(ff, check=True)

@@ -409,6 +409,31 @@ def cap_factor_lesson(t, n):
                       f"⚠️ {EDU}\nHBE Capital", "", t["tags"]])
 
 
+LAKH_INDICES = [("Nifty 50", "Nifty 50"), ("Nifty Next 50", "Nifty Next 50"), ("Nifty 500", "Nifty 500"),
+                ("Midcap 150", "Nifty Midcap 150"), ("Smallcap 250", "Nifty Smallcap 250"),
+                ("Momentum 30", "Nifty200 Momentum 30")]
+
+
+def cap_myth(m):
+    return "\n".join([f"Myth vs Fact: {m['myth']} ❌", "", f"✅ {m['fact']}", "",
+                      f"📤 Send this to {m['send']}.", "💬 Which investing myth did you believe the longest?",
+                      "Follow @hbecapital for daily investing basics.", "",
+                      f"⚠️ {EDU} {MF_DISCLAIMER}\nHBE Capital · AMFI-registered Mutual Fund Distributor · {ARN}", "",
+                      "#mythvsfact #mutualfunds #investingtips #personalfinance #sip"])
+
+
+def cap_lakh(r):
+    rows = "\n".join(f"{n}: {edu.inr(v)} ({c:.1f}% a year)" for n, v, c in r["rows"])
+    return "\n".join([f"₹1 Lakh Invested {r['years']} Years Ago: What It's Worth Today 💰", "", rows, "",
+                      "Same ₹1 lakh, same years, very different outcomes. And every one of these needed the same thing: "
+                      "staying invested through the falls.", "",
+                      "💬 Which one surprised you?", "📤 Share with someone who says 'investing doesn't work'.", "",
+                      f"⚠️ {EDU} Index price returns as of {r['asof']:%d %b %Y}; indices can't be bought directly and index "
+                      f"funds have costs. Past performance may or may not be sustained in future. {MF_DISCLAIMER}\n"
+                      f"HBE Capital · AMFI-registered Mutual Fund Distributor · {ARN}", "",
+                      "#wealthcreation #nifty50 #smallcap #longterminvesting #investing"])
+
+
 def cap_us_edu(t, n):
     points = "\n".join(f"→ {h}" for h, _ in t["slides"])
     return "\n".join([f"US Investing Basics #{n}: {t['title']} 🇺🇸", "", t["hook"], "", points, "",
@@ -577,12 +602,22 @@ def build(day: dt.date):
     except Exception as e:      # a market-data problem must never block the fund posts
         print("market: skipped,", e)
 
-    # 15:00 education: MF Basics carousel / compounding illustration, alternating days
-    if d % 2 == 0:
+    # 15:00 education, 6-day cycle: MF Basics · compounding · myth vs fact · MF Basics · ₹1 lakh then vs now · compounding
+    cyc = d % 6
+    if cyc in (0, 3):
         topics = json.loads((ROOT / "content" / "education.json").read_text())
         k = (d // 2) % len(topics)
         slides = edu.edu_carousel(topics[k], k + 1, out / "edu")
         add("edu", slides[0], cap_edu(topics[k], k + 1), "edu", carousel=slides)
+    elif cyc == 2:
+        myths = json.loads((ROOT / "content" / "myths.json").read_text())
+        m = myths[(d // 6) % len(myths)]
+        add("edu", edu.myth_card(m, out / "5_myth"), cap_myth(m), "myth")
+    elif cyc == 4:
+        look = {x["name"].lower(): x for x in mkt.INDEX_LIST}
+        ser = [(lab, mkt.series(look[n.lower()])) for lab, n in LAKH_INDICES if n.lower() in look]
+        r = edu.lakh_card(ser, [10, 5, 15, 20][(d // 6) % 4], out / "5_lakh")
+        add("edu", out / "5_lakh.jpg", cap_lakh(r), "lakh")
     else:
         typ, amt, yrs, rate = COMPOUNDING[(d // 2) % len(COMPOUNDING)]
         f = out / "5_compounding"

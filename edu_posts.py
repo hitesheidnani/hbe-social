@@ -215,3 +215,73 @@ def compounding_lumpsum(amount, rate, out, horizons=(10, 20, 30)):
     _note_and_footer(fig, rate)
     save(fig, out)
     return {"type": "lump", "amount": amount, "rate": rate, "values": vals, "double": double}
+
+
+# ---------------------------------------------------------------- shareable formats
+def myth_card(item, out):
+    """Myth vs Fact card, written to be forwarded."""
+    fig = canvas()
+    brand_badge(fig, 0.06, 0.955, size=0.85)
+    fig.text(0.06, 0.885, "MYTH VS FACT", color=ACCENT, fontsize=15, weight="semibold")
+    for y0, h, label, col, text, size in ((0.52, 0.31, "MYTH", "#FF5C6C", item["myth"], 34),
+                                          (0.19, 0.30, "FACT", "#2ECC8F", item["fact"], 27)):
+        fig.add_artist(FancyBboxPatch((0.06, y0), 0.88, h, boxstyle="round,pad=0,rounding_size=0.02",
+                                      transform=fig.transFigure, fc=PANEL, ec=col, lw=2))
+        fig.text(0.10, y0 + h - 0.045, label, color=col, fontsize=20, weight="heavy", va="center")
+        fig.text(0.10, y0 + (h - 0.07) / 2, wrap(text, 30 if size > 30 else 38), color=TEXT, fontsize=size,
+                 weight="bold" if label == "MYTH" else "regular", va="center", linespacing=1.3)
+    fig.text(0.5, 0.135, f"Send this to {item['send']}", color=GOLD, fontsize=19, weight="bold", ha="center")
+    footer(fig, "mf")
+    return save(fig, out)
+
+
+def lakh_card(series, years, out):
+    """What ₹1 lakh invested N years ago in each index is worth today (price indices)."""
+    rows = []
+    for label, pts in series:
+        end_d, end = pts[-1]
+        target = end_d.replace(year=end_d.year - years)
+        prior = [v for d_, v in pts if d_ <= target]
+        if prior and (target - pts[0][0]).days >= 0:
+            rows.append((label, 1e5 * end / prior[-1], ((end / prior[-1]) ** (1 / years) - 1) * 100))
+    rows.sort(key=lambda r: r[1])
+    asof = series[0][1][-1][0]
+    fig = _card_frame("Then vs now", f"₹1 lakh invested {years} years ago",
+                      f"Value today in Nifty indices · price returns, dividends excluded · as of {asof:%d %b %Y}")
+    ax = fig.add_axes([0.27, 0.20, 0.67, 0.56])
+    _style(ax)
+    ax.grid(False)
+    bars = ax.barh([r[0] for r in rows], [r[1] / 1e5 for r in rows], color=[ACCENT if i == len(rows) - 1 else "#2A3654"
+                                                                         for i in range(len(rows))], height=0.62)
+    for b, r in zip(bars, rows):
+        ax.text(b.get_width(), b.get_y() + b.get_height() / 2, f"  {inr(r[1])}  ({r[2]:.1f}%/yr)", va="center",
+                color=TEXT, fontsize=13.5, weight="bold")
+    ax.set_xticks([])
+    ax.tick_params(axis="y", colors=TEXT, labelsize=14, length=0)
+    ax.set_xlim(0, max(r[1] for r in rows) / 1e5 * 1.6)
+    fig.text(0.5, 0.165, "Indices cannot be bought directly; index funds and ETFs have costs and tracking differences.\n"
+             "Past performance may or may not be sustained in future.", color=MUTED, fontsize=10.5, ha="center",
+             va="center", linespacing=1.4)
+    footer(fig, "mf")
+    save(fig, out)
+    return {"years": years, "asof": asof, "rows": rows[::-1]}
+
+
+def news_card(headline, points, out, kicker="MARKET NEWS"):
+    """Same-day reaction card: headline + up to 4 short points."""
+    import datetime as _dt
+    fig = canvas()
+    brand_badge(fig, 0.06, 0.955, size=0.85)
+    fig.text(0.06, 0.885, f"{kicker} · {_dt.datetime.now(_dt.timezone(_dt.timedelta(hours=5, minutes=30))):%d %b %Y}".upper(),
+             color=ACCENT, fontsize=15, weight="semibold")
+    head = wrap(headline, 22)
+    fig.text(0.06, 0.74, head, color=TEXT, fontsize=46 if len(head.splitlines()) <= 3 else 38, weight="heavy",
+             va="center", linespacing=1.15)
+    y = 0.56
+    for p in points[:4]:
+        t = wrap(p, 40)
+        fig.text(0.06, y, "→", color=GOLD, fontsize=24, weight="bold", va="top")
+        fig.text(0.115, y, t, color=TEXT, fontsize=24, va="top", linespacing=1.35)
+        y -= 0.045 * len(t.splitlines()) + 0.03
+    footer(fig, "generic")
+    return save(fig, out)
