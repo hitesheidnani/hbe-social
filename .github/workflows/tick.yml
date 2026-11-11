@@ -45,7 +45,9 @@ jobs:
           while [ "$(date +%s)" -lt "$end" ]; do
             git pull -q --rebase || true
             D=$(TZ=Asia/Kolkata date +%F)
-            if [ ! -f "posts/$D/plan.json" ]; then
+            # Build only from 06:00 IST: by then the US session has closed and NSE has published the day's data.
+            # (Building just after midnight used the previous day's closes.)
+            if [ ! -f "posts/$D/plan.json" ] && [ "$(TZ=Asia/Kolkata date +%H)" -ge 6 ]; then
               python -c "import market_posts; market_posts.update_all()" || true
               python daily.py "$D" || true
             fi

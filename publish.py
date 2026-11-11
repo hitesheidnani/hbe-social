@@ -38,7 +38,7 @@ def with_cta(caption):
 # Every post links to the other channels so people can follow everywhere.
 CHANNELS = {
     "instagram": ("Instagram", "@hbecapital", "https://instagram.com/hbecapital"),
-    "youtube": ("YouTube", "@hbecapital", "https://youtube.com/@hbecapital"),
+    "youtube": ("YouTube", "@hbecapital", "https://www.youtube.com/channel/UCncnCb5rbHQePNI1bfoxg9A"),
     "x": ("X", "@hitesheidnani", "https://x.com/hitesheidnani"),
     "linkedin": ("LinkedIn", "Hitesh Eidnani", "https://linkedin.com/in/hitesheidnani"),
     "facebook": ("Facebook", "HBE Capital Investments", f"https://facebook.com/{os.environ.get('FB_PAGE_ID', '')}"),
