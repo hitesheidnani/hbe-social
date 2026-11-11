@@ -17,7 +17,7 @@ Daily mix (IST):
   20:00  top-10 leaderboard, shorter horizon (1y / 2y / 3y), rotating category
 Returns for periods under 1 year are never shown.
 """
-import json, sys, datetime as dt
+import json, os, sys, datetime as dt
 from pathlib import Path
 
 import mf_posts as mf
