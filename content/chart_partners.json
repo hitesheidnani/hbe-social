@@ -1,4 +1,16 @@
 {
- "banana3stocks": {"name": "Banana3", "handle": "@Banana3Stocks", "url": "https://x.com/Banana3Stocks",
-                   "agreed": "2026-11-11", "conditions": "Credit their work on every post"}
+ "banana3stocks": {
+  "name": "Banana3",
+  "handle": "@Banana3Stocks",
+  "url": "https://x.com/Banana3Stocks",
+  "agreed": "2026-11-11",
+  "conditions": "Credit their work on every post"
+ },
+ "bluekurtic": {
+  "name": "Bluekurtic Market Insights",
+  "handle": "@Bluekurtic",
+  "url": "https://x.com/Bluekurtic",
+  "agreed": "2026-11-11",
+  "conditions": "None stated ('Anytime'); always credit"
+ }
 }
