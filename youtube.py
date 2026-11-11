@@ -25,7 +25,8 @@ def title_from(caption):
 
 def upload_short(mp4, caption):
     tok = _token()
-    desc = caption.replace("link in bio", "hbecapital.net/funds")[:4900]
+    desc = (caption.replace("hbecapital.net/funds (link in bio)", "https://hbecapital.net/funds")
+            .replace("link in bio", "https://hbecapital.net/funds"))[:4900]
     meta = {"snippet": {"title": title_from(caption), "description": desc, "categoryId": "27",
                         "tags": ["investing", "mutual funds", "stock market", "HBE Capital"]},
             "status": {"privacyStatus": "public", "selfDeclaredMadeForKids": False}}

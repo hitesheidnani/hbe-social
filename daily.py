@@ -435,8 +435,9 @@ def cap_lakh(r):
 
 
 def cap_partner(title, note, pt):
-    return "\n".join([f"Chart of the Day: {title} 📈", "", f"Chart by {pt['name']} ({pt['handle']} on X). "
-                      f"Follow them for more: {pt['url']}", ""] + ([note, ""] if note else []) +
+    x_name = pt["handle"].lstrip("@")
+    return "\n".join([f"Chart of the Day: {title} 📈", "",
+                      f"Chart by {pt['name']}. Find them on X as {x_name}: {pt['url']}", ""] + ([note, ""] if note else []) +
                      ["Shared with the creator's permission. All credit for the chart goes to them.", "",
                       "🔖 Save this · 📤 Share with a fellow chart lover", "",
                       f"⚠️ {EDU} The chart reflects its creator's analysis, not a recommendation by HBE Capital.\nHBE Capital",
@@ -596,7 +597,7 @@ def build(day: dt.date):
                 src, pt, status = got
                 title = f"From {pt['name']}"
                 add("partner", edu.partner_chart_card(src, title, pt, out / "4b_partner"),
-                    cap_partner(title, f"See the original post: {status}\nSpotted via The Chart Report (@TheChartReport).", pt),
+                    cap_partner(title, f"Original post: {status}", pt),
                     "partner")
                 src.unlink()
     except Exception as e:

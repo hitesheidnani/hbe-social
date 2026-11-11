@@ -75,7 +75,7 @@ def li_caption(caption):
     """Adapt an Instagram caption for LinkedIn."""
     c = (caption.replace("hbecapital.net/funds (link in bio)", "https://hbecapital.net/funds")
          .replace("link in bio", "https://hbecapital.net/funds").replace("Follow @hbecapital", "Follow HBE Capital"))
-    c = c.replace("@hbecapital", "HBE Capital")
+    c = re.sub(r"(?<![\w/.])@hbecapital\b", "HBE Capital", c)   # never touch addresses that contain the handle
     return little_text(c)
 
 

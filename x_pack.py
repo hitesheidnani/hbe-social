@@ -14,7 +14,7 @@ LIMIT = 270          # X allows 280 characters (emoji count double); keep a marg
 TIMES = ["09:00", "13:00", "18:00"]
 
 
-FOLLOW = "\n\n📲 Insta & YouTube: @hbecapital"
+FOLLOW = "\n\n📲 Instagram & YouTube: hbecapital"
 
 
 def fit(text, limit=LIMIT):

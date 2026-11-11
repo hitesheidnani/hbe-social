@@ -9,7 +9,7 @@ Usage:
   python publish.py --dry-run            # show what would be posted
 Env: IG_USER_ID, META_PAGE_TOKEN, FB_PAGE_ID, GITHUB_REPOSITORY (owner/name), optional POST_DATE (YYYY-MM-DD)
 """
-import argparse, json, os, sys, time, urllib.parse, urllib.request, urllib.error, datetime as dt
+import argparse, re, json, os, sys, time, urllib.parse, urllib.request, urllib.error, datetime as dt
 from pathlib import Path
 
 ROOT = Path(__file__).parent
@@ -46,20 +46,31 @@ CHANNELS = {
 
 
 def follow_line(platform):
-    """'Follow us' line listing the other channels: handles on Instagram, clickable links elsewhere."""
-    parts = []
-    for key, (name, handle, url) in CHANNELS.items():
-        if key == platform or (key == "facebook" and platform == "instagram"):
-            continue
-        if platform == "instagram" or not url or url.endswith("/"):
-            parts.append(f"{name} {handle}")
-        else:
-            parts.append(f"{name}: {url}")
+    """'Follow us' line listing the other channels.
+    Instagram turns every @name into a link to an INSTAGRAM account and never makes web addresses clickable,
+    so there we write plain names (the real links live in the bio). Elsewhere we use full clickable links."""
+    if platform == "instagram":
+        return ("📲 Also follow HBE Capital on YouTube (HBE Capital), X (x.com/hitesheidnani) and "
+                "LinkedIn (Hitesh Eidnani). Links in bio.")
+    parts = [f"{name}: {url}" for key, (name, handle, url) in CHANNELS.items() if key != platform]
     return "📲 Follow HBE Capital everywhere: " + " · ".join(parts)
 
 
+OWN_HANDLE = {"instagram": "hbecapital", "youtube": "hbecapital"}
+
+
+def strip_foreign_handles(caption, platform):
+    """On Instagram and YouTube an @name links to an account ON THAT PLATFORM. Any @name that is not our own
+    account there (X handles of creators, etc.) is written without the @ so it cannot open the wrong profile."""
+    own = OWN_HANDLE.get(platform)
+    if not own:
+        return caption
+    return re.sub(r"(?<![\w/.])@(?!%s\b)(\w+)" % own, r"\1", caption)
+
+
 def for_platform(caption, platform):
-    """Insert the follow line just above the disclaimer (or at the end)."""
+    """Platform-safe caption with the follow line inserted just above the disclaimer (or at the end)."""
+    caption = strip_foreign_handles(caption, platform)
     line = follow_line(platform)
     lines = caption.split("\n")
     for i, l in enumerate(lines):
