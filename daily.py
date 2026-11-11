@@ -588,6 +588,17 @@ def build(day: dt.date):
             if note_file.exists():
                 note_file.rename(used / f"{day.isoformat()} {note_file.name}")
             break
+        else:
+            # nothing in the inbox: look for a partner's chart among those featured on The Chart Report
+            import partner_fetch
+            got = partner_fetch.pick(out)
+            if got:
+                src, pt, status = got
+                title = f"From {pt['name']}"
+                add("partner", edu.partner_chart_card(src, title, pt, out / "4b_partner"),
+                    cap_partner(title, f"See the original post: {status}\nSpotted via The Chart Report (@TheChartReport).", pt),
+                    "partner")
+                src.unlink()
     except Exception as e:
         print("partner: skipped,", e)
 
