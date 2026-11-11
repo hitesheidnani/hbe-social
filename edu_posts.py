@@ -285,3 +285,25 @@ def news_card(headline, points, out, kicker="MARKET NEWS"):
         y -= 0.045 * len(t.splitlines()) + 0.03
     footer(fig, "generic")
     return save(fig, out)
+
+
+def partner_chart_card(image_path, title, partner, out):
+    """A partner's chart, shown whole and unedited, with credit to the creator."""
+    from PIL import Image
+    import numpy as np
+    fig = canvas()
+    brand_badge(fig, 0.06, 0.955, size=0.85)
+    fig.text(0.06, 0.895, "CHART OF THE DAY", color=ACCENT, fontsize=15, weight="semibold")
+    fig.text(0.06, 0.845, wrap(title, 34), color=TEXT, fontsize=30, weight="heavy", va="center", linespacing=1.15)
+    im = Image.open(image_path).convert("RGB")
+    bw, bh = 0.88, 0.58                                   # box, in figure fractions (canvas is 1080 x 1350)
+    ar_box, ar = (bw * 1080) / (bh * 1350), im.width / im.height
+    w, h = (bw, bw * 1080 / ar / 1350) if ar >= ar_box else (bh * 1350 * ar / 1080, bh)
+    ax = fig.add_axes([0.06 + (bw - w) / 2, 0.19 + (bh - h) / 2, w, h])
+    ax.imshow(np.asarray(im))
+    ax.axis("off")
+    fig.text(0.5, 0.15, f"Chart by {partner['name']} · {partner['handle']} on X", color=GOLD, fontsize=19,
+             weight="bold", ha="center")
+    fig.text(0.5, 0.118, "Shared with the creator's permission", color=MUTED, fontsize=13, ha="center")
+    footer(fig, "generic")
+    return save(fig, out)

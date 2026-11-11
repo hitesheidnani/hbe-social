@@ -62,7 +62,7 @@ jobs:
             fi
             # publish everything due (one post per call; loop until nothing is due)
             for i in 1 2 3; do python publish.py | tee /tmp/out.txt || true; grep -q "Nothing due" /tmp/out.txt && break; done
-            git add posts data/indices
+            git add -A posts data/indices partner_charts
             git diff --cached --quiet || git commit -q -m "posts: ticker $(TZ=Asia/Kolkata date '+%F %H:%M')"
             git pull -q --rebase && git push -q || true
             sleep 600

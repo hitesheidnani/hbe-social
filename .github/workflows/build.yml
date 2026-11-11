@@ -43,6 +43,6 @@ jobs:
         run: |
           git config user.name "hbe-social-bot"
           git config user.email "actions@users.noreply.github.com"
-          git add posts data/indices
+          git add -A posts data/indices partner_charts
           git diff --cached --quiet || git commit -m "posts: build $(TZ=Asia/Kolkata date +%F)"
           git pull --rebase && git push

@@ -30,7 +30,7 @@ from brand import quote_card, story_version, tweet_card, ARN, MF_DISCLAIMER, EDU
 
 ROOT = Path(__file__).parent
 SLOTS = {"update": "08:00", "us_close": "08:30", "psych": "09:00", "tweet_am": "10:00", "market": "11:00", "long": "12:30", "edu": "15:00", "factor": "16:00",
-         "spotlight": "13:30", "feature": "17:30", "tweet_pm": "18:30", "us_theme": "19:00", "short": "20:00", "us_wisdom": "21:30"}
+         "spotlight": "13:30", "partner": "14:00", "feature": "17:30", "tweet_pm": "18:30", "us_theme": "19:00", "short": "20:00", "us_wisdom": "21:30"}
 # 19:00 US theme by weekday (Mon=0); heatmap / style periods rotate 1y -> 3y -> 5y week to week
 US_THEME = {0: "sectors", 1: "vs_india", 2: "drawdown", 3: "style", 4: "years", 5: "us_edu", 6: "wrap"}
 US_TAGS = "#usstocks #sp500 #nasdaq #wallstreet #investinus"
@@ -434,6 +434,15 @@ def cap_lakh(r):
                       "#wealthcreation #nifty50 #smallcap #longterminvesting #investing"])
 
 
+def cap_partner(title, note, pt):
+    return "\n".join([f"Chart of the Day: {title} 📈", "", f"Chart by {pt['name']} ({pt['handle']} on X). "
+                      f"Follow them for more: {pt['url']}", ""] + ([note, ""] if note else []) +
+                     ["Shared with the creator's permission. All credit for the chart goes to them.", "",
+                      "🔖 Save this · 📤 Share with a fellow chart lover", "",
+                      f"⚠️ {EDU} The chart reflects its creator's analysis, not a recommendation by HBE Capital.\nHBE Capital",
+                      "", "#chartoftheday #technicalanalysis #stockmarket #investing #trading"])
+
+
 def cap_us_edu(t, n):
     points = "\n".join(f"→ {h}" for h, _ in t["slides"])
     return "\n".join([f"US Investing Basics #{n}: {t['title']} 🇺🇸", "", t["hook"], "", points, "",
@@ -557,6 +566,30 @@ def build(day: dt.date):
                 .replace(TAGS["psych"], FAC_TAGS), "factor_quote")
     except Exception as e:
         print("factor: skipped,", e)
+
+    # 14:00 partner chart of the day (only from creators who gave permission; skipped if the inbox is empty)
+    try:
+        partners = json.loads((ROOT / "content" / "chart_partners.json").read_text())
+        inbox = ROOT / "partner_charts" / "inbox"
+        files = sorted((f for f in inbox.iterdir() if f.suffix.lower() in (".png", ".jpg", ".jpeg", ".webp")),
+                       key=lambda f: f.stat().st_mtime)
+        for f in files:
+            handle, _, title = f.stem.partition(" - ")
+            pt = partners.get(handle.strip().lstrip("@").lower())
+            if not pt:
+                print("partner: no permission on record for", handle, "- skipped")
+                continue
+            title = title.strip() or "Chart of the day"
+            note_file = f.with_suffix(".txt")
+            note = note_file.read_text().strip() if note_file.exists() else ""
+            add("partner", edu.partner_chart_card(f, title, pt, out / "4b_partner"), cap_partner(title, note, pt), "partner")
+            used = ROOT / "partner_charts" / "used"
+            f.rename(used / f"{day.isoformat()} {f.name}")
+            if note_file.exists():
+                note_file.rename(used / f"{day.isoformat()} {note_file.name}")
+            break
+    except Exception as e:
+        print("partner: skipped,", e)
 
     # 13:30 Magnificent 7 spotlight
     try:
