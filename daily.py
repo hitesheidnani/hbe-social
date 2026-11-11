@@ -708,7 +708,8 @@ def build(day: dt.date):
     add("short", out / "4_short.jpg", cap_leader(r), "leaderboard", rows=len(r["top"]))
 
     # Wednesdays: the X pack for the next 7 days, Thu to Wed (evergreen posts for manual scheduling in X's free scheduler)
-    if day.weekday() == 2:
+    # Paused 2026-11-11: Hitesh chose to skip X for now. Set X_PACK=1 in the workflow env to resume.
+    if day.weekday() == 2 and os.environ.get("X_PACK") == "1":
         try:
             import x_pack
             x_pack.build_week(day + dt.timedelta(days=1))
