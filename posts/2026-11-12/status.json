@@ -130,5 +130,43 @@
    "url": "https://www.linkedin.com/feed/update/urn:li:share:7526517076040060929/",
    "at": "2026-11-12T11:01:11+05:30"
   }
+ },
+ "long": {
+  "instagram": {
+   "ok": true,
+   "id": "17890302975687825",
+   "url": "https://www.instagram.com/p/DfoeTZpF-_b/",
+   "at": "2026-11-12T12:32:19+05:30"
+  },
+  "instagram_story": {
+   "ok": true,
+   "id": "17976885273175458",
+   "at": "2026-11-12T12:32:19+05:30"
+  },
+  "facebook": {
+   "ok": true,
+   "id": "1610477555472993_122100788391546038",
+   "url": "https://www.facebook.com/1610477555472993_122100788391546038",
+   "at": "2026-11-12T12:32:19+05:30"
+  },
+  "linkedin": {
+   "ok": true,
+   "id": "urn:li:share:7526539991389192192",
+   "url": "https://www.linkedin.com/feed/update/urn:li:share:7526539991389192192/",
+   "at": "2026-11-12T12:32:19+05:30"
+  },
+  "instagram_reel": {
+   "ok": true,
+   "id": "17982663933121331",
+   "url": "https://www.instagram.com/reel/DfoeYQVCEZv/",
+   "at": "2026-11-12T12:32:19+05:30"
+  },
+  "youtube": {
+   "ok": true,
+   "id": "DkWf_56DLAI",
+   "url": "https://youtube.com/shorts/DkWf_56DLAI",
+   "privacy": "public",
+   "at": "2026-11-12T12:32:19+05:30"
+  }
  }
 }
