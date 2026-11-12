@@ -95,6 +95,9 @@ def build(out):
               "Same 9 categories, different one from 12:30", "Story + Reel"],
              ["21:30", "US investing wisdom", "Quote card: Buffett, Bogle, Lynch, Graham, Munger, Templeton, Fisher",
               "20 quotes, one a day", "Story"],
+             ["22:30", "Trader's mindset", "Bold quote under a candlestick illustration (long quotes: text-only card), "
+              "from Hitesh's saved Pinterest quote bank; jokes excluded", "567 quotes, one a day "
+              "(content/pin_quotes.json)", "Story"],
          ], [16 * mm, 32 * mm, 105 * mm, 85 * mm, W - 238 * mm]),
          Paragraph("Weekly", H2),
          table([
