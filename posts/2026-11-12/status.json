@@ -413,5 +413,30 @@
    "privacy": "public",
    "at": "2026-11-12T20:02:25+05:30"
   }
+ },
+ "us_wisdom": {
+  "instagram": {
+   "ok": true,
+   "id": "18017307611986357",
+   "url": "https://www.instagram.com/p/DfpcTrgiVYr/",
+   "at": "2026-11-12T21:34:06+05:30"
+  },
+  "instagram_story": {
+   "ok": true,
+   "id": "18132162607855015",
+   "at": "2026-11-12T21:34:06+05:30"
+  },
+  "facebook": {
+   "ok": true,
+   "id": "1610477555472993_122101125717546038",
+   "url": "https://www.facebook.com/1610477555472993_122101125717546038",
+   "at": "2026-11-12T21:34:06+05:30"
+  },
+  "linkedin": {
+   "ok": true,
+   "id": "urn:li:share:7526676303253495809",
+   "url": "https://www.linkedin.com/feed/update/urn:li:share:7526676303253495809/",
+   "at": "2026-11-12T21:34:06+05:30"
+  }
  }
 }
