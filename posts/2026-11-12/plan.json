@@ -1,150 +1,158 @@
 [
-  {
-    "slot": "update",
-    "time_ist": "08:00",
-    "kind": "update",
-    "image": "posts/2026-11-12/00_update.jpg",
-    "story_image": "posts/2026-11-12/00_update_story.jpg",
-    "caption": "Market Update | Thu, 12 Nov 2026 🌏\n\n🇮🇳 India\n🟢 Nifty 50: 25,255 (+0.84%)\n🟢 Nifty Bank: 60,792 (+1.76%)\n🟢 Nifty Midcap 150: 22,598 (+0.85%)\n🟢 Nifty Smallcap 250: 17,798 (+1.26%)\n\n🇺🇸 US\n🟢 S&P 500: 7,619 (+1.31%)\n🟢 Nasdaq 100: 28,374 (+2.28%)\n🟢 Dow Jones: 52,486 (+0.49%)\n🟢 Russell 2000: 2,846 (+0.88%)\n\n🌍 Global\n🔴 Gold ($/oz): 4,030 (-2.05%)\n🔴 Brent crude ($): 91.49 (-1.17%)\n⬆️ US 10Y yield: 5.00% (+2 bp)\n⬇️ USD / INR: 93.93 (-0.02%)\n\nTrend check: 8 of 10 indices & commodities are above their 200-day average.\n🟢 more than 1% above the 200-day average (bullish) · 🔴 more than 1% below (bearish) · 🟡 within 1% (neutral) · ⬆️⬇️ rates and USD/INR vs their 200-day average.\n\nIndia: NSE close 11 Nov. US & global: close 11 Nov. Index figures are price levels.\n\n🔔 Follow @hbecapital for this update every morning at 8.\n\n⚠️ For educational purposes only. Not investment advice.\n\n#stockmarket #nifty50 #sp500 #marketupdate #investing"
-  },
-  {
-    "slot": "us_close",
-    "time_ist": "08:30",
-    "kind": "us_close",
-    "image": "posts/2026-11-12/01_us_close.jpg",
-    "story_image": "posts/2026-11-12/01_us_close_story.jpg",
-    "caption": "US Market Close | Wed, 11 Nov 2026 🇺🇸\n\nS&P 500 +1.31% · Nasdaq 100 +2.28% · Dow Jones +0.49% · Russell 2000 +0.88%\nVIX 17.49 (-10.1%) · US 10Y 5.00% (+2 bp) · Dollar Index 102.84 (+0.60%)\n\nMagnificent 7: best Tesla +2.91%, weakest Microsoft -2.26%.\nSectors: 10 of 11 up. Leader Technology +3.23%, laggard Cons. Discretionary -0.05%.\n\n🔔 Follow for the US close every morning.\n\n⚠️ For educational purposes only. Not investment advice. Not a recommendation to buy or sell any security. Past performance may or may not be sustained in future. US data: Yahoo Finance.\nHBE Capital\n\n#usstocks #sp500 #nasdaq #wallstreet #investinus"
-  },
-  {
-    "slot": "psych",
-    "time_ist": "09:00",
-    "kind": "psych",
-    "image": "posts/2026-11-12/1_psychology.jpg",
-    "story_image": "posts/2026-11-12/1_psychology_story.jpg",
-    "caption": "\"Win or lose, everybody gets what they want out of the market.\"\n— Ed Seykota\n\nLook honestly at your behaviour. Overtrading may be about excitement; refusing to sell losers may be about avoiding regret. Know what you're really after.\n\n💬 Which rule do you struggle with most? Tell us below.\n🔖 Save this for the next time the market tests your patience.\n\nFollow @hbecapital for daily trading psychology and mutual fund data.\n\n⚠️ For educational purposes only. Not investment advice.\n\n#tradingpsychology #stockmarket #investing #markdouglas #mindset"
-  },
-  {
-    "slot": "tweet_am",
-    "time_ist": "10:00",
-    "kind": "tweet",
-    "image": "posts/2026-11-12/1b_tweet_am.jpg",
-    "story_image": "posts/2026-11-12/1b_tweet_am_story.jpg",
-    "caption": "Diversification means some part of your portfolio will always look bad.\n\nThat's not a mistake.\nThat's the design.\n\n💬 Agree or disagree? Tell me in the comments.\n📤 Share this with someone who needs to hear it.\nFollow @hbecapital for daily notes on investing, markets and discipline.\n\n⚠️ For educational purposes only. Not investment advice.\nHitesh Eidnani · Managing Partner, HBE Capital · AMFI-registered MFD · ARN-275597\n\n#investing #stockmarketindia #mutualfunds #personalfinance #wealthcreation",
-    "as_reel": true
-  },
-  {
-    "slot": "market",
-    "time_ist": "11:00",
-    "kind": "heatmap",
-    "image": "posts/2026-11-12/0_market.jpg",
-    "story_image": "posts/2026-11-12/0_market_story.jpg",
-    "caption": "Nifty Strategy Indices: 5-Year Returns Heatmap | Nov 2026 🟩🟥\n\n28 of 28 strategy indices are up over 5-year a year (CAGR).\n\n🏆 Leaders: Nifty 200 Value 30 +21.4%, Nifty 500 Value 50 +19.7%, High Beta 50 +14.1%\n🔻 Laggards: Midcap150 Quality 50 +5.2%, Nifty 200 Quality 30 +5.8%, Nifty 500 Flexicap Quality 30 +5.9%\n\nLeadership rotates. Last period's winners are rarely next period's, which is why diversification and a disciplined process matter more than chasing the hottest theme.\n\nData as of 11 Nov 2026. Source: NSE Indices.\n\n💬 Which of these surprised you? Comment below.\n🔖 Save this · 📤 Share with a fellow investor\n\n⚠️ For educational purposes only. Not investment advice. Index figures are price returns (dividends excluded); indices cannot be invested in directly. Past performance may or may not be sustained in future. Not a recommendation.\nHBE Capital · AMFI-registered Mutual Fund Distributor · ARN-275597\n\n#factorinvesting #momentuminvesting #smartbeta #stockmarketindia #investing"
-  },
-  {
-    "slot": "long",
-    "time_ist": "12:30",
-    "kind": "leaderboard",
-    "image": "posts/2026-11-12/2_long.jpg",
-    "story_image": "posts/2026-11-12/2_long_story.jpg",
-    "caption": "Top 10 Value Mutual Funds by 7-Year Returns | India 2026 📊\n\n1. ICICI Prudential Value Fund: 18.9%\n2. Bandhan Value Fund: 18.3%\n3. Aditya Birla Sun Life Value Fund: 17.6%\n4. Nippon India Value Fund: 17.0%\n5. Templeton India Value Fund: 16.3%\n6. HDFC Value Fund: 16.1%\n7. JM Value Fund: 16.1%\n8. UTI Value Fund: 15.2%\n9. Union Value Fund: 15.2%\n10. Tata Value Fund: 14.9%\n\nBenchmark (Nifty 500 TRI): 14.8%\n10 of 13 funds beat the index over this period. Median fund: 16.1%.\n\nData: Regular plan, Growth option. NAV as of 11 Nov 2026. Source: AMFI NAVs and NSE Indices, computed by HBE Capital FundNavigator.\n\n💬 Which of these do you hold? Comment below.\n🔖 Save this for your next review · 📤 Share with someone who invests in mutual funds\n📊 Full rankings for every category: link in bio\n\n⚠️ For educational purposes only. Not investment advice. Past performance may or may not be sustained in future. This is not a recommendation to buy or sell any fund. Mutual fund investments are subject to market risks, read all scheme related documents carefully.\nHBE Capital · AMFI-registered Mutual Fund Distributor · ARN-275597\n\n#valueinvesting #mutualfunds #sip #investing #personalfinance",
-    "reel": {
-      "rows": 10
-    }
-  },
-  {
-    "slot": "spotlight",
-    "time_ist": "13:30",
-    "kind": "spotlight",
-    "image": "posts/2026-11-12/3b_spotlight.jpg",
-    "story_image": "posts/2026-11-12/3b_spotlight_story.jpg",
-    "caption": "Alphabet (GOOGL) Stock Snapshot | 11 Nov 2026 🔍\n\nLast close: $293.45\nTrend: below its 200-day average (-13.4%)\nFrom all-time high: -27.1% (ATH May 2026)\n52-week range: $274 – $403\nReturns (incl. dividends): 1y +1.0% · 3y +30.7%/yr · 5y +15.2%/yr\n\nOne Magnificent 7 stock every day. Factual data only, no buy/sell views.\n\n🔖 Save this · 📤 Share with someone investing in US tech\n\n⚠️ For educational purposes only. Not investment advice. Not a recommendation to buy or sell any security. Past performance may or may not be sustained in future. US data: Yahoo Finance.\nHBE Capital\n\n#googl #magnificent7 #usstocks #nasdaq #investinus"
-  },
-  {
-    "slot": "partner",
-    "time_ist": "14:00",
-    "kind": "partner",
-    "image": "posts/2026-11-12/4b_partner.jpg",
-    "story_image": "posts/2026-11-12/4b_partner_story.jpg",
-    "caption": "Chart of the Day: From Ryan Detrick, CMT 📈\n\nChart by Ryan Detrick, CMT. Find them on X as RyanDetrick: https://x.com/RyanDetrick\n\nOriginal post: https://x.com/RyanDetrick/status/2120529634458816727\n\nShared with the creator's permission. All credit for the chart goes to them.\n\n🔖 Save this · 📤 Share with a fellow chart lover\n\n⚠️ For educational purposes only. Not investment advice. The chart reflects its creator's analysis, not a recommendation by HBE Capital.\nHBE Capital\n\n#chartoftheday #technicalanalysis #stockmarket #investing #trading"
-  },
-  {
-    "slot": "edu",
-    "time_ist": "15:00",
-    "kind": "edu",
-    "image": "posts/2026-11-12/edu/slide_01.jpg",
-    "story_image": "posts/2026-11-12/edu/slide_01_story.jpg",
-    "caption": "MF Basics #13: ELSS: tax saving with growth 📚\n\nThe 80C option with the shortest lock-in.\n\n→ Equity Linked Savings Scheme\n→ 3-year lock-in\n→ Mostly equity\n→ Check your regime\n\n💡 ELSS combines tax saving with equity growth, if you're in the old tax regime.\n\n👉 Swipe through, then save this for later 🔖\n📤 Share it with someone starting their investing journey\nFollow @hbecapital for a new mutual fund lesson every other day.\n\n⚠️ For educational purposes only. Not investment advice. Mutual fund investments are subject to market risks, read all scheme related documents carefully.\nHBE Capital · AMFI-registered Mutual Fund Distributor · ARN-275597\n\n#elss #taxsaving #80c #mutualfunds #personalfinance",
-    "carousel": [
-      "posts/2026-11-12/edu/slide_01.jpg",
-      "posts/2026-11-12/edu/slide_02.jpg",
-      "posts/2026-11-12/edu/slide_03.jpg",
-      "posts/2026-11-12/edu/slide_04.jpg",
-      "posts/2026-11-12/edu/slide_05.jpg",
-      "posts/2026-11-12/edu/slide_06.jpg"
-    ]
-  },
-  {
-    "slot": "factor",
-    "time_ist": "16:00",
-    "kind": "factor_years",
-    "image": "posts/2026-11-12/5c_factor.jpg",
-    "story_image": "posts/2026-11-12/5c_factor_story.jpg",
-    "caption": "Factors Take Turns: 12 Years of Nifty Factor Returns 🔄\n\nYears each factor finished first: Value 5, Alpha 5, Quality 2, Momentum 0, Low volatility 0.\n\nNo factor wins every year. Chasing last year's winner is how investors end up buying high and selling low. A rule-based, multi-factor approach removes the guesswork.\n\n🔖 Save this · 📤 Share with a fellow systematic investor\n\n⚠️ For educational purposes only. Not investment advice. Index figures are NSE price returns; history before each index's launch is back-calculated by NSE. Not a recommendation.\nHBE Capital\n\n#momentuminvesting #factorinvesting #systematictrading #quant #stockmarketindia"
-  },
-  {
-    "slot": "feature",
-    "time_ist": "17:30",
-    "kind": "pms_sheet",
-    "image": "posts/2026-11-12/pms_sheet/slide_01.jpg",
-    "story_image": "posts/2026-11-12/pms_sheet/slide_01_story.jpg",
-    "caption": "PMS Performance Sheet | Month-End 31 Oct 2026 📋\n\nAll 1844 PMS strategies reported to APMI: top equity strategies by 1-year return, plus multi-asset, hybrid and debt PMS, with benchmarks.\n\nTop 1-year (equity): Ndpms-1 +69.6%; East Green Quant Strategy +49.0%; Bcad-nd +47.6%\n\n👉 Swipe for multi-asset, hybrid & debt PMS and benchmarks.\nPMS needs ₹50 lakh minimum. Returns are reported by providers and are not verified by HBE Capital.\n\n🔖 Save this · 📤 Share with someone comparing PMS options\n\n⚠️ For educational purposes only. Not investment advice. Past performance may or may not be sustained in future. PMS investments are subject to market risks. This is not a recommendation to invest in any strategy.\n\n#PMS #portfoliomanagement #wealthmanagement #HNI #investing",
-    "carousel": [
-      "posts/2026-11-12/pms_sheet/slide_01.jpg",
-      "posts/2026-11-12/pms_sheet/slide_02.jpg"
-    ]
-  },
-  {
-    "slot": "tweet_pm",
-    "time_ist": "18:30",
-    "kind": "tweet",
-    "image": "posts/2026-11-12/5b_tweet_pm.jpg",
-    "story_image": "posts/2026-11-12/5b_tweet_pm_story.jpg",
-    "caption": "Wealthy families usually ask one question first:\n\n\"How do we avoid the big loss?\"\n\nNot \"how do we get the big win?\"\n\nWealthy families protect first. Then compound.\n\n💬 Agree or disagree? Tell me in the comments.\n📤 Share this with someone who needs to hear it.\nFollow @hbecapital for daily notes on investing, markets and discipline.\n\n⚠️ For educational purposes only. Not investment advice.\nHitesh Eidnani · Managing Partner, HBE Capital · AMFI-registered MFD · ARN-275597\n\n#investing #stockmarketindia #mutualfunds #personalfinance #wealthcreation",
-    "as_reel": true
-  },
-  {
-    "slot": "us_theme",
-    "time_ist": "19:00",
-    "kind": "us_style",
-    "image": "posts/2026-11-12/6_us_theme.jpg",
-    "story_image": "posts/2026-11-12/6_us_theme_story.jpg",
-    "caption": "US Style Monitor: Which Style Is Winning? (5-Year) | Nov 2026 🧭\n\nS&P 500 Growth +11.4% vs S&P 500 Value +11.7% → S&P 500 Value leads\nLarge (S&P 500) +11.9% vs Small (Russell 2000) +4.7% → Large (S&P 500) leads\nEqual-weight S&P +8.5% vs S&P 500 +11.9% → S&P 500 leads\nMomentum +9.2% vs S&P 500 +11.9% → S&P 500 leads\nQuality +10.7% vs S&P 500 +11.9% → S&P 500 leads\nLow volatility +7.8% vs S&P 500 +11.9% → S&P 500 leads\n\nStyles take turns. Owning a blend means you never need to guess which one leads next.\n\n🔖 Save this · 📤 Share with someone investing in the US\n\n⚠️ For educational purposes only. Not investment advice. Not a recommendation to buy or sell any security. Past performance may or may not be sustained in future. US data: Yahoo Finance.\nHBE Capital\n\n#usstocks #sp500 #nasdaq #wallstreet #investinus"
-  },
-  {
-    "slot": "short",
-    "time_ist": "20:00",
-    "kind": "leaderboard",
-    "image": "posts/2026-11-12/4_short.jpg",
-    "story_image": "posts/2026-11-12/4_short_story.jpg",
-    "caption": "Top 10 Flexi Cap Mutual Funds by 2-Year Returns | India 2026 📊\n\n1. Aditya Birla Sun Life Flexi Cap Fund: 8.0%\n2. ITI Flexi Cap Fund: 7.6%\n3. ICICI Prudential Flexi Cap fund: 7.0%\n4. Bajaj Finserv Flexi Cap Fund: 7.0%\n5. Helios Flexi Cap Fund: 7.0%\n6. HDFC Flexi Cap Fund: 6.7%\n7. Mirae Asset Flexi Cap Fund: 6.1%\n8. Axis Flexi Cap Fund: 5.8%\n9. Invesco India Flexi Cap Fund: 5.5%\n10. Bank of India Flexi Cap Fund: 5.4%\n\nBenchmark (Nifty 500 TRI): 3.6%\n23 of 38 funds beat the index over this period. Median fund: 4.3%.\n\nData: Regular plan, Growth option. NAV as of 11 Nov 2026. Source: AMFI NAVs and NSE Indices, computed by HBE Capital FundNavigator.\n\n💬 Which of these do you hold? Comment below.\n🔖 Save this for your next review · 📤 Share with someone who invests in mutual funds\n📊 Full rankings for every category: link in bio\n\n⚠️ For educational purposes only. Not investment advice. Past performance may or may not be sustained in future. This is not a recommendation to buy or sell any fund. Mutual fund investments are subject to market risks, read all scheme related documents carefully.\nHBE Capital · AMFI-registered Mutual Fund Distributor · ARN-275597\n\n#flexicapfunds #mutualfunds #sip #investing #personalfinance",
-    "reel": {
-      "rows": 10
-    }
-  },
-  {
-    "slot": "us_wisdom",
-    "time_ist": "21:30",
-    "kind": "us_wisdom",
-    "image": "posts/2026-11-12/7_us_wisdom.jpg",
-    "story_image": "posts/2026-11-12/7_us_wisdom_story.jpg",
-    "caption": "\"Wide diversification is only required when investors do not understand what they are doing.\"\n— Warren Buffett\n\nBuffett's point is about expertise. For most investors who aren't full-time analysts, his advice is the opposite: own a low-cost index fund.\n\n💬 Agree? Tell us in the comments.\nFollow @hbecapital for daily investing wisdom.\n\n⚠️ For educational purposes only. Not investment advice.\n\n#warrenbuffett #investingwisdom #longterminvesting #stockmarket #investing"
-  },
-  {
-    "slot": "mindset",
-    "time_ist": "22:30",
-    "kind": "psych",
-    "image": "posts/2026-11-12/8_mindset.jpg",
-    "story_image": "posts/2026-11-12/8_mindset_story.jpg",
-    "caption": "\"The eye sees only what the mind is prepared to comprehend.\"\n— Robertson Davies\n\n💬 Agree or disagree? Tell us below.\n🔖 Save this. 📤 Send it to a friend who needs to read it today.\n\nFollow @hbecapital for daily trading psychology and mutual fund data.\n\n⚠️ For educational purposes only. Not investment advice.\n\n#tradingpsychology #stockmarket #investing #markdouglas #mindset"
+ {
+  "slot": "update",
+  "time_ist": "08:00",
+  "kind": "update",
+  "image": "posts/2026-11-12/00_update.jpg",
+  "story_image": "posts/2026-11-12/00_update_story.jpg",
+  "caption": "Market Update | Thu, 12 Nov 2026 🌏\n\n🇮🇳 India\n🟢 Nifty 50: 25,255 (+0.84%)\n🟢 Nifty Bank: 60,792 (+1.76%)\n🟢 Nifty Midcap 150: 22,598 (+0.85%)\n🟢 Nifty Smallcap 250: 17,798 (+1.26%)\n\n🇺🇸 US\n🟢 S&P 500: 7,619 (+1.31%)\n🟢 Nasdaq 100: 28,374 (+2.28%)\n🟢 Dow Jones: 52,486 (+0.49%)\n🟢 Russell 2000: 2,846 (+0.88%)\n\n🌍 Global\n🔴 Gold ($/oz): 4,030 (-2.05%)\n🔴 Brent crude ($): 91.49 (-1.17%)\n⬆️ US 10Y yield: 5.00% (+2 bp)\n⬇️ USD / INR: 93.93 (-0.02%)\n\nTrend check: 8 of 10 indices & commodities are above their 200-day average.\n🟢 more than 1% above the 200-day average (bullish) · 🔴 more than 1% below (bearish) · 🟡 within 1% (neutral) · ⬆️⬇️ rates and USD/INR vs their 200-day average.\n\nIndia: NSE close 11 Nov. US & global: close 11 Nov. Index figures are price levels.\n\n🔔 Follow @hbecapital for this update every morning at 8.\n\n⚠️ For educational purposes only. Not investment advice.\n\n#stockmarket #nifty50 #sp500 #marketupdate #investing"
+ },
+ {
+  "slot": "us_close",
+  "time_ist": "08:30",
+  "kind": "us_close",
+  "image": "posts/2026-11-12/01_us_close.jpg",
+  "story_image": "posts/2026-11-12/01_us_close_story.jpg",
+  "caption": "US Market Close | Wed, 11 Nov 2026 🇺🇸\n\nS&P 500 +1.31% · Nasdaq 100 +2.28% · Dow Jones +0.49% · Russell 2000 +0.88%\nVIX 17.49 (-10.1%) · US 10Y 5.00% (+2 bp) · Dollar Index 102.84 (+0.60%)\n\nMagnificent 7: best Tesla +2.91%, weakest Microsoft -2.26%.\nSectors: 10 of 11 up. Leader Technology +3.23%, laggard Cons. Discretionary -0.05%.\n\n🔔 Follow for the US close every morning.\n\n⚠️ For educational purposes only. Not investment advice. Not a recommendation to buy or sell any security. Past performance may or may not be sustained in future. US data: Yahoo Finance.\nHBE Capital\n\n#usstocks #sp500 #nasdaq #wallstreet #investinus"
+ },
+ {
+  "slot": "psych",
+  "time_ist": "09:00",
+  "kind": "psych",
+  "image": "posts/2026-11-12/1_psychology.jpg",
+  "story_image": "posts/2026-11-12/1_psychology_story.jpg",
+  "caption": "\"Win or lose, everybody gets what they want out of the market.\"\n— Ed Seykota\n\nLook honestly at your behaviour. Overtrading may be about excitement; refusing to sell losers may be about avoiding regret. Know what you're really after.\n\n💬 Which rule do you struggle with most? Tell us below.\n🔖 Save this for the next time the market tests your patience.\n\nFollow @hbecapital for daily trading psychology and mutual fund data.\n\n⚠️ For educational purposes only. Not investment advice.\n\n#tradingpsychology #stockmarket #investing #markdouglas #mindset"
+ },
+ {
+  "slot": "tweet_am",
+  "time_ist": "10:00",
+  "kind": "tweet",
+  "image": "posts/2026-11-12/1b_tweet_am.jpg",
+  "story_image": "posts/2026-11-12/1b_tweet_am_story.jpg",
+  "caption": "Diversification means some part of your portfolio will always look bad.\n\nThat's not a mistake.\nThat's the design.\n\n💬 Agree or disagree? Tell me in the comments.\n📤 Share this with someone who needs to hear it.\nFollow @hbecapital for daily notes on investing, markets and discipline.\n\n⚠️ For educational purposes only. Not investment advice.\nHitesh Eidnani · Managing Partner, HBE Capital · AMFI-registered MFD · ARN-275597\n\n#investing #stockmarketindia #mutualfunds #personalfinance #wealthcreation",
+  "as_reel": true
+ },
+ {
+  "slot": "market",
+  "time_ist": "11:00",
+  "kind": "heatmap",
+  "image": "posts/2026-11-12/0_market.jpg",
+  "story_image": "posts/2026-11-12/0_market_story.jpg",
+  "caption": "Nifty Strategy Indices: 5-Year Returns Heatmap | Nov 2026 🟩🟥\n\n28 of 28 strategy indices are up over 5-year a year (CAGR).\n\n🏆 Leaders: Nifty 200 Value 30 +21.4%, Nifty 500 Value 50 +19.7%, High Beta 50 +14.1%\n🔻 Laggards: Midcap150 Quality 50 +5.2%, Nifty 200 Quality 30 +5.8%, Nifty 500 Flexicap Quality 30 +5.9%\n\nLeadership rotates. Last period's winners are rarely next period's, which is why diversification and a disciplined process matter more than chasing the hottest theme.\n\nData as of 11 Nov 2026. Source: NSE Indices.\n\n💬 Which of these surprised you? Comment below.\n🔖 Save this · 📤 Share with a fellow investor\n\n⚠️ For educational purposes only. Not investment advice. Index figures are price returns (dividends excluded); indices cannot be invested in directly. Past performance may or may not be sustained in future. Not a recommendation.\nHBE Capital · AMFI-registered Mutual Fund Distributor · ARN-275597\n\n#factorinvesting #momentuminvesting #smartbeta #stockmarketindia #investing"
+ },
+ {
+  "slot": "long",
+  "time_ist": "12:30",
+  "kind": "leaderboard",
+  "image": "posts/2026-11-12/2_long.jpg",
+  "story_image": "posts/2026-11-12/2_long_story.jpg",
+  "caption": "Top 10 Value Mutual Funds by 7-Year Returns | India 2026 📊\n\n1. ICICI Prudential Value Fund: 18.9%\n2. Bandhan Value Fund: 18.3%\n3. Aditya Birla Sun Life Value Fund: 17.6%\n4. Nippon India Value Fund: 17.0%\n5. Templeton India Value Fund: 16.3%\n6. HDFC Value Fund: 16.1%\n7. JM Value Fund: 16.1%\n8. UTI Value Fund: 15.2%\n9. Union Value Fund: 15.2%\n10. Tata Value Fund: 14.9%\n\nBenchmark (Nifty 500 TRI): 14.8%\n10 of 13 funds beat the index over this period. Median fund: 16.1%.\n\nData: Regular plan, Growth option. NAV as of 11 Nov 2026. Source: AMFI NAVs and NSE Indices, computed by HBE Capital FundNavigator.\n\n💬 Which of these do you hold? Comment below.\n🔖 Save this for your next review · 📤 Share with someone who invests in mutual funds\n📊 Full rankings for every category: link in bio\n\n⚠️ For educational purposes only. Not investment advice. Past performance may or may not be sustained in future. This is not a recommendation to buy or sell any fund. Mutual fund investments are subject to market risks, read all scheme related documents carefully.\nHBE Capital · AMFI-registered Mutual Fund Distributor · ARN-275597\n\n#valueinvesting #mutualfunds #sip #investing #personalfinance",
+  "reel": {
+   "rows": 10
   }
+ },
+ {
+  "slot": "spotlight",
+  "time_ist": "13:30",
+  "kind": "spotlight",
+  "image": "posts/2026-11-12/3b_spotlight.jpg",
+  "story_image": "posts/2026-11-12/3b_spotlight_story.jpg",
+  "caption": "Alphabet (GOOGL) Stock Snapshot | 11 Nov 2026 🔍\n\nLast close: $293.45\nTrend: below its 200-day average (-13.4%)\nFrom all-time high: -27.1% (ATH May 2026)\n52-week range: $274 – $403\nReturns (incl. dividends): 1y +1.0% · 3y +30.7%/yr · 5y +15.2%/yr\n\nOne Magnificent 7 stock every day. Factual data only, no buy/sell views.\n\n🔖 Save this · 📤 Share with someone investing in US tech\n\n⚠️ For educational purposes only. Not investment advice. Not a recommendation to buy or sell any security. Past performance may or may not be sustained in future. US data: Yahoo Finance.\nHBE Capital\n\n#googl #magnificent7 #usstocks #nasdaq #investinus"
+ },
+ {
+  "slot": "partner",
+  "time_ist": "14:00",
+  "kind": "partner",
+  "image": "posts/2026-11-12/4b_partner.jpg",
+  "story_image": "posts/2026-11-12/4b_partner_story.jpg",
+  "caption": "Chart of the Day: From Ryan Detrick, CMT 📈\n\nChart by Ryan Detrick, CMT. Find them on X as RyanDetrick: https://x.com/RyanDetrick\n\nOriginal post: https://x.com/RyanDetrick/status/2120529634458816727\n\nShared with the creator's permission. All credit for the chart goes to them.\n\n🔖 Save this · 📤 Share with a fellow chart lover\n\n⚠️ For educational purposes only. Not investment advice. The chart reflects its creator's analysis, not a recommendation by HBE Capital.\nHBE Capital\n\n#chartoftheday #technicalanalysis #stockmarket #investing #trading"
+ },
+ {
+  "slot": "edu",
+  "time_ist": "15:00",
+  "kind": "edu",
+  "image": "posts/2026-11-12/edu/slide_01.jpg",
+  "story_image": "posts/2026-11-12/edu/slide_01_story.jpg",
+  "caption": "MF Basics #13: ELSS: tax saving with growth 📚\n\nThe 80C option with the shortest lock-in.\n\n→ Equity Linked Savings Scheme\n→ 3-year lock-in\n→ Mostly equity\n→ Check your regime\n\n💡 ELSS combines tax saving with equity growth, if you're in the old tax regime.\n\n👉 Swipe through, then save this for later 🔖\n📤 Share it with someone starting their investing journey\nFollow @hbecapital for a new mutual fund lesson every other day.\n\n⚠️ For educational purposes only. Not investment advice. Mutual fund investments are subject to market risks, read all scheme related documents carefully.\nHBE Capital · AMFI-registered Mutual Fund Distributor · ARN-275597\n\n#elss #taxsaving #80c #mutualfunds #personalfinance",
+  "carousel": [
+   "posts/2026-11-12/edu/slide_01.jpg",
+   "posts/2026-11-12/edu/slide_02.jpg",
+   "posts/2026-11-12/edu/slide_03.jpg",
+   "posts/2026-11-12/edu/slide_04.jpg",
+   "posts/2026-11-12/edu/slide_05.jpg",
+   "posts/2026-11-12/edu/slide_06.jpg"
+  ]
+ },
+ {
+  "slot": "factor",
+  "time_ist": "16:00",
+  "kind": "factor_years",
+  "image": "posts/2026-11-12/5c_factor.jpg",
+  "story_image": "posts/2026-11-12/5c_factor_story.jpg",
+  "caption": "Factors Take Turns: 12 Years of Nifty Factor Returns 🔄\n\nYears each factor finished first: Value 5, Alpha 5, Quality 2, Momentum 0, Low volatility 0.\n\nNo factor wins every year. Chasing last year's winner is how investors end up buying high and selling low. A rule-based, multi-factor approach removes the guesswork.\n\n🔖 Save this · 📤 Share with a fellow systematic investor\n\n⚠️ For educational purposes only. Not investment advice. Index figures are NSE price returns; history before each index's launch is back-calculated by NSE. Not a recommendation.\nHBE Capital\n\n#momentuminvesting #factorinvesting #systematictrading #quant #stockmarketindia"
+ },
+ {
+  "slot": "feature",
+  "time_ist": "17:30",
+  "kind": "pms_sheet",
+  "image": "posts/2026-11-12/pms_sheet/slide_01.jpg",
+  "story_image": "posts/2026-11-12/pms_sheet/slide_01_story.jpg",
+  "caption": "PMS Performance Sheet | Month-End 31 Oct 2026 📋\n\nAll 1844 PMS strategies reported to APMI: top equity strategies by 1-year return, plus multi-asset, hybrid and debt PMS, with benchmarks.\n\nTop 1-year (equity): Ndpms-1 +69.6%; East Green Quant Strategy +49.0%; Bcad-nd +47.6%\n\n👉 Swipe for multi-asset, hybrid & debt PMS and benchmarks.\nPMS needs ₹50 lakh minimum. Returns are reported by providers and are not verified by HBE Capital.\n\n🔖 Save this · 📤 Share with someone comparing PMS options\n\n⚠️ For educational purposes only. Not investment advice. Past performance may or may not be sustained in future. PMS investments are subject to market risks. This is not a recommendation to invest in any strategy.\n\n#PMS #portfoliomanagement #wealthmanagement #HNI #investing",
+  "carousel": [
+   "posts/2026-11-12/pms_sheet/slide_01.jpg",
+   "posts/2026-11-12/pms_sheet/slide_02.jpg"
+  ]
+ },
+ {
+  "slot": "tweet_pm",
+  "time_ist": "18:30",
+  "kind": "tweet",
+  "image": "posts/2026-11-12/5b_tweet_pm.jpg",
+  "story_image": "posts/2026-11-12/5b_tweet_pm_story.jpg",
+  "caption": "Wealthy families usually ask one question first:\n\n\"How do we avoid the big loss?\"\n\nNot \"how do we get the big win?\"\n\nWealthy families protect first. Then compound.\n\n💬 Agree or disagree? Tell me in the comments.\n📤 Share this with someone who needs to hear it.\nFollow @hbecapital for daily notes on investing, markets and discipline.\n\n⚠️ For educational purposes only. Not investment advice.\nHitesh Eidnani · Managing Partner, HBE Capital · AMFI-registered MFD · ARN-275597\n\n#investing #stockmarketindia #mutualfunds #personalfinance #wealthcreation",
+  "as_reel": true
+ },
+ {
+  "slot": "news_6d6931",
+  "time_ist": "18:50",
+  "kind": "news",
+  "image": "posts/2026-11-12/9_news_6d6931.jpg",
+  "story_image": "posts/2026-11-12/9_news_6d6931_story.jpg",
+  "caption": "🇮🇳 Final redemption under Sovereign Gold Bond (SGB) Scheme - Redemption Price for final redemption of SGB 2018-19 Series-III due on November 13, 2026\n\nSource: Reserve Bank of India (official release).\nRead the full text: https://www.rbi.org.in/scripts/BS_PressReleaseDisplay.aspx?prid=63964\n\nWe share official announcements as published, without commentary.\n\n⚠️ For educational purposes only. Not investment advice.\nHBE Capital\n\n#rbi #monetarypolicy #reporate #indianeconomy #investing"
+ },
+ {
+  "slot": "us_theme",
+  "time_ist": "19:00",
+  "kind": "us_style",
+  "image": "posts/2026-11-12/6_us_theme.jpg",
+  "story_image": "posts/2026-11-12/6_us_theme_story.jpg",
+  "caption": "US Style Monitor: Which Style Is Winning? (5-Year) | Nov 2026 🧭\n\nS&P 500 Growth +11.4% vs S&P 500 Value +11.7% → S&P 500 Value leads\nLarge (S&P 500) +11.9% vs Small (Russell 2000) +4.7% → Large (S&P 500) leads\nEqual-weight S&P +8.5% vs S&P 500 +11.9% → S&P 500 leads\nMomentum +9.2% vs S&P 500 +11.9% → S&P 500 leads\nQuality +10.7% vs S&P 500 +11.9% → S&P 500 leads\nLow volatility +7.8% vs S&P 500 +11.9% → S&P 500 leads\n\nStyles take turns. Owning a blend means you never need to guess which one leads next.\n\n🔖 Save this · 📤 Share with someone investing in the US\n\n⚠️ For educational purposes only. Not investment advice. Not a recommendation to buy or sell any security. Past performance may or may not be sustained in future. US data: Yahoo Finance.\nHBE Capital\n\n#usstocks #sp500 #nasdaq #wallstreet #investinus"
+ },
+ {
+  "slot": "short",
+  "time_ist": "20:00",
+  "kind": "leaderboard",
+  "image": "posts/2026-11-12/4_short.jpg",
+  "story_image": "posts/2026-11-12/4_short_story.jpg",
+  "caption": "Top 10 Flexi Cap Mutual Funds by 2-Year Returns | India 2026 📊\n\n1. Aditya Birla Sun Life Flexi Cap Fund: 8.0%\n2. ITI Flexi Cap Fund: 7.6%\n3. ICICI Prudential Flexi Cap fund: 7.0%\n4. Bajaj Finserv Flexi Cap Fund: 7.0%\n5. Helios Flexi Cap Fund: 7.0%\n6. HDFC Flexi Cap Fund: 6.7%\n7. Mirae Asset Flexi Cap Fund: 6.1%\n8. Axis Flexi Cap Fund: 5.8%\n9. Invesco India Flexi Cap Fund: 5.5%\n10. Bank of India Flexi Cap Fund: 5.4%\n\nBenchmark (Nifty 500 TRI): 3.6%\n23 of 38 funds beat the index over this period. Median fund: 4.3%.\n\nData: Regular plan, Growth option. NAV as of 11 Nov 2026. Source: AMFI NAVs and NSE Indices, computed by HBE Capital FundNavigator.\n\n💬 Which of these do you hold? Comment below.\n🔖 Save this for your next review · 📤 Share with someone who invests in mutual funds\n📊 Full rankings for every category: link in bio\n\n⚠️ For educational purposes only. Not investment advice. Past performance may or may not be sustained in future. This is not a recommendation to buy or sell any fund. Mutual fund investments are subject to market risks, read all scheme related documents carefully.\nHBE Capital · AMFI-registered Mutual Fund Distributor · ARN-275597\n\n#flexicapfunds #mutualfunds #sip #investing #personalfinance",
+  "reel": {
+   "rows": 10
+  }
+ },
+ {
+  "slot": "us_wisdom",
+  "time_ist": "21:30",
+  "kind": "us_wisdom",
+  "image": "posts/2026-11-12/7_us_wisdom.jpg",
+  "story_image": "posts/2026-11-12/7_us_wisdom_story.jpg",
+  "caption": "\"Wide diversification is only required when investors do not understand what they are doing.\"\n— Warren Buffett\n\nBuffett's point is about expertise. For most investors who aren't full-time analysts, his advice is the opposite: own a low-cost index fund.\n\n💬 Agree? Tell us in the comments.\nFollow @hbecapital for daily investing wisdom.\n\n⚠️ For educational purposes only. Not investment advice.\n\n#warrenbuffett #investingwisdom #longterminvesting #stockmarket #investing"
+ },
+ {
+  "slot": "mindset",
+  "time_ist": "22:30",
+  "kind": "psych",
+  "image": "posts/2026-11-12/8_mindset.jpg",
+  "story_image": "posts/2026-11-12/8_mindset_story.jpg",
+  "caption": "\"The eye sees only what the mind is prepared to comprehend.\"\n— Robertson Davies\n\n💬 Agree or disagree? Tell us below.\n🔖 Save this. 📤 Send it to a friend who needs to read it today.\n\nFollow @hbecapital for daily trading psychology and mutual fund data.\n\n⚠️ For educational purposes only. Not investment advice.\n\n#tradingpsychology #stockmarket #investing #markdouglas #mindset"
+ }
 ]
