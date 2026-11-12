@@ -26,11 +26,11 @@ import market_posts as mkt
 import update_post as upd
 import us_posts as us
 import factor_posts as fac
-from brand import quote_card, story_version, tweet_card, ARN, MF_DISCLAIMER, EDU
+from brand import quote_card, chart_quote_card, story_version, tweet_card, ARN, MF_DISCLAIMER, EDU
 
 ROOT = Path(__file__).parent
 SLOTS = {"update": "08:00", "us_close": "08:30", "psych": "09:00", "tweet_am": "10:00", "market": "11:00", "long": "12:30", "edu": "15:00", "factor": "16:00",
-         "spotlight": "13:30", "partner": "14:00", "feature": "17:30", "tweet_pm": "18:30", "us_theme": "19:00", "short": "20:00", "us_wisdom": "21:30"}
+         "spotlight": "13:30", "partner": "14:00", "feature": "17:30", "tweet_pm": "18:30", "us_theme": "19:00", "short": "20:00", "us_wisdom": "21:30", "mindset": "22:30"}
 # 19:00 US theme by weekday (Mon=0); heatmap / style periods rotate 1y -> 3y -> 5y week to week
 US_THEME = {0: "sectors", 1: "vs_india", 2: "drawdown", 3: "style", 4: "years", 5: "us_edu", 6: "wrap"}
 US_TAGS = "#usstocks #sp500 #nasdaq #wallstreet #investinus"
@@ -90,6 +90,15 @@ def numbered(rows):
 
 
 # ---------------------------------------------------------------- captions
+def cap_mindset(item):
+    by = f"\n— {item['author']}" if item.get("author") else ""
+    return (f"\"{item['quote']}\"{by}\n\n"
+            "💬 Agree or disagree? Tell us below.\n"
+            "🔖 Save this. 📤 Send it to a friend who needs to read it today.\n\n"
+            "Follow @hbecapital for daily trading psychology and mutual fund data.\n\n"
+            f"⚠️ {EDU}\n\n" + TAGS["psych"])
+
+
 def cap_psych(item):
     by = f"\n— {item['author']}" if item.get("author") else ""
     if item.get("book"):
@@ -622,6 +631,16 @@ def build(day: dt.date):
     q = quotes[d % len(quotes)]
     add("psych", quote_card(q["quote"], "Market psychology", out / "1_psychology", author=q.get("author")),
         cap_psych(q), "psych")
+
+    # 22:30 trader's mindset: one line from Hitesh's saved quote bank (content/pin_quotes.json).
+    # Short lines sit under a candlestick illustration; long ones get a text-only card.
+    try:
+        pool = json.loads((ROOT / "content" / "pin_quotes.json").read_text())
+        q = pool[d % len(pool)]
+        add("mindset", chart_quote_card(q["quote"], out / "8_mindset", author=q.get("author") or None, seed=d,
+                                        chart=len(q["quote"]) <= 150), cap_mindset(q), "psych")
+    except Exception as e:
+        print("mindset: skipped,", e)
 
     # 12:30 long-horizon leaderboard
     r = leaderboard_with_fallback(d % len(CATS), LONG_HORIZONS[(d // len(CATS)) % 3], out / "2_long")

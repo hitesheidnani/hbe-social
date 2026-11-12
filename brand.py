@@ -156,3 +156,55 @@ def tweet_card(paragraphs, out):
     fig.text(0.29, top - 0.118, f"AMFI-registered MF Distributor · {ARN}", color=MUTED, fontsize=15, va="center")
     footer(fig)
     return save(fig, out)
+
+
+def _candles(ax, seed, n=38):
+    """Stylised candlestick path (illustration only, not real prices): one of a few classic shapes,
+    chosen by seed: steady uptrend, crash-and-recover, base-then-breakout, uptrend with a deep pullback."""
+    import numpy as np
+    rng = np.random.default_rng(seed)
+    t = np.linspace(0, 1, n)
+    drift = [0.75 * t,
+             np.where(t < 0.28, -1.3 * t, -0.364 + 1.25 * (t - 0.28)),
+             np.where(t < 0.55, 0.06 * np.sin(t * 20), 1.6 * (t - 0.55)),
+             0.95 * t - 0.33 * np.exp(-((t - 0.5) / 0.08) ** 2)][seed % 4]
+    close = 100 * np.exp(drift + np.cumsum(rng.normal(0, 0.03, n)))
+    open_ = np.r_[close[0] * 0.98, close[:-1]]
+    hi = np.maximum(open_, close) * (1 + np.abs(rng.normal(0, 0.016, n)))
+    lo = np.minimum(open_, close) * (1 - np.abs(rng.normal(0, 0.016, n)))
+    for i in range(n):
+        c = UP if close[i] >= open_[i] else DOWN
+        ax.plot([i, i], [lo[i], hi[i]], color=c, lw=2.2, solid_capstyle="round")
+        ax.bar(i, max(abs(close[i] - open_[i]), close[i] * 0.004), bottom=min(open_[i], close[i]), width=0.66, color=c)
+    ax.set_xlim(-1.5, n + 0.5)
+    ax.axis("off")
+
+
+def chart_quote_card(text, out, author=None, seed=0, chart=True):
+    """Bold line under a candlestick illustration, in HBE colours. Text shrinks until it fits its box.
+    chart=False gives a text-only card for long quotes."""
+    fig = canvas()
+    brand_badge(fig, 0.06, 0.955, size=0.85)
+    if chart:
+        ax = fig.add_axes([0.08, 0.50, 0.84, 0.40])
+        ax.set_facecolor(BG)
+        _candles(ax, seed)
+    else:
+        fig.text(0.5, 0.845, "“", color=GOLD, fontsize=130, weight="heavy", va="center", ha="center")
+    top, bottom = (0.455 if chart else 0.80), (0.155 if author else 0.115)
+    rend = fig.canvas.get_renderer()
+    for size, width in [(60, 16), (54, 18), (48, 20), (43, 23), (38, 26), (34, 29), (30, 33), (27, 37), (24, 42), (22, 46)]:
+        lines = [l for part in str(text).split("\n") for l in (textwrap.wrap(part.upper() if chart else part, width=width + (0 if chart else 4)) or [""])]
+        t = fig.text(0.5, (top + bottom) / 2, "\n".join(lines), color=TEXT, fontsize=size, weight="heavy",
+                     ha="center", va="center", linespacing=1.2)
+        bb = t.get_window_extent(rend).transformed(fig.transFigure.inverted())
+        if bb.width <= 0.88 and bb.height <= top - bottom:
+            break
+        t.remove()
+    else:
+        fig.text(0.5, (top + bottom) / 2, "\n".join(lines), color=TEXT, fontsize=size, weight="heavy",
+                 ha="center", va="center", linespacing=1.2)
+    if author:
+        fig.text(0.5, 0.108, f"— {author}", color=GOLD, fontsize=20, weight="semibold", ha="center")
+    footer(fig)
+    return save(fig, out)
