@@ -196,7 +196,8 @@ def video_for(p):
     v = None
     if p.get("as_reel"):
         from reel import static_reel
-        v, _ = static_reel(ROOT / p["image"], Path(tempfile.mkdtemp()) / "card.mp4")
+        mood = "news" if p.get("kind") in ("update", "us_close", "us_health", "news") else "calm"
+        v, _ = static_reel(ROOT / p["image"], Path(tempfile.mkdtemp()) / "card.mp4", mood=mood)
     elif p.get("reel"):
         from reel import make_reel
         v, _ = make_reel(ROOT / p["image"], p["reel"]["rows"], Path(tempfile.mkdtemp()) / "reel.mp4")

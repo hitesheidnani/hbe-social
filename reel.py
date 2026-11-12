@@ -21,11 +21,15 @@ SUMMARY_BOTTOM = 0.095          # figure fraction just above the 'Past performan
 TONE = "aevalsrc='0.05*sin(2*PI*220*t)+0.04*sin(2*PI*277.2*t)+0.035*sin(2*PI*329.6*t)':s=44100"
 
 
+MOOD = "any"      # set per video by make_reel / static_reel: "upbeat", "calm" or "news"
+
+
 def audio_input(secs):
-    """ffmpeg input + filter for the soundtrack: a track from music/ (rotating daily) or a soft generated tone."""
+    """ffmpeg input + filter for the soundtrack: a track from music/<mood>/ (else any track in music/),
+    rotating daily, or a soft generated tone when there are no tracks."""
     import datetime as dt
     from brand import ROOT
-    tracks = sorted((ROOT / "music").glob("*.mp3"))
+    tracks = sorted((ROOT / "music" / MOOD).glob("*.mp3")) or sorted((ROOT / "music").rglob("*.mp3"))
     if tracks:
         t = tracks[dt.date.today().toordinal() % len(tracks)]
         return (["-stream_loop", "-1", "-t", f"{secs:.2f}", "-i", str(t)],
@@ -45,6 +49,8 @@ def _row_box(i):
 
 
 def make_reel(card_jpg, rows, out_mp4, hook="WAIT FOR #1"):
+    global MOOD
+    MOOD = "upbeat"
     card = Image.open(card_jpg).convert("RGB").resize((W, CARD_H), Image.LANCZOS)
     blank = Image.new("RGB", (W, CARD_H), BG)
     row_boxes = [_row_box(i) for i in range(rows)]
@@ -96,7 +102,9 @@ if __name__ == "__main__":
     print(make_reel(sys.argv[1], int(sys.argv[2]) if len(sys.argv) > 2 else 10, sys.argv[3] if len(sys.argv) > 3 else "reel.mp4"))
 
 
-def static_reel(card_jpg, out_mp4, secs=8.0):
+def static_reel(card_jpg, out_mp4, secs=8.0, mood="calm"):
+    global MOOD
+    MOOD = mood
     """A still card as a 9:16 Reel (card centred on the brand background, soft generated audio)."""
     from brand import story_version
     frame = story_version(card_jpg, footer_text="Follow @hbecapital for more")
