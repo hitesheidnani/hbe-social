@@ -313,5 +313,30 @@
    "privacy": "public",
    "at": "2026-11-13T18:33:21+05:30"
   }
+ },
+ "us_theme": {
+  "instagram": {
+   "ok": true,
+   "id": "17918030370499549",
+   "url": "https://www.instagram.com/p/Dfrv-LdDa01/",
+   "at": "2026-11-13T19:04:25+05:30"
+  },
+  "instagram_story": {
+   "ok": true,
+   "id": "18112071347221821",
+   "at": "2026-11-13T19:04:25+05:30"
+  },
+  "facebook": {
+   "ok": true,
+   "id": "1610477555472993_122101891941546038",
+   "url": "https://www.facebook.com/1610477555472993_122101891941546038",
+   "at": "2026-11-13T19:04:25+05:30"
+  },
+  "linkedin": {
+   "ok": true,
+   "id": "urn:li:share:7527001030648033282",
+   "url": "https://www.linkedin.com/feed/update/urn:li:share:7527001030648033282/",
+   "at": "2026-11-13T19:04:25+05:30"
+  }
  }
 }
