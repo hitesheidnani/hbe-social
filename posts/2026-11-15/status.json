@@ -80,5 +80,30 @@
    "privacy": "public",
    "at": "2026-11-15T10:05:38+05:30"
   }
+ },
+ "market": {
+  "instagram": {
+   "ok": true,
+   "id": "18081249020436247",
+   "url": "https://www.instagram.com/p/DfwC8vRF_OG/",
+   "at": "2026-11-15T11:07:13+05:30"
+  },
+  "instagram_story": {
+   "ok": false,
+   "error": "Instagram API: The requested resource does not exist (code 24, subcode 2207006)",
+   "at": "2026-11-15T11:07:13+05:30"
+  },
+  "facebook": {
+   "ok": true,
+   "id": "1610477555472993_122103400533546038",
+   "url": "https://www.facebook.com/1610477555472993_122103400533546038",
+   "at": "2026-11-15T11:07:13+05:30"
+  },
+  "linkedin": {
+   "ok": true,
+   "id": "urn:li:share:7527605708452749312",
+   "url": "https://www.linkedin.com/feed/update/urn:li:share:7527605708452749312/",
+   "at": "2026-11-15T11:07:13+05:30"
+  }
  }
 }
