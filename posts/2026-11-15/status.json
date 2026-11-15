@@ -1,1 +1,27 @@
-{}
+{
+ "update": {
+  "instagram": {
+   "ok": true,
+   "id": "18148993909583620",
+   "url": "https://www.instagram.com/p/Dfvt-r_l2E4/",
+   "at": "2026-11-15T08:03:58+05:30"
+  },
+  "instagram_story": {
+   "ok": true,
+   "id": "18109511956968994",
+   "at": "2026-11-15T08:03:58+05:30"
+  },
+  "facebook": {
+   "ok": true,
+   "id": "1610477555472993_122103289413546038",
+   "url": "https://www.facebook.com/1610477555472993_122103289413546038",
+   "at": "2026-11-15T08:03:58+05:30"
+  },
+  "linkedin": {
+   "ok": true,
+   "id": "urn:li:share:7527559623466172418",
+   "url": "https://www.linkedin.com/feed/update/urn:li:share:7527559623466172418/",
+   "at": "2026-11-15T08:03:58+05:30"
+  }
+ }
+}
