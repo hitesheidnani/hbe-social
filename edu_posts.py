@@ -287,13 +287,13 @@ def news_card(headline, points, out, kicker="MARKET NEWS"):
     return save(fig, out)
 
 
-def partner_chart_card(image_path, title, partner, out):
+def partner_chart_card(image_path, title, partner, out, kicker="CHART OF THE DAY", credit=None, note="Shared with the creator's permission"):
     """A partner's chart, shown whole and unedited, with credit to the creator."""
     from PIL import Image
     import numpy as np
     fig = canvas()
     brand_badge(fig, 0.06, 0.955, size=0.85)
-    fig.text(0.06, 0.895, "CHART OF THE DAY", color=ACCENT, fontsize=15, weight="semibold")
+    fig.text(0.06, 0.895, kicker, color=ACCENT, fontsize=15, weight="semibold")
     fig.text(0.06, 0.845, wrap(title, 34), color=TEXT, fontsize=30, weight="heavy", va="center", linespacing=1.15)
     im = Image.open(image_path).convert("RGB")
     bw, bh = 0.88, 0.58                                   # box, in figure fractions (canvas is 1080 x 1350)
@@ -302,8 +302,9 @@ def partner_chart_card(image_path, title, partner, out):
     ax = fig.add_axes([0.06 + (bw - w) / 2, 0.19 + (bh - h) / 2, w, h])
     ax.imshow(np.asarray(im))
     ax.axis("off")
-    fig.text(0.5, 0.15, f"Chart by {partner['name']} · {partner['handle']} on X", color=GOLD, fontsize=19,
+    fig.text(0.5, 0.15, credit or f"Chart by {partner['name']} · {partner['handle']} on X", color=GOLD, fontsize=19,
              weight="bold", ha="center")
-    fig.text(0.5, 0.118, "Shared with the creator's permission", color=MUTED, fontsize=13, ha="center")
+    if note:
+        fig.text(0.5, 0.118, note, color=MUTED, fontsize=13, ha="center")
     footer(fig, "generic")
     return save(fig, out)
