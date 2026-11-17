@@ -23,5 +23,30 @@
    "url": "https://www.linkedin.com/feed/update/urn:li:share:7528285026057269249/",
    "at": "2026-11-17T08:06:29+05:30"
   }
+ },
+ "us_close": {
+  "instagram": {
+   "ok": true,
+   "id": "17985112349908220",
+   "url": "https://www.instagram.com/p/Df07Xi9l0nV/",
+   "at": "2026-11-17T08:37:10+05:30"
+  },
+  "instagram_story": {
+   "ok": false,
+   "error": "Instagram API: Media ID is not available (code 9007, subcode 2207027)",
+   "at": "2026-11-17T08:37:10+05:30"
+  },
+  "facebook": {
+   "ok": true,
+   "id": "1610477555472993_122105387913546038",
+   "url": "https://www.facebook.com/1610477555472993_122105387913546038",
+   "at": "2026-11-17T08:37:10+05:30"
+  },
+  "linkedin": {
+   "ok": true,
+   "id": "urn:li:share:7528292706435874816",
+   "url": "https://www.linkedin.com/feed/update/urn:li:share:7528292706435874816/",
+   "at": "2026-11-17T08:37:10+05:30"
+  }
  }
 }
