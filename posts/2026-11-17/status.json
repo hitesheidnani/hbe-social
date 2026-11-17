@@ -168,5 +168,30 @@
    "privacy": "public",
    "at": "2026-11-17T12:30:57+05:30"
   }
+ },
+ "spotlight": {
+  "instagram": {
+   "ok": true,
+   "id": "18066563387550648",
+   "url": "https://www.instagram.com/p/Df1dLPhly5K/",
+   "at": "2026-11-17T13:32:35+05:30"
+  },
+  "instagram_story": {
+   "ok": true,
+   "id": "18123728896949792",
+   "at": "2026-11-17T13:32:35+05:30"
+  },
+  "facebook": {
+   "ok": true,
+   "id": "1610477555472993_122105570829546038",
+   "url": "https://www.facebook.com/1610477555472993_122105570829546038",
+   "at": "2026-11-17T13:32:35+05:30"
+  },
+  "linkedin": {
+   "ok": true,
+   "id": "urn:li:share:7528367066987503616",
+   "url": "https://www.linkedin.com/feed/update/urn:li:share:7528367066987503616/",
+   "at": "2026-11-17T13:32:35+05:30"
+  }
  }
 }
