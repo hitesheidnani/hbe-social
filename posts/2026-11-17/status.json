@@ -268,5 +268,23 @@
    "url": "https://www.linkedin.com/feed/update/urn:li:ugcPost:7528428481588846593/",
    "at": "2026-11-17T17:36:19+05:30"
   }
+ },
+ "news_74e8eb": {
+  "instagram": {
+   "ok": false,
+   "error": "Instagram API: Only photo or video can be accepted as media type. (code 9004, subcode 2207052)",
+   "at": "2026-11-17T18:07:19+05:30"
+  },
+  "facebook": {
+   "ok": false,
+   "error": "Instagram API: Missing or invalid image file (code 324, subcode 2069019)",
+   "at": "2026-11-17T18:07:19+05:30"
+  },
+  "linkedin": {
+   "ok": true,
+   "id": "urn:li:share:7528436096657989632",
+   "url": "https://www.linkedin.com/feed/update/urn:li:share:7528436096657989632/",
+   "at": "2026-11-17T18:07:13+05:30"
+  }
  }
 }
