@@ -293,5 +293,37 @@
    "id": "18163819381500728",
    "at": "2026-11-17T18:17:23+05:30"
   }
+ },
+ "tweet_pm": {
+  "instagram": {
+   "ok": true,
+   "id": "17975416584174239",
+   "url": "https://www.instagram.com/reel/Df2AJg1HCMi/",
+   "at": "2026-11-17T18:38:08+05:30"
+  },
+  "instagram_story": {
+   "ok": true,
+   "id": "18122069218969510",
+   "at": "2026-11-17T18:38:08+05:30"
+  },
+  "facebook": {
+   "ok": true,
+   "id": "1610477555472993_122105768385546038",
+   "url": "https://www.facebook.com/1610477555472993_122105768385546038",
+   "at": "2026-11-17T18:38:08+05:30"
+  },
+  "linkedin": {
+   "ok": true,
+   "id": "urn:li:share:7528444087889362944",
+   "url": "https://www.linkedin.com/feed/update/urn:li:share:7528444087889362944/",
+   "at": "2026-11-17T18:38:08+05:30"
+  },
+  "youtube": {
+   "ok": true,
+   "id": "Sby6phB7AXg",
+   "url": "https://youtube.com/shorts/Sby6phB7AXg",
+   "privacy": "public",
+   "at": "2026-11-17T18:38:08+05:30"
+  }
  }
 }
