@@ -1,20 +1,27 @@
 {
  "news_b7211c": {
   "instagram": {
-   "ok": false,
-   "error": "Instagram API: Only photo or video can be accepted as media type. (code 9004, subcode 2207052)",
-   "at": "2026-11-19T07:01:46+05:30"
+   "ok": true,
+   "id": "18140580952732855",
+   "url": "https://www.instagram.com/p/Df57Miik3yt/",
+   "at": "2026-11-19T07:11:51+05:30"
   },
   "facebook": {
-   "ok": false,
-   "error": "Instagram API: Missing or invalid image file (code 324, subcode 2069019)",
-   "at": "2026-11-19T07:01:46+05:30"
+   "ok": true,
+   "id": "1610477555472993_122107205373546038",
+   "url": "https://www.facebook.com/1610477555472993_122107205373546038",
+   "at": "2026-11-19T07:11:51+05:30"
   },
   "linkedin": {
    "ok": true,
    "id": "urn:li:share:7528993382585626624",
    "url": "https://www.linkedin.com/feed/update/urn:li:share:7528993382585626624/",
    "at": "2026-11-19T07:01:41+05:30"
+  },
+  "instagram_story": {
+   "ok": true,
+   "id": "18100479881115553",
+   "at": "2026-11-19T07:11:51+05:30"
   }
  }
 }
