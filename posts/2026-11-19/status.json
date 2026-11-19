@@ -130,5 +130,30 @@
    "privacy": "public",
    "at": "2026-11-19T10:05:30+05:30"
   }
+ },
+ "market": {
+  "instagram": {
+   "ok": true,
+   "id": "18353315164267324",
+   "url": "https://www.instagram.com/p/Df6WECyF5Jk/",
+   "at": "2026-11-19T11:06:38+05:30"
+  },
+  "instagram_story": {
+   "ok": true,
+   "id": "17944309683388467",
+   "at": "2026-11-19T11:06:38+05:30"
+  },
+  "facebook": {
+   "ok": true,
+   "id": "1610477555472993_122107350405546038",
+   "url": "https://www.facebook.com/1610477555472993_122107350405546038",
+   "at": "2026-11-19T11:06:38+05:30"
+  },
+  "linkedin": {
+   "ok": true,
+   "id": "urn:li:share:7529055145553240065",
+   "url": "https://www.linkedin.com/feed/update/urn:li:share:7529055145553240065/",
+   "at": "2026-11-19T11:06:38+05:30"
+  }
  }
 }
