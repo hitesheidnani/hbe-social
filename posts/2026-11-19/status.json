@@ -413,5 +413,30 @@
    "url": "https://www.linkedin.com/feed/update/urn:li:share:7529213792883449856/",
    "at": "2026-11-19T21:37:04+05:30"
   }
+ },
+ "mindset": {
+  "instagram": {
+   "ok": true,
+   "id": "18099386195396817",
+   "url": "https://www.instagram.com/p/Df7lLrijRcp/",
+   "at": "2026-11-19T22:37:59+05:30"
+  },
+  "instagram_story": {
+   "ok": true,
+   "id": "18055289324812140",
+   "at": "2026-11-19T22:37:59+05:30"
+  },
+  "facebook": {
+   "ok": true,
+   "id": "1610477555472993_122107857081546038",
+   "url": "https://www.facebook.com/1610477555472993_122107857081546038",
+   "at": "2026-11-19T22:37:59+05:30"
+  },
+  "linkedin": {
+   "ok": true,
+   "id": "urn:li:share:7529229126675853312",
+   "url": "https://www.linkedin.com/feed/update/urn:li:share:7529229126675853312/",
+   "at": "2026-11-19T22:37:59+05:30"
+  }
  }
 }
