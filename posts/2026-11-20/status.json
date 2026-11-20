@@ -73,5 +73,37 @@
    "url": "https://www.linkedin.com/feed/update/urn:li:share:7529387046256422912/",
    "at": "2026-11-20T09:05:36+05:30"
   }
+ },
+ "tweet_am": {
+  "instagram": {
+   "ok": true,
+   "id": "18110415872525105",
+   "url": "https://www.instagram.com/reel/Df8z-OmF8IY/",
+   "at": "2026-11-20T10:06:25+05:30"
+  },
+  "instagram_story": {
+   "ok": true,
+   "id": "18181102312447142",
+   "at": "2026-11-20T10:06:25+05:30"
+  },
+  "facebook": {
+   "ok": true,
+   "id": "1610477555472993_122108286159546038",
+   "url": "https://www.facebook.com/1610477555472993_122108286159546038",
+   "at": "2026-11-20T10:06:25+05:30"
+  },
+  "linkedin": {
+   "ok": true,
+   "id": "urn:li:share:7529402441692508160",
+   "url": "https://www.linkedin.com/feed/update/urn:li:share:7529402441692508160/",
+   "at": "2026-11-20T10:06:25+05:30"
+  },
+  "youtube": {
+   "ok": true,
+   "id": "yRkhpxc9roI",
+   "url": "https://youtube.com/shorts/yRkhpxc9roI",
+   "privacy": "public",
+   "at": "2026-11-20T10:06:25+05:30"
+  }
  }
 }
