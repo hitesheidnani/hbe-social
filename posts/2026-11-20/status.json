@@ -23,5 +23,30 @@
    "url": "https://www.linkedin.com/feed/update/urn:li:share:7529371508712894465/",
    "at": "2026-11-20T08:03:43+05:30"
   }
+ },
+ "us_close": {
+  "instagram": {
+   "ok": true,
+   "id": "18078379481759638",
+   "url": "https://www.instagram.com/p/Df8pfTIidKk/",
+   "at": "2026-11-20T08:34:52+05:30"
+  },
+  "instagram_story": {
+   "ok": true,
+   "id": "17897675229485529",
+   "at": "2026-11-20T08:34:52+05:30"
+  },
+  "facebook": {
+   "ok": true,
+   "id": "1610477555472993_122108227905546038",
+   "url": "https://www.facebook.com/1610477555472993_122108227905546038",
+   "at": "2026-11-20T08:34:52+05:30"
+  },
+  "linkedin": {
+   "ok": true,
+   "id": "urn:li:share:7529379346726391808",
+   "url": "https://www.linkedin.com/feed/update/urn:li:share:7529379346726391808/",
+   "at": "2026-11-20T08:34:52+05:30"
+  }
  }
 }
