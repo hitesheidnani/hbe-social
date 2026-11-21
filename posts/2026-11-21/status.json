@@ -401,5 +401,30 @@
    "privacy": "public",
    "at": "2026-11-21T20:09:40+05:30"
   }
+ },
+ "us_wisdom": {
+  "instagram": {
+   "ok": true,
+   "id": "18151033507600913",
+   "url": "https://www.instagram.com/p/DgAnKKhEjQd/",
+   "at": "2026-11-21T21:31:28+05:30"
+  },
+  "instagram_story": {
+   "ok": true,
+   "id": "18090913466295572",
+   "at": "2026-11-21T21:31:28+05:30"
+  },
+  "facebook": {
+   "ok": true,
+   "id": "1610477555472993_122109365229546038",
+   "url": "https://www.facebook.com/1610477555472993_122109365229546038",
+   "at": "2026-11-21T21:31:28+05:30"
+  },
+  "linkedin": {
+   "ok": true,
+   "id": "urn:li:share:7529937163963215872",
+   "url": "https://www.linkedin.com/feed/update/urn:li:share:7529937163963215872/",
+   "at": "2026-11-21T21:31:28+05:30"
+  }
  }
 }
