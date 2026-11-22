@@ -351,5 +351,30 @@
    "privacy": "public",
    "at": "2026-11-22T20:09:01+05:30"
   }
+ },
+ "us_wisdom": {
+  "instagram": {
+   "ok": true,
+   "id": "18155773993530333",
+   "url": "https://www.instagram.com/p/DgDL4dwl-VZ/",
+   "at": "2026-11-22T21:30:50+05:30"
+  },
+  "instagram_story": {
+   "ok": true,
+   "id": "18473608651140712",
+   "at": "2026-11-22T21:30:50+05:30"
+  },
+  "facebook": {
+   "ok": true,
+   "id": "1610477555472993_122109866637546038",
+   "url": "https://www.facebook.com/1610477555472993_122109866637546038",
+   "at": "2026-11-22T21:30:50+05:30"
+  },
+  "linkedin": {
+   "ok": true,
+   "id": "urn:li:share:7530299382383013888",
+   "url": "https://www.linkedin.com/feed/update/urn:li:share:7530299382383013888/",
+   "at": "2026-11-22T21:30:50+05:30"
+  }
  }
 }
