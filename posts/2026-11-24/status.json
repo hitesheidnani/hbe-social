@@ -388,5 +388,30 @@
    "privacy": "public",
    "at": "2026-11-24T20:01:19+05:30"
   }
+ },
+ "us_wisdom": {
+  "instagram": {
+   "ok": true,
+   "id": "17997710127059042",
+   "url": "https://www.instagram.com/p/DgIV0QxEt-3/",
+   "at": "2026-11-24T21:33:51+05:30"
+  },
+  "instagram_story": {
+   "ok": false,
+   "error": "Instagram API: Media ID is not available (code 9007, subcode 2207027)",
+   "at": "2026-11-24T21:33:51+05:30"
+  },
+  "facebook": {
+   "ok": true,
+   "id": "1610477555472993_122110769745546038",
+   "url": "https://www.facebook.com/1610477555472993_122110769745546038",
+   "at": "2026-11-24T21:33:51+05:30"
+  },
+  "linkedin": {
+   "ok": true,
+   "id": "urn:li:share:7531024902045376514",
+   "url": "https://www.linkedin.com/feed/update/urn:li:share:7531024902045376514/",
+   "at": "2026-11-24T21:33:51+05:30"
+  }
  }
 }
