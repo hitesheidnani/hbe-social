@@ -391,20 +391,52 @@
  },
  "news_12cacf": {
   "instagram": {
-   "ok": false,
-   "error": "Instagram API: Only photo or video can be accepted as media type. (code 9004, subcode 2207052)",
-   "at": "2026-11-25T19:04:10+05:30"
+   "ok": true,
+   "id": "18081545213447960",
+   "url": "https://www.instagram.com/p/DgKqoxdly9X/",
+   "at": "2026-11-25T19:14:16+05:30"
   },
   "facebook": {
-   "ok": false,
-   "error": "Instagram API: Missing or invalid image file (code 324, subcode 2069019)",
-   "at": "2026-11-25T19:04:10+05:30"
+   "ok": true,
+   "id": "1610477555472993_122111192673546038",
+   "url": "https://www.facebook.com/1610477555472993_122111192673546038",
+   "at": "2026-11-25T19:14:16+05:30"
   },
   "linkedin": {
    "ok": true,
    "id": "urn:li:share:7531349513278713856",
    "url": "https://www.linkedin.com/feed/update/urn:li:share:7531349513278713856/",
    "at": "2026-11-25T19:04:07+05:30"
+  },
+  "instagram_story": {
+   "ok": true,
+   "id": "17919082134491202",
+   "at": "2026-11-25T19:14:16+05:30"
+  }
+ },
+ "news_5a74e6": {
+  "instagram": {
+   "ok": true,
+   "id": "18046160183842561",
+   "url": "https://www.instagram.com/p/DgKqshTly3H/",
+   "at": "2026-11-25T19:14:47+05:30"
+  },
+  "instagram_story": {
+   "ok": true,
+   "id": "17869333947678698",
+   "at": "2026-11-25T19:14:47+05:30"
+  },
+  "facebook": {
+   "ok": true,
+   "id": "1610477555472993_122111193273546038",
+   "url": "https://www.facebook.com/1610477555472993_122111193273546038",
+   "at": "2026-11-25T19:14:47+05:30"
+  },
+  "linkedin": {
+   "ok": true,
+   "id": "urn:li:share:7531352283624861696",
+   "url": "https://www.linkedin.com/feed/update/urn:li:share:7531352283624861696/",
+   "at": "2026-11-25T19:14:47+05:30"
   }
  }
 }
