@@ -426,5 +426,30 @@
    "url": "https://www.linkedin.com/feed/update/urn:li:share:7532112227286396928/",
    "at": "2026-11-27T21:34:33+05:30"
   }
+ },
+ "mindset": {
+  "instagram": {
+   "ok": true,
+   "id": "18147165430615760",
+   "url": "https://www.instagram.com/p/DgQLURqgAkc/",
+   "at": "2026-11-27T22:36:01+05:30"
+  },
+  "instagram_story": {
+   "ok": true,
+   "id": "17935068048422411",
+   "at": "2026-11-27T22:36:01+05:30"
+  },
+  "facebook": {
+   "ok": true,
+   "id": "1610477555472993_122112133917546038",
+   "url": "https://www.facebook.com/1610477555472993_122112133917546038",
+   "at": "2026-11-27T22:36:01+05:30"
+  },
+  "linkedin": {
+   "ok": true,
+   "id": "urn:li:share:7532127701369937920",
+   "url": "https://www.linkedin.com/feed/update/urn:li:share:7532127701369937920/",
+   "at": "2026-11-27T22:36:01+05:30"
+  }
  }
 }
